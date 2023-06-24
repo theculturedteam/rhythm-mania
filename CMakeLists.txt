@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.5.1)
 
 # Define the project name
-project(rhythm-game)
+project(rhythm-mania)
 
 # Add SDL2 CMake modules
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/sdl2)
