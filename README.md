@@ -36,13 +36,13 @@ make
 4. Download mingw-w64 from the link above and the extract it and move the mingw64 folder to C:\
 5. Add `C:\mingw64` and `C:\mingw64\bin` to your user path.
 6. Now cd to rhythm-mania and run the following commands:
-    `mkdir build
-    cd build
-    cmake .. -G "MinGW Makefiles"`
+    `mkdir build`,
+    `cd build`,
+    `cmake .. -G "MinGW Makefiles"`
 7. Run `make` and the run `./rhythm-mania.exe`
 8. But the game will not run, you will have to copy and paste dlls to the folder where the exe is located.
-9. Run these commands to copy the dlls. ==Note: you need to be inside build directory to run these commands, if you are not inside build then these will not work==:
+9. Run these commands to copy the dlls. **Note: you need to be inside build directory to run these commands, if you are not inside build then these will not work**:
     `cp ..\.sdl2\bin\*.dll .\`
 
-==Note: The above setup is only needed to run once.==
+**Note: The above setup is only needed to run once.**
 To build and run the game after that just run `make` then `./rhythm-mania.exe` in your terminal, while inside build directory.
