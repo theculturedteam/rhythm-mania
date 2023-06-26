@@ -10,7 +10,7 @@
 ```sh
 # Clone this repo
 git clone https://github.com/theculturedteam/rhythm-mania
-cd rhythm-maniaA
+cd rhythm-mania
 
 # Create a build folder
 mkdir build
