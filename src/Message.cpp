@@ -1,5 +1,4 @@
 #include "Message.hpp"
-#include <iostream>
 
 Message :: Message(std::string type)
 {
@@ -9,6 +8,10 @@ Message :: Message(std::string type)
     } else {
         std::cout << "Error: message type not valid" << std::endl;
     }
+}
+
+Message :: ~Message()
+{
 }
 
 bool Message :: validate_type(std::string type)
