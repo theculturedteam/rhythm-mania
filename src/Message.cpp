@@ -25,15 +25,21 @@ bool Message :: validate_type(std::string type)
 
 void Message :: set(char c)
 {
-    input = c;
+    this->input = c;
 }
 
 void Message :: set(u_int32_t time)
 {
-    time = time;
+    this->time = time;
 }
 
 void Message :: set(std::string str)
 {
-    str = str;
+    this->str = str;
+}
+
+void Message :: set(std::string cmd, std::string str)
+{
+    this->command = cmd;
+    this->str = str;
 }

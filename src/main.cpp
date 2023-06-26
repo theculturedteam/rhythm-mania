@@ -10,8 +10,8 @@ int main(int argc, char* argv[]){
     
 	std::cout << "Hello from main" << std::endl;
 	Time *time = new Time();
-
 	time->hello();
+
     cout << "Hello World" << endl;
     Message *msg = new Message("input");
     msg->set('k');
