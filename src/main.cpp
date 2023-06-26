@@ -1,4 +1,5 @@
 #include <iostream>
+#include <SDL2/SDL.h>
 #include "framework/time.hpp"
 
 int main(int argc,  char* argv[]) {
@@ -8,9 +9,10 @@ int main(int argc,  char* argv[]) {
 
 	std::cout << "Hello from main" << std::endl;
 
-	Time *time = new Time();
 
-	time->hello();
+	while (true) {
+		std::cout << Time::sGetTime() << std::endl;
+	}
 
 	return 0;
 }

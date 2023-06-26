@@ -1,6 +1,7 @@
+#include <SDL_timer.h>
 #include <iostream>
 #include "framework/time.hpp"
 
-void Time::hello() {
-	std::cout << "Hello From time" << std::endl;
+Uint32 Time::sGetTime() {
+	return SDL_GetTicks();
 }
