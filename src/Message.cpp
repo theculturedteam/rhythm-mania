@@ -31,7 +31,7 @@ void Message :: set(char c)
     this->input = c;
 }
 
-void Message :: set(u_int32_t time)
+void Message :: set(uint32_t time)
 {
     this->time = time;
 }

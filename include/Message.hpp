@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include <sys/types.h>
+#include <cstdint>
 #include <iostream>
 
 class Message
@@ -9,7 +9,7 @@ class Message
         Message(std::string type);
         ~Message();
         void set(char c);
-        void set(u_int32_t time);
+        void set(uint32_t time);
         void set(std::string str);
         void set(std::string cmd, std::string str);
 
@@ -20,7 +20,7 @@ class Message
         union
         {
             char input;
-            u_int32_t time;
+            uint32_t time;
             std::string str;
         };
 
