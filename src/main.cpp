@@ -1,18 +1,38 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include "framework/time.hpp"
+#include "Message.hpp"
+#include "MessageBus.hpp"
+using namespace std;
 
-int main(int argc,  char* argv[]) {
+void post();
+void receive();
 
-	(void) argc;
+MessageBus* msgBus = new MessageBus();
+
+int main(int argc, char* argv[]){
+    (void) argc;
     (void) argv;
+    
+    while(true)
+    {
+        post();
+        receive();
+    }
+    return 0;
+}
 
-	std::cout << "Hello from main" << std::endl;
 
+void post()
+{
+    Message* msg = new Message("input");
+    msg->set('a');
+    msgBus->postMessage(msg);
+}
 
-	while (true) {
-		std::cout << Time::sGetTime() << std::endl;
-	}
-
-	return 0;
+void receive()
+{
+    Message* another = msgBus->getMessage();
+    cout << another->getType() << std::endl;
+    delete another;
 }
