@@ -4,17 +4,35 @@
 #include "MessageBus.hpp"
 using namespace std;
 
+void post();
+void receive();
+
+MessageBus* msgBus = new MessageBus();
+
 int main(int argc, char* argv[]){
     (void) argc;
     (void) argv;
     
-	std::cout << "Hello from main" << std::endl;
-	Time *time = new Time();
-	time->hello();
-
-    cout << "Hello World" << endl;
-    Message *msg = new Message("input");
-    msg->set('k');
+    while(true)
+    {
+        post();
+        receive();
+    }
 
     return 0;
+}
+
+
+void post()
+{
+    Message* msg = new Message("input");
+    msg->set('a');
+    msgBus->postMessage(msg);
+}
+
+void receive()
+{
+    Message* another = msgBus->getMessage();
+    cout << another->getType() << std::endl;
+    delete another;
 }

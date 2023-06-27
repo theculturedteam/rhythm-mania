@@ -16,7 +16,7 @@ Message :: ~Message()
 
 bool Message :: validate_type(std::string type)
 {
-    std::string types[] = {"command", "time", "input", "path"};
+    std::string types[] = {"sound", "time", "input", "path"};
 
     for(std::string t : types)
     {
@@ -45,4 +45,9 @@ void Message :: set(std::string cmd, std::string str)
 {
     this->command = cmd;
     this->str = str;
+}
+
+std::string Message :: getType()
+{
+    return type;
 }

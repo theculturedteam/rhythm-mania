@@ -12,6 +12,7 @@ class Message
         void set(uint32_t time);
         void set(std::string str);
         void set(std::string cmd, std::string str);
+        std::string getType();
 
         std::string command;
         
