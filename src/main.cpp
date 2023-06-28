@@ -11,7 +11,6 @@ int main(int argc,  char* argv[]) {
 	Time *time = new Time();
 
 	time->hello();
-	
 
 	return 0;
 }
