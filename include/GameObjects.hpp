@@ -1,52 +1,91 @@
 #pragma once
-#include <SDL_rect.h>
+#include <vector>
 
-// For game objects like background, stationary arrows etc that do not need to move
-// Also other classes inherit from this class, so this provides source texture and
-// destination for that texture
-class StationaryGameObject {
-	private:
-		SDL_Rect srcRect, destRect;
-	public:
-		// this sets the x, y coordinate for the top left pixel of source textute
-		// and also its width and height which is later used by RenderCopy
-		// to display that texture
-		void setSrcRect(int srcX, int srcY, int srcW, int srcH);
-		// this sets the x, y coordinate for the top left pixel of destination in
-		//
-		void setDestRect(int destX, int destY, int destW, int destH);
-
-		SDL_Rect getSrcRect();
-		SDL_Rect getDestRect();
+// Similar to SDL_Rect
+struct PositionAndDimensionStruct {
+	int x;
+	int y;
+	int w;
+	int h;
 };
 
-
-// For game objects like moving arrows, that are movable but also do not need to be 
-// animated, for both movable and animated objects use MovableAndAnimatableGameObject
-// as described below
-class MovableGameObject : public StationaryGameObject {
+// Abstract class for all other class to inherit so that game objects can be made up of vector of BaseComponent class pointers
+class BaseComponent {
 	private:
+		virtual void emptyFunction() = 0;
+};
+
+// Provides the size and position of texture in the texture atlas
+class TexturePositionComponent : public BaseComponent {
+	private:
+		void emptyFunction() {};
+		PositionAndDimensionStruct srcRect;
+
+	public:
+		void setSrcRect(int srcX, int srcY, int srcW, int srcH);
+		PositionAndDimensionStruct getSrcRect();
+};
+
+// Provides the position of game objects in window
+class PositionComponent : public BaseComponent {
+	private:
+		void emptyFunction() {};
+		PositionAndDimensionStruct destRect;
+
+	public:
+		void setDestRect(int destX, int destY, int destW, int destH);
+
+		PositionAndDimensionStruct getDestRect();
+
+};
+
+// Provides movement parameters
+class MovementComponent : public BaseComponent {
+	private:
+		void emptyFunction() {};
 		int xVelocity = 0, yVelocity = 0;
+
 	public:
 		void setVelocity(int xVelocity, int yVelocity);
 
 		int getXVelocity();
 		int getYVelocity();
+
 };
 
-// For game objects like ideal NPC, that have animations but do not move
-class AnimatableGameObject : public StationaryGameObject {
+// Provides score parameter
+class ScoreComponent : public BaseComponent {
 	private:
-		SDL_Rect firstTexturePosition;
+		void emptyFunction() {};
+		int score;
+
+	public:
+		void setScore(int score);
+
+		int getScore();
+};
+
+// Provides animation related parameters
+class AnimationComponent : public BaseComponent {
+	private:
+		void emptyFunction() {};
+
+		// Position and size of the first texture for animation
+		PositionAndDimensionStruct firstTexturePosition;
 		int noOfFrameInAnimation;
+
 	public:
 		void setFirstTexturePosition(int xOfFirstTex, int yOfFirstTex, int wOfFirstTex, int hOfFirstTex);
 		void setNoOfFramInAnimation(int noOfFrameInAnimation);
 
-		SDL_Rect getFirstTexturePosition();
+		PositionAndDimensionStruct getFirstTexturePosition();
 		int getNoOfFrameInAnimaiton();
+
 };
 
-// For game objects that move and also have animations
-class MovableAndAnimatableGameObject : public MovableGameObject , public AnimatableGameObject {
+// Actual class all the game objects are made up of
+class GameObject {
+	private:
+		std::vector<BaseComponent*> components;
 };
+
