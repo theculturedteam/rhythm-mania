@@ -1,0 +1,53 @@
+#include "Message.hpp"
+
+Message :: Message(std::string type)
+{
+    if(validate_type(type))
+    {
+        this->type = type;
+    } else {
+        std::cout << "Error: message type not valid" << std::endl;
+    }
+}
+
+Message :: ~Message()
+{
+}
+
+bool Message :: validate_type(std::string type)
+{
+    std::string types[] = {"sound", "time", "input", "path"};
+
+    for(std::string t : types)
+    {
+        if(type == t)
+            return true;
+    }
+    return false;
+}
+
+void Message :: set(char c)
+{
+    this->input = c;
+}
+
+void Message :: set(uint32_t time)
+{
+    this->time = time;
+}
+
+void Message :: set(std::string str)
+{
+    this->str = str;
+}
+
+void Message :: set(std::string cmd, std::string str)
+{
+    this->command = cmd;
+    this->str = str;
+}
+
+std::string Message :: getType()
+{
+    return type;
+}

@@ -1,5 +1,7 @@
 #pragma once
+#include <SDL2/SDL.h>
+
 class Time {
 	public: 
-		void hello();
+		static Uint32 sGetTime();
 };
