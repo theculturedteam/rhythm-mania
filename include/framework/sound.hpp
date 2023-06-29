@@ -5,7 +5,7 @@ class Sound{
     Mix_Music *run_music;
     Mix_Chunk *current_music;
     static Sound *instance;
-    // Sound();
+    Sound();
 
 public:
     

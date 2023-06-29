@@ -7,10 +7,6 @@ Sound *Sound :: instance = nullptr;
 
 void Sound ::PlayMusic(const char *path, int loop)
 {
-    
-    printf("\n");
-    printf("audio");
-    // SDL_AudioInit;
     if (Mix_OpenAudio(22020, AUDIO_S16SYS, 2, 4096) != 0) // initializes the audio device
     {
         printf("can't play the music");
