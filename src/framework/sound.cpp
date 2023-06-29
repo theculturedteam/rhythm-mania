@@ -52,4 +52,5 @@ Sound* Sound :: get_object(){
         }
         return instance;
 }
-// Sound :: Sound(){}
+
+Sound :: Sound(){}
