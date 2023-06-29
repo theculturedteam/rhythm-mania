@@ -1,38 +1,26 @@
+#include <SDL_timer.h>
+#include <cstdio>
 #include <iostream>
 #include <SDL2/SDL.h>
 #include "framework/time.hpp"
-#include "Message.hpp"
-#include "MessageBus.hpp"
-using namespace std;
-
-void post();
-void receive();
-
-MessageBus* msgBus = new MessageBus();
 
 int main(int argc, char* argv[]){
     (void) argc;
     (void) argv;
     
-    while(true)
-    {
-        post();
-        receive();
-    }
+	Time* timeInstance = Time::sGetInstance();
+
+	timeInstance->setPreviousTime(timeInstance->getCurrentTime());
+
+	std::cout << "Previous Time: " << timeInstance->getPreviousTime() << std::endl;
+
+	while (true) {
+		std::cout << "DT: " << timeInstance->calculateDeltaTime(timeInstance->getCurrentTime()) << std::endl;
+		printf("dt: %f", timeInstance->calculateDeltaTime(timeInstance->getCurrentTime()));
+		SDL_Delay(10000);
+		timeInstance->setPreviousTime(timeInstance->getCurrentTime());
+	}
+
     return 0;
 }
 
-
-void post()
-{
-    Message* msg = new Message("input");
-    msg->set('a');
-    msgBus->postMessage(msg);
-}
-
-void receive()
-{
-    Message* another = msgBus->getMessage();
-    cout << another->getType() << std::endl;
-    delete another;
-}
