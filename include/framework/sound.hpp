@@ -1,9 +1,17 @@
 #pragma once
-#include "SDL_mixer.h"
+#include "SDL2/SDL_mixer.h"
 class Sound{
-    static Mix_Music *run_music;
-    public:
-    static void PlayMusic(char *path, int loop);
-    static void PauseMusic();
-    static void ResumeMusic();
+    private:
+    Mix_Music *run_music;
+    Mix_Chunk *current_music;
+    static Sound *instance;
+    // Sound();
+
+public:
+    
+    static Sound *get_object();
+     void PlayMusic(const char *path, int loop);
+     void PlayChunk(const char *path, int loop);
+     void PauseMusic();
+     void ResumeMusic();
 };
