@@ -13,12 +13,13 @@ MessageBus* msgBus = new MessageBus();
 int main(int argc, char* argv[]){
     (void) argc;
     (void) argv;
-    
+
     while(true)
     {
-        post();
-        receive();
+    post();
+    receive();
     }
+    //std::cout << msgBus->getMessageType() << std::endl;
     return 0;
 }
 
@@ -32,7 +33,10 @@ void post()
 
 void receive()
 {
-    Message* another = msgBus->getMessage();
-    cout << another->getType() << std::endl;
-    delete another;
+    if(msgBus->hasMessage())
+    {
+        std::cout << msgBus->getMessageType() << std::endl;
+        Message* another = msgBus->getMessage();
+        delete another;
+    }
 }
