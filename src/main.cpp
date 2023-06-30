@@ -7,18 +7,19 @@
 int main(int argc, char* argv[]){
     (void) argc;
     (void) argv;
+
+	SDL_Init(SDL_INIT_TIMER);
     
-	Time* timeInstance = Time::sGetInstance();
+	Time& timeInstance = Time::sGetInstance();
 
-	timeInstance->setPreviousTime(timeInstance->getCurrentTime());
+	timeInstance.setPreviousTime(timeInstance.getCurrentTime());
 
-	std::cout << "Previous Time: " << timeInstance->getPreviousTime() << std::endl;
+	std::cout << "Previous Time: " << timeInstance.getPreviousTime() << std::endl;
 
 	while (true) {
-		std::cout << "DT: " << timeInstance->calculateDeltaTime(timeInstance->getCurrentTime()) << std::endl;
-		printf("dt: %f", timeInstance->calculateDeltaTime(timeInstance->getCurrentTime()));
-		SDL_Delay(10000);
-		timeInstance->setPreviousTime(timeInstance->getCurrentTime());
+		double dt = timeInstance.calculateDeltaTime(timeInstance.getCurrentTime());
+		std::cout << "dt: " << dt << std::endl;
+		SDL_Delay(16);
 	}
 
     return 0;
