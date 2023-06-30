@@ -8,10 +8,11 @@ class Sound{
     Sound();
 
 public:
-    
     static Sound *get_object();
-     void PlayMusic(const char *path, int loop);
-     void PlayChunk(const char *path, int loop);
-     void PauseMusic();
-     void ResumeMusic();
+    void PlayMusic(int loop);               
+    void PlayChunk(int loop);                
+    void LoadMusic(const char *path);          //to load music i.e. to create music object run_music
+    void LoadChunk(const char *path);          // to load hunk i.e. current_music
+    void PauseMusic();
+    void ResumeMusic();
 };

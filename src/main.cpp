@@ -77,17 +77,17 @@ int main(int argc, char* argv[]){
 // }
  void soundtest(){
     int choice;
-        
-        Sound *object = Sound :: get_object();
-        // object.PlayChunk("../res/audio/music1.wav", 1);
-        object->PlayMusic("../res/audio/music1.wav", 1);
-        printf("enter");
-        scanf("%d", &choice);
-        if(choice == 1)
-        {
-           object->PauseMusic();
-        }
 
+    Sound *object = Sound :: get_object();
+    // object.PlayChunk("../res/audio/music1.wav", 1);
+    object->LoadMusic("../res/audio/music1.wav");
+    object->PlayMusic(1);
+    printf("enter");
+    scanf("%d", &choice);
+    if (choice == 1)
+    {
+            object->PauseMusic();
+        }
         scanf("%d", &choice);
         if (choice == 1)
         {
