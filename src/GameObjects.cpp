@@ -1,8 +1,8 @@
 #include "GameObjects.hpp"
+#include <cstdarg>
+#include <cstring>
+#include <iostream>
 
-// Do not look at this for documentaion, documentaion available in header file GameObjects.hh
-
-BaseComponent::~BaseComponent() {};
 
 void TexturePositionComponent::setSrcRect(int srcX, int srcY, int srcW, int srcH) {
 	srcRect.x = srcX;
@@ -66,6 +66,55 @@ int& AnimationComponent::getNoOfFrameInAnimaiton() {
 	return noOfFrameInAnimation;
 }
 
-void GameObject::addComponent(BaseComponent* component) {
-	this->components.push_back(component);
+GameObject::GameObject(const char* format...) {
+	// Macros from <cstdarg> that are used to access and process variable arguments
+	va_list args;
+	va_start(args, format);
+
+	// takes the first argument
+	const char* component = format;
+	while (component != nullptr) {
+		/* std::cout << component << std::endl; */
+		if (strcmp(component, "texture") == 0) {
+			texturePositionComponent = new TexturePositionComponent();
+			/* std::cout << "Created texturePositionComponent" << std::endl; */
+		} 
+		else if (strcmp(component, "position") == 0) {
+			positionComponent = new PositionComponent();
+			/* std::cout << "Created positionComponent" << std::endl; */
+		} 
+		else if (strcmp(component, "movement") == 0) {
+			movementComponent = new MovementComponent();
+			/* std::cout << "Created movementComponent" << std::endl; */
+		} 
+		else if (strcmp(component, "score") == 0) {
+			scoreComponent = new ScoreComponent();
+			/* std::cout << "Created scoreComponent" << std::endl; */
+		} 
+		else if (strcmp(component, "animation") == 0) {
+			animationComponent = new AnimationComponent();
+			/* std::cout << "Created animationComponent" << std::endl; */
+		} 
+		else {
+			std::cout << "Not a valid component" << std::endl;
+		}
+
+		// sets component to the next argument
+		component = va_arg(args, const char*);
+	}
+
+	va_end(args);
+}
+
+GameObject::~GameObject() {
+	delete texturePositionComponent;
+	texturePositionComponent = NULL;
+	delete positionComponent;
+	positionComponent = NULL;
+	delete movementComponent;
+	movementComponent = NULL;
+	delete scoreComponent;
+	scoreComponent = NULL;
+	delete animationComponent;
+	animationComponent = NULL;
 }

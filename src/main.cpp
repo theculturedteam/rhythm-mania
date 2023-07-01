@@ -13,62 +13,36 @@ int main(int argc, char* argv[]){
     (void) argc;
     (void) argv;
     
-	GameObject player1 = GameObject();
+	std::cout << "debug0" << std::endl;
+	GameObject player1("texture", "position", "movement", "score", "animation", nullptr);
 
-	TexturePositionComponent* texturePositionComponent= new TexturePositionComponent();
-	player1.addComponent(texturePositionComponent);
-	PositionComponent* positionComponent= new PositionComponent();
-	player1.addComponent(positionComponent);
-	MovementComponent* movementComponent= new MovementComponent();
-	player1.addComponent(movementComponent);
-	ScoreComponent* scoreComponent= new ScoreComponent();
-	player1.addComponent(scoreComponent);
-	AnimationComponent* animaitonComponent= new AnimationComponent();
-	player1.addComponent(animaitonComponent);
+	player1.texturePositionComponent->setSrcRect(10, 11, 12, 13);
+	std::cout << "x: " << player1.texturePositionComponent->getSrcRect().x << std::endl;
+	std::cout << "y: " << player1.texturePositionComponent->getSrcRect().y << std::endl;
+	std::cout << "w: " << player1.texturePositionComponent->getSrcRect().w << std::endl;
+	std::cout << "h: " << player1.texturePositionComponent->getSrcRect().h << std::endl;
 
-	for(auto* ptr : player1.getVector()) {
-		ptr->setSrcRect(69, 10, 20, 20);
-		std::cout << ptr->getSrcRect().x << std::endl;
+	player1.positionComponent->setDestRect(14, 15, 16, 17);
+	std::cout << "x: " << player1.positionComponent->getDestRect().x << std::endl;
+	std::cout << "y: " << player1.positionComponent->getDestRect().y << std::endl;
+	std::cout << "w: " << player1.positionComponent->getDestRect().w << std::endl;
+	std::cout << "h: " << player1.positionComponent->getDestRect().h << std::endl;
 
-		if (ptr->getComponentType() == "texture") {
-			ptr->setSrcRect(10, 11, 12, 13);
-			std::cout << ptr->getSrcRect().x << std::endl;
-			std::cout << ptr->getSrcRect().y << std::endl;
-			std::cout << ptr->getSrcRect().w << std::endl;
-			std::cout << ptr->getSrcRect().h << std::endl;
-		}
-		else if (ptr->getComponentType() == "position") {
-			ptr->setDestRect(14, 15, 16, 17);
-			std::cout << ptr->getDestRect().x << std::endl;
-			std::cout << ptr->getDestRect().y << std::endl;
-			std::cout << ptr->getDestRect().w << std::endl;
-			std::cout << ptr->getDestRect().h << std::endl;
-		}
-		else if (ptr->getComponentType() == "movement") {
-			ptr->setVelocity(18, 19);
-			std::cout << ptr->getXVelocity() << std::endl;
-			std::cout << ptr->getYVelocity() << std::endl;
-		}
-		else if (ptr->getComponentType() == "score") {
-			ptr->setScore(20);
-			std::cout << ptr->getScore() << std::endl;
-		}
-		else if (ptr->getComponentType() == "animation") {
-			ptr->setFirstTexturePosition(21, 22, 23, 24);
-			std::cout << ptr->getSrcRect().x << std::endl;
-			std::cout << ptr->getSrcRect().y << std::endl;
-			std::cout << ptr->getSrcRect().w << std::endl;
-			std::cout << ptr->getSrcRect().h << std::endl;
+	player1.movementComponent->setVelocity(18, 19);
+	std::cout << "xVelocity: " << player1.movementComponent->getXVelocity() << std::endl;
+	std::cout << "yVelocity: " << player1.movementComponent->getYVelocity() << std::endl;
 
-			ptr->setNoOfFramInAnimation(25);
-			std::cout << ptr->getNoOfFrameInAnimaiton() << std::endl;
-		}
-	}
+	player1.scoreComponent->setScore(20);
+	std::cout << "score: " << player1.scoreComponent->getScore() << std::endl;
 
-	for(auto* ptr : player1.getVector()) {
-		delete ptr;
-	}
+	player1.animationComponent->setFirstTexturePosition(21, 22, 23, 24);
+	std::cout << "x: " << player1.animationComponent->getFirstTexturePosition().x << std::endl;
+	std::cout << "y: " << player1.animationComponent->getFirstTexturePosition().y << std::endl;
+	std::cout << "w: " << player1.animationComponent->getFirstTexturePosition().w << std::endl;
+	std::cout << "h: " << player1.animationComponent->getFirstTexturePosition().h << std::endl;
 
+	player1.animationComponent->setNoOfFramInAnimation(25);
+	std::cout << "noOfFrameInAnimation: " << player1.animationComponent->getNoOfFrameInAnimaiton() << std::endl;
     return 0;
 }
 
