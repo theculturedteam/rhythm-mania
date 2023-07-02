@@ -1,6 +1,4 @@
 #include <iostream>
-#include <SDL2/SDL.h>
-#include "framework/time.hpp"
 #include "Message.hpp"
 #include "MessageBus.hpp"
 using namespace std;
