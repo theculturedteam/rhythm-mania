@@ -1,12 +1,18 @@
 #include "framework/input.hpp"
 
+Input :: Input()
+{}
+
+Input :: ~Input()
+{}
+
 Input& Input :: getInstance()
 {
     static Input instance;
     return instance;
 }
 
-InputData* Input :: getInputs()
+std::vector<InputData*>* Input :: getInputs()
 {
     while(SDL_PollEvent(&event))
     {
@@ -14,12 +20,17 @@ InputData* Input :: getInputs()
         {
             std::cout << "Quit Event: SDL asks to quit" << std::endl;
             InputData* in = new InputData(0, 0);
-            return in;
+            inputsVec.push_back(in);
         } else if(!event.key.repeat && (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP))
         {
             InputData* in = new InputData(event.key.keysym.sym, event.key.timestamp);
-            return in; //Please call delete in GameLogic
+            inputsVec.push_back(in);
         }
     };
-    return nullptr;
+    return &inputsVec;
 };
+
+void Input :: clearInputs()
+{
+    inputsVec.clear();
+}

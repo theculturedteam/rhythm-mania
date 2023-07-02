@@ -1,7 +1,7 @@
 #pragma once
-#include <SDL_events.h>
 #include <iostream>
-#include <cstddef>
+#include <vector>
+#include <SDL_events.h>
 #include "framework/inputData.hpp"
 
 class Input
@@ -9,12 +9,14 @@ class Input
     public:
         static Input& getInstance();
         ~Input();
-        InputData* getInputs();
+        std::vector<InputData*>* getInputs();
+        void clearInputs();
 
         Input(Input const&) = delete; // Avoiding copy of the instance
         void operator=(Input const&) = delete; // Overriding = to avoid copy
 
     private:
         Input();
+        std::vector<InputData*> inputsVec;
         SDL_Event event;
 };
