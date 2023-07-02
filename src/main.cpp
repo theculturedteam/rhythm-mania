@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Message.hpp"
 #include "MessageBus.hpp"
+#include "framework/inputData.hpp"
 using namespace std;
 
 void post();
@@ -25,7 +26,8 @@ int main(int argc, char* argv[]){
 void post()
 {
     Message* msg = new Message("input");
-    msg->set('a');
+    InputData* in = new InputData(98, 123);
+    msg->setData(in);
     msgBus->postMessage(msg);
 }
 
@@ -33,8 +35,11 @@ void receive()
 {
     if(msgBus->hasMessage())
     {
-        std::cout << msgBus->getMessageType() << std::endl;
+        //std::cout << msgBus->getMessageType() << std::endl;
         Message* another = msgBus->getMessage();
+        InputData* in = another->getInputData();
+        std::cout << in->getKeyCode() << std::endl;
+        //std::cout << in->getTimeStamp() << std::endl;
         delete another;
     }
 }
