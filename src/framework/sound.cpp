@@ -1,9 +1,8 @@
 #include "framework/sound.hpp"
-#include<iostream>
+#include <iostream>
 
 // Mix_Music *Sound::run_music = nullptr;
 // Mix_Chunk *Sound::current_music = nullptr;
-Sound* Sound :: instance = nullptr;
 
 void Sound ::LoadMusic(const char *path)
 {
@@ -12,27 +11,27 @@ void Sound ::LoadMusic(const char *path)
 
 void Sound ::LoadChunk(const char *path)
 {
-    current_music = Mix_LoadWAV(path); 
+    current_music = Mix_LoadWAV(path);
 }
 
-void Sound ::PlayMusic( int loop)
+void Sound ::PlayMusic(int loop)
 {
     printf("  music initialized\n");
     Mix_PlayMusic(run_music, loop);
 }
 
-void Sound ::PlayChunk( int loop)
+void Sound ::PlayChunk(int loop)
 {
     if (Mix_OpenAudio(22020, AUDIO_S16SYS, 2, 4096) != 0) // initializes the audio device
     {
         printf("can't play the music");
     }
-    Mix_PlayChannel(-1, current_music, loop);  //-1 chooses the available channel 
+    Mix_PlayChannel(-1, current_music, loop); //-1 chooses the available channel
 }
 
-void Sound :: PauseMusic()
+void Sound ::PauseMusic()
 {
-    if(Mix_PlayingMusic())
+    if (Mix_PlayingMusic())
     {
         Mix_PauseMusic();
     }
@@ -40,7 +39,7 @@ void Sound :: PauseMusic()
         printf("music isn't playing");
 }
 
-void Sound :: ResumeMusic()
+void Sound ::ResumeMusic()
 {
     if (Mix_PausedMusic())
     {
@@ -49,20 +48,21 @@ void Sound :: ResumeMusic()
     else
         printf("Music isn't paused");
 }
-Sound* Sound :: get_object(){
-        if(instance == nullptr)
-        {
-            instance = new Sound();
-            return instance;
-        }
-        return instance;
-        
+Sound &Sound ::get_object()
+{
+    // if(instance == nullptr)
+    // {
+    //     instance = new Sound();
+    //     return instance;
+    // }
+    static Sound instance;
+    return instance;
 }
 
-Sound :: Sound(){
+Sound ::Sound()
+{
     if (Mix_OpenAudio(22020, AUDIO_S16SYS, 2, 4096) != 0) // initializes the audio device
     {
         printf("can't play the music");
     }
-    
 }
