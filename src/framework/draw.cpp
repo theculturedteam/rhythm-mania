@@ -1,12 +1,13 @@
 #include "framework/draw.hpp"
 
-bool Draw::isRunning = false;
+bool Draw::isRunning;
 const char* Draw::path = "";
 SDL_Texture* Draw::texture = nullptr;
 SDL_Window* Draw::window = nullptr;
 SDL_Renderer* Draw::renderer = nullptr;
+Draw* Draw::instanceptr;
 
-//temporary function for test
+
 void Draw :: sInitializeSDL(){
     if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0){
         std::cout << "SDL INIT ERROR: " << SDL_GetError() << std::endl;
@@ -34,6 +35,16 @@ void Draw::DestroySDL(){
     SDL_Quit();
 }
 
+Draw* Draw::getInstance(){
+    {
+        if(instanceptr == NULL){
+            instanceptr = new Draw();
+            return instanceptr;
+        }
+        return instanceptr;
+    }
+}
+
 void Draw::sHandleEvents()
 {
     SDL_Event event;
@@ -48,9 +59,12 @@ void Draw::sHandleEvents()
 }
 
 bool Draw::sCheckRunning(){
+    std::cout<< isRunning<< std::endl;
     return isRunning;
 }
-// void Draw :: sFullScreenDraw(std::string path){
-//     SDL_RenderGetViewport(renderer, &dstRect);
-//     sDrawTexture(path);
-// }
+
+
+void Draw :: sFullScreenDraw(std::string path, SDL_Rect srcRect, SDL_Rect dstRect){
+    SDL_RenderGetViewport(renderer, &dstRect);
+    sDrawTexture(path, srcRect, dstRect);
+}

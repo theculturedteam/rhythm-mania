@@ -10,7 +10,8 @@ int main(int argc,  char* argv[]) {
 
 	Time *time = new Time();
 	
-	Draw::sInitializeSDL();
+	Draw* singleton = Draw::getInstance();
+	singleton->sInitializeSDL();
 	SDL_Rect srcRect;
 	SDL_Rect dstRect;
 	srcRect.w = 32;
@@ -21,14 +22,16 @@ int main(int argc,  char* argv[]) {
 	dstRect.h = 64;
 	dstRect.x = 300;
 	dstRect.y = 400;
-	bool isRunning = Draw::sCheckRunning();
+	
+	bool isRunning = singleton->sCheckRunning();
 	while (isRunning)
 	{
-		Draw::sHandleEvents();
-		Draw::sDrawTexture("../res/images/healthbar1.png", srcRect, dstRect);
-		isRunning = Draw::sCheckRunning();
+		singleton->sHandleEvents();
+		//singleton->sFullScreenDraw("../res/images/healthbar1.png", srcRect, dstRect);
+		singleton->sDrawTexture("../res/images/healthbar1.png", srcRect, dstRect);
+		isRunning = singleton->sCheckRunning();
 	}
-	Draw::DestroySDL();
+	singleton->DestroySDL();
 	time->hello();
 
 	return 0;
