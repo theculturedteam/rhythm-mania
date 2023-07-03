@@ -3,6 +3,3 @@
 System :: System(MessageBus* msgBus)
     :msgBus(msgBus)
 {}
-
-System :: ~System()
-{}
