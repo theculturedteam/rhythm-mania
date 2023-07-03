@@ -4,11 +4,17 @@
 #include <SDL2/SDL.h>
 #include "GameObjects.hpp"
 #include "framework/time.hpp"
+#include "Message.hpp"
+#include "MessageBus.hpp"
+#include "framework/inputData.hpp"
 using namespace std;
 
+MessageBus* msgBus = new MessageBus();
+
 void testTimeFramework() {
+	std::cout << "Testing Time Framework" << std::endl;
 	SDL_Init(SDL_INIT_TIMER);
-    
+
 	Time& timeInstance = Time::sGetInstance();
 
 	timeInstance.setPreviousTime(timeInstance.getCurrentTime());
@@ -23,6 +29,7 @@ void testTimeFramework() {
 }
 
 void testGameObject() {
+	std::cout << "Testing Game Object" << std::endl;
 	std::cout << "debug0" << std::endl;
 	GameObject player1("texture", "position", "movement", "score", "animation", nullptr);
 
@@ -53,15 +60,49 @@ void testGameObject() {
 
 	player1.animationComponent->setNoOfFramInAnimation(25);
 	std::cout << "noOfFrameInAnimation: " << player1.animationComponent->getNoOfFrameInAnimaiton() << std::endl;
+}	
+
+void post()
+{
+	Message* msg = new Message("input");
+	InputData* in = new InputData(98, 123);
+	msg->setData(in);
+	msgBus->postMessage(msg);
+}
+
+void receive()
+{
+	if(msgBus->hasMessage())
+	{
+		//std::cout << msgBus->getMessageType() << std::endl;
+		Message* another = msgBus->getMessage();
+		InputData* in = another->getInputData();
+		std::cout << in->getKeyCode() << std::endl;
+		//std::cout << in->getTimeStamp() << std::endl;
+		delete another;
+	}
+}
+
+void testMessageBus() {
+	std::cout << "Testing Message Bus" << std::endl;
+
+	while(true)
+	{
+		post();
+		receive();
+	}
+	//std::cout << msgBus->getMessageType() << std::endl;
 }
 
 int main(int argc, char* argv[]){
-    (void) argc;
-    (void) argv;
+	(void) argc;
+	(void) argv;
 
 	testTimeFramework();
 	testGameObject();
+	testMessageBus();
 
-    return 0;
+	return 0;
 }
+
 
