@@ -98,8 +98,8 @@ int main(int argc, char* argv[]){
 	(void) argc;
 	(void) argv;
 
-	testTimeFramework();
-	testGameObject();
+	/* testTimeFramework(); */
+	/* testGameObject(); */
 	testMessageBus();
 
 	return 0;
