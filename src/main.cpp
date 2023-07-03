@@ -7,6 +7,7 @@
 #include "Message.hpp"
 #include "MessageBus.hpp"
 #include "framework/inputData.hpp"
+#include "framework/draw.hpp"
 using namespace std;
 
 MessageBus* msgBus = new MessageBus();
@@ -62,6 +63,31 @@ void testGameObject() {
 	std::cout << "noOfFrameInAnimation: " << player1.animationComponent->getNoOfFrameInAnimaiton() << std::endl;
 }	
 
+void testDrawFramework() {
+	Draw* singleton = Draw::getInstance();
+	singleton->sInitializeSDL();
+	SDL_Rect srcRect;
+	SDL_Rect dstRect;
+	srcRect.w = 32;
+	srcRect.h = 32;
+	srcRect.x = 0;
+	srcRect.y = 0;
+	dstRect.w = 64;
+	dstRect.h = 64;
+	dstRect.x = 300;
+	dstRect.y = 400;
+	
+	bool isRunning = singleton->sCheckRunning();
+	while (isRunning)
+	{
+		singleton->sHandleEvents();
+		//singleton->sFullScreenDraw("../res/images/healthbar1.png", srcRect, dstRect);
+		singleton->sDrawTexture("../res/images/healthbar1.png", srcRect, dstRect);
+		isRunning = singleton->sCheckRunning();
+	}
+	singleton->DestroySDL();
+}
+
 void post()
 {
 	Message* msg = new Message("input");
@@ -98,11 +124,11 @@ int main(int argc, char* argv[]){
 	(void) argc;
 	(void) argv;
 
+	std::cout << "Hello from main" << std::endl;
 	/* testTimeFramework(); */
 	/* testGameObject(); */
-	testMessageBus();
+	testDrawFramework();
+	/* testMessageBus(); */
 
 	return 0;
 }
-
-
