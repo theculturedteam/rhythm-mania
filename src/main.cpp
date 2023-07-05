@@ -44,24 +44,30 @@ void testInputSystem() {
 	init("Game", 0, 40, 1280, 720);
 
 	InputSystem inputSystem(msgBus);
+	Time& timeInstance = Time::sGetInstance();
+
+	timeInstance.getPreviousTime();
 	while (isRunning) {
+
+		double dt = timeInstance.calculateDeltaTime();
+		timeInstance.setPreviousTime();
+		std::cout << "dt: " << dt << std::endl;
+
 		inputSystem.update();
 		if (msgBus->hasMessage()) {
 			Message* msg = msgBus->getMessage();
 			InputData* inputData = msg->getInputData();
 			if (inputData != nullptr) {
-				std::cout << "keycode: " << inputData->getKeyCode() << " timestamp: " << inputData->getTimeStamp() << std::endl;
+				/* std::cout << "keycode: " << inputData->getKeyCode() << " timestamp: " << inputData->getTimeStamp() << std::endl; */
 				if (inputData->getKeyCode() == 0) {
-					std::cout << "set game is running to false" << std::endl;
+					/* std::cout << "set game is running to false" << std::endl; */
 					isRunning = false;
 				}
 			}
-			std::cout << "1" << std::endl;
 			delete msg;
-			std::cout << "2" << std::endl;
 			inputData = NULL;
-			std::cout << "3" << std::endl;
 		}
+		SDL_Delay(16);
 	}
 	quitSDL();
 }
