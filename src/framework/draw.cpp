@@ -57,7 +57,6 @@ void Draw::HandleEvents()
 
 bool Draw::CheckRunning()
 {
-    std::cout << isRunning << std::endl;
     return isRunning;
 }
 
