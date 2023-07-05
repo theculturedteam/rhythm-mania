@@ -84,8 +84,6 @@ void testDrawFramework() {
     while (isRunning)
     {
         singleton.HandleEvents();
-        // singleton->sFullScreenDraw("../res/images/healthbar1.png", srcRect, dstRect);
-        
         singleton.DrawTexture( srcRect, dstRect);
         isRunning = singleton.CheckRunning();
     }
