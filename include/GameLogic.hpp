@@ -2,6 +2,8 @@
 #include "GameObjects.hpp"
 #include "MessageBus.hpp"
 #include "framework/time.hpp"
+#include "BeatMap.hpp"
+#include "time.h"
 
 class GameLogic
 {
@@ -17,4 +19,6 @@ class GameLogic
     private:
         MessageBus* msgBus;
         std::vector<GameObject*>* gameObjects;
+        BeatMap beatMap;
+        uint32_t startTime;
 };

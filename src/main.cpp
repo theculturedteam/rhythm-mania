@@ -8,7 +8,8 @@
 #include "MessageBus.hpp"
 #include "framework/inputData.hpp"
 #include "framework/draw.hpp"
-using namespace std;
+#include "GameLogic.hpp"
+
 
 MessageBus* msgBus = new MessageBus();
 
@@ -128,11 +129,13 @@ int main(int argc, char* argv[]){
 	(void) argc;
 	(void) argv;
 
-	std::cout << "Hello from main" << std::endl;
+	//std::cout << "Hello from main" << std::endl;
 	/* testTimeFramework(); */
 	/* testGameObject(); */
-	testDrawFramework();
+	//testDrawFramework();
 	/* testMessageBus(); */
+    std::vector<GameObject*> gameObjects; 
+    GameLogic g1(msgBus, &gameObjects);
 
 	return 0;
 }
