@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include "framework/inputData.hpp"
-#include "framework/soundData.hpp"
+#include "data/inputData.hpp"
+#include "data/soundData.hpp"
 
 class Message
 {
