@@ -18,12 +18,13 @@ void testTimeFramework() {
 
 	Time& timeInstance = Time::sGetInstance();
 
-	timeInstance.setPreviousTime(timeInstance.getCurrentTime());
+	timeInstance.setPreviousTime();
 
 	std::cout << "Previous Time: " << timeInstance.getPreviousTime() << std::endl;
 
 	while (true) {
-		double dt = timeInstance.calculateDeltaTime(timeInstance.getCurrentTime());
+		double dt = timeInstance.calculateDeltaTime();
+		timeInstance.setPreviousTime();
 		std::cout << "dt: " << dt << std::endl;
 		SDL_Delay(16);
 	}
@@ -129,9 +130,9 @@ int main(int argc, char* argv[]){
 	(void) argv;
 
 	std::cout << "Hello from main" << std::endl;
-	/* testTimeFramework(); */
+	testTimeFramework();
 	/* testGameObject(); */
-	testDrawFramework();
+	/* testDrawFramework(); */
 	/* testMessageBus(); */
 
 	return 0;

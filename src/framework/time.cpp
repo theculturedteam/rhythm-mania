@@ -9,13 +9,13 @@ Time& Time::sGetInstance() {
 	return timeInstance;
 }
 
-void Time::setPreviousTime(uint32_t previousTime) {
-	this->previousTime = previousTime;
+void Time::setPreviousTime() {
+	previousTime = getCurrentTime();
 }
 
-double Time::calculateDeltaTime(uint32_t curretTime) {
+double Time::calculateDeltaTime() {
+	curretTime = getCurrentTime();
 	double dt = (curretTime - previousTime) / 1000.0;
-	previousTime = curretTime;
 	return dt;
 }
 
