@@ -1,4 +1,4 @@
-#include "framework/SoundData.hpp"
+#include "data/SoundData.hpp"
 
 std::string SoundData ::getpath()
 {
@@ -11,4 +11,9 @@ std::string SoundData ::getcommand()
 }
 SoundData::SoundData()
 {
+}
+void SoundData::setdata(std ::string path, std::string command)
+{
+    this->path = path;
+    this->command = command;
 }
