@@ -12,6 +12,7 @@ class MessageBus
         void postMessage(Message* msg);
         Message* getMessage();
         std::string getMessageType();
+        bool hasMessage();
     private:
         std::queue<Message*> messageQueue;
 };
