@@ -8,6 +8,7 @@
 #include "MessageBus.hpp"
 #include "framework/inputData.hpp"
 #include "framework/draw.hpp"
+#include "system/RenderSystem.hpp"
 using namespace std;
 
 MessageBus* msgBus = new MessageBus();
@@ -92,6 +93,26 @@ void testDrawFramework() {
     singleton.DestroySDL();
 }
 
+
+void testRenderSystem(){
+	Draw& drawInstance = Draw::getInstance();
+	drawInstance.InitializeSDL();
+	bool checkRunning = drawInstance.CheckRunning();
+	GameObject* player1 = new GameObject("position", "texture", nullptr);
+	GameObject* background = new GameObject("position", "texture", nullptr);
+	player1->texturePositionComponent->setSrcRect(0, 0 , 371, 403);
+	player1->positionComponent->setDestRect(100, 100, 50, 50);
+	background->texturePositionComponent->setSrcRect(0, 0, 371, 403);
+	background->positionComponent->setDestRect(0, 0, 50, 50);
+	std::vector<GameObject*>* gameobjects = new std::vector<GameObject*>{player1, background};
+	Render renderSystem(msgBus,gameobjects);
+	while(checkRunning){
+		drawInstance.HandleEvents();	
+		renderSystem.update();
+		checkRunning = drawInstance.CheckRunning();
+	}
+
+}
 void post()
 {
 	Message* msg = new Message("input");
@@ -131,9 +152,9 @@ int main(int argc, char* argv[]){
 	std::cout << "Hello from main" << std::endl;
 	/* testTimeFramework(); */
 	/* testGameObject(); */
-	testDrawFramework();
+	// testDrawFramework();
 	/* testMessageBus(); */
-
+	testRenderSystem();
 	return 0;
 }
 

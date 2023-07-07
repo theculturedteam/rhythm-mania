@@ -13,18 +13,23 @@ void Draw ::InitializeSDL()
     {
         std::cout << "IMG INIT ERROR: " << SDL_GetError() << std::endl;
     }
+
     isRunning = true;
-    window = SDL_CreateWindow("GAME", 0, 40, SCREEN_HEIGHT, SCREEN_WIDTH, SDL_WINDOW_RESIZABLE);
+    window = SDL_CreateWindow("GAME", 0, 40, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE);
+    if(window == NULL)
+        std::cout << "Window Creation Failed" << SDL_GetError() << std::endl;
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    SDL_RenderSetLogicalSize(renderer, SCREEN_HEIGHT, SCREEN_WIDTH);
+    if(renderer == NULL)
+        std::cout << "Renderer Creation Failed" << SDL_GetError() << std::endl;
+    SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
     std::cout << "Game Started" << std::endl;
 }
 
 void Draw ::DrawTexture(SDL_Rect srcRect, SDL_Rect dstRect)
 {
-    (void)srcRect;
-    SDL_RenderCopy(renderer, texture, NULL, &dstRect);
+    SDL_RenderClear(renderer);
+    SDL_RenderCopy(renderer, texture, &srcRect, &dstRect);
     SDL_RenderPresent(renderer);
 }
 
@@ -57,7 +62,6 @@ void Draw::HandleEvents()
 
 bool Draw::CheckRunning()
 {
-    std::cout << isRunning << std::endl;
     return isRunning;
 }
 

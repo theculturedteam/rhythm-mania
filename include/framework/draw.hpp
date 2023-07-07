@@ -2,6 +2,7 @@
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_image.h>
 #include <iostream>
+//to load and draw different textures on the screen
 class Draw{
     const char* path;
     SDL_Texture * texture;
