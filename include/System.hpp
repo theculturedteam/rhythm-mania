@@ -8,6 +8,6 @@ class System
         virtual void handleMessage() = 0;
         virtual ~System() = default;
         virtual void update() = 0;
-    private:
+    protected:
         MessageBus* msgBus;
 };

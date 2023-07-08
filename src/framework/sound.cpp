@@ -50,11 +50,6 @@ void Sound ::ResumeMusic()
 }
 Sound &Sound ::get_object()
 {
-    // if(instance == nullptr)
-    // {
-    //     instance = new Sound();
-    //     return instance;
-    // }
     static Sound instance;
     return instance;
 }
@@ -65,4 +60,17 @@ Sound ::Sound()
     {
         printf("can't play the music");
     }
+}
+void Sound :: FreeMusic()
+{
+    Mix_FreeMusic(run_music);
+    Mix_CloseAudio();
+    Mix_Quit();
+}
+
+void Sound::FreeChunk()
+{
+    Mix_FreeChunk(current_music);
+    Mix_CloseAudio();
+    Mix_Quit();
 }

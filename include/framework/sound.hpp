@@ -1,5 +1,6 @@
 #pragma once
 #include "SDL2/SDL_mixer.h"
+#include "iostream"
 class Sound
 {
 private:
@@ -15,4 +16,6 @@ public:
     void LoadChunk(const char *path); // to load hunk i.e. current_music
     void PauseMusic();
     void ResumeMusic();
+    void FreeMusic();
+    void FreeChunk();
 };
