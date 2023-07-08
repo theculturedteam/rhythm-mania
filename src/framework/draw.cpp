@@ -17,20 +17,22 @@ void Draw ::InitializeSDL()
     window = SDL_CreateWindow("GAME", 0, 40, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0);
     std::cout << "Game Started" << std::endl;
 }
 
 void Draw ::DrawTexture(SDL_Rect srcRect, SDL_Rect dstRect)
 {
+     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, texture, &srcRect, &dstRect);
     SDL_RenderPresent(renderer);
 }
 
 void Draw::DestroySDL()
 {
-    SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    SDL_DestroyTexture(texture);
     SDL_Quit();
 }
 
@@ -63,3 +65,4 @@ bool Draw::CheckRunning()
 void Draw::LoadTexture(std::string path){
     texture = IMG_LoadTexture(renderer, path.c_str()); // c_str to convert to char* from string
 }
+
