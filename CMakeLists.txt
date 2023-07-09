@@ -16,7 +16,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE include)
 
 # Add compiler errors/warnings flags
 target_compile_options(${PROJECT_NAME} PRIVATE $<$<C_COMPILER_ID:MSVC>:/W4 /WX>)
-target_compile_options(${PROJECT_NAME} PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -Werror>)
+target_compile_options(${PROJECT_NAME} PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -Werror -g>)
 
 # Setting to automatically generate compile_commands required by linters
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
