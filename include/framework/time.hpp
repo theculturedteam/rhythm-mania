@@ -6,6 +6,7 @@ class Time {
 		// member variable
 		uint32_t previousTime;
 		uint32_t curretTime;
+		double deltaTime;
 
 		Time() {};
 
@@ -21,4 +22,5 @@ class Time {
 
 		uint32_t getPreviousTime();
 		uint32_t getCurrentTime();
+		double getDeltaTime();
 };

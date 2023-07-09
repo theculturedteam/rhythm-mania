@@ -19,12 +19,9 @@ void testTimeFramework() {
 	Time& timeInstance = Time::sGetInstance();
 
 	timeInstance.setPreviousTime();
-
 	std::cout << "Previous Time: " << timeInstance.getPreviousTime() << std::endl;
-
 	while (true) {
 		double dt = timeInstance.calculateDeltaTime();
-		timeInstance.setPreviousTime();
 		std::cout << "dt: " << dt << std::endl;
 		SDL_Delay(16);
 	}

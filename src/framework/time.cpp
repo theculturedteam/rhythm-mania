@@ -15,8 +15,9 @@ void Time::setPreviousTime() {
 
 double Time::calculateDeltaTime() {
 	curretTime = getCurrentTime();
-	double dt = (curretTime - previousTime) / 1000.0;
-	return dt;
+	deltaTime = (curretTime - previousTime) / 1000.0;
+	previousTime = getCurrentTime();
+	return deltaTime;
 }
 
 uint32_t Time::getPreviousTime() {
@@ -27,3 +28,6 @@ uint32_t Time::getCurrentTime() {
 	return SDL_GetTicks();
 }
 
+double Time::getDeltaTime() {
+	return deltaTime;
+}
