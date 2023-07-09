@@ -17,8 +17,8 @@ int main(int argc, char *argv[])
 
     SDL_Rect srcRect;
     SDL_Rect dstRect;
-    srcRect.w = 32;
-    srcRect.h = 32;
+    srcRect.w = 371;
+    srcRect.h = 403;
     srcRect.x = 0;
     srcRect.y = 0;
     dstRect.w = 64;
@@ -27,11 +27,13 @@ int main(int argc, char *argv[])
     dstRect.y = 500;
 
     bool isRunning = singleton.CheckRunning();
+    singleton.ClearTexture();
     singleton.LoadTexture("../res/images/arrow_left.png");
     while (isRunning)
     {
+        singleton.CopyTexture(srcRect, dstRect);
+        singleton.PresentTexture();
         singleton.HandleEvents();
-        singleton.DrawTexture( srcRect, dstRect);
         isRunning = singleton.CheckRunning();
     }
     singleton.DestroySDL();
