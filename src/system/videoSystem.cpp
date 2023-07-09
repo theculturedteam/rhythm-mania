@@ -57,17 +57,19 @@ void VideoSystem::update() {
 	if (frame < noOfFrames && isPlaying) {
 		drawInstance.setTexture(textures[frame]);
 
+        SDL_RenderClear(drawInstance.getRenderer());
 
 		SDL_Rect srcRect = {0, 0, textureWidth, textureHeight};
 		SDL_Rect destRect = {0, 0, 1920, 1080};
 
 		drawInstance.DrawTexture(srcRect, destRect);
 
-		SDL_DestroyTexture(textures[frame]);
+		//SDL_DestroyTexture(textures[frame]);
 
 		frame += videoSpeed * timeInstance.getDeltaTime();
 		std::cout << "deltaTime: " << timeInstance.getDeltaTime() << std::endl;
 		std::cout << "frame: " << frame << std::endl;
+        SDL_RenderPresent(drawInstance.getRenderer());
 	}
 }
 
@@ -75,4 +77,5 @@ VideoSystem::~VideoSystem() {
 	for (SDL_Texture* texture : textures) {
 		SDL_DestroyTexture(texture);
 	}
+    std::cout << "Texture deleted" << std::endl;
 }

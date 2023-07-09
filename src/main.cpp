@@ -34,14 +34,14 @@ void testVideoSystem() {
 	videoSystem.update();
 
 	timeInstance.setPreviousTime();
-	while (drawInstance.CheckRunning()) {
-		timeInstance.calculateDeltaTime();
-		timeInstance.setPreviousTime();
+    while (drawInstance.CheckRunning()) {
+        timeInstance.calculateDeltaTime();
+        timeInstance.setPreviousTime();
 
-		drawInstance.HandleEvents();
-	
-		videoSystem.update();
-	}
+        drawInstance.HandleEvents();
+    
+        videoSystem.update();
+    }
 	drawInstance.DestroySDL();
 }
 int main(int argc, char* argv[]){

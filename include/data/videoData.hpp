@@ -1,10 +1,12 @@
 #pragma once
 #include <cstdint>
 #include <string>
+#include <iostream>
 
 class VideoData {
     public:
         VideoData(std::string command, std::string videoDir, uint16_t noOfFrames, int videoSpeed);
+        ~VideoData();
 
 		std::string getCommad();
 		std::string getVideoDir();

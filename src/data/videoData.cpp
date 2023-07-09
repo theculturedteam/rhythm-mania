@@ -21,3 +21,7 @@ int VideoData::getVideoSpeed() {
 	return videoSpeed;
 }
 
+VideoData :: ~VideoData()
+{
+    std::cout << "Video data deleted" << std::endl;
+}

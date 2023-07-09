@@ -26,9 +26,9 @@ void Draw ::InitializeSDL()
 
 void Draw ::DrawTexture(SDL_Rect srcRect, SDL_Rect dstRect)
 {
-	SDL_RenderClear(renderer);
+	//SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, texture, &srcRect, &dstRect);
-    SDL_RenderPresent(renderer);
+    //SDL_RenderPresent(renderer);
 }
 
 void Draw::DestroySDL()
