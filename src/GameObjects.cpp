@@ -3,7 +3,6 @@
 #include <cstring>
 #include <iostream>
 
-
 void TexturePositionComponent::setSrcRect(int srcX, int srcY, int srcW, int srcH) {
 	srcRect.x = srcX;
 	srcRect.y = srcY;
@@ -15,7 +14,7 @@ PositionAndDimensionStruct& TexturePositionComponent::getSrcRect() {
 	return srcRect;
 }
 
-void PositionComponent::setDestRect(int destX, int destY, int destW, int destH) {
+void PositionComponent::setDestRect(float destX, float destY, float destW, float destH) {
 	destRect.x = destX;
 	destRect.y = destY;
 	destRect.w = destW;
