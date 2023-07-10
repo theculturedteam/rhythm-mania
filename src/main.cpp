@@ -6,132 +6,76 @@
 #include "framework/time.hpp"
 #include "Message.hpp"
 #include "MessageBus.hpp"
-#include "framework/inputData.hpp"
+#include "data/inputData.hpp"
 #include "framework/draw.hpp"
+#include "system/inputSystem.hpp"
 using namespace std;
 
 MessageBus* msgBus = new MessageBus();
+bool isRunning;
+SDL_Window* window;
+SDL_Renderer* renderer;
 
-void testTimeFramework() {
-	std::cout << "Testing Time Framework" << std::endl;
-	SDL_Init(SDL_INIT_TIMER);
+void init(const char* title, int xpos, int ypos, int width, int height) {
+    if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0){
+        std::cout << "SDL INIT ERROR: " << SDL_GetError() << std::endl;
+        isRunning = false;
+    }
 
+    if(!IMG_Init(IMG_INIT_PNG)){
+        std::cout << "IMG INIT ERROR: " << SDL_GetError() << std::endl;
+        isRunning = false;
+    }
+
+    window = SDL_CreateWindow(title, xpos, ypos, width, height, SDL_WINDOW_SHOWN);
+    renderer = SDL_CreateRenderer(window,-1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    isRunning = true;
+    std::cout << "Game Started" << std::endl;
+}
+
+void quitSDL() {
+    SDL_DestroyWindow(window);
+    SDL_DestroyRenderer(renderer);
+    SDL_Quit();
+    std::cout << "Game Ended" << std::endl;
+}
+
+void testInputSystem() {
+	init("Game", 0, 40, 1280, 720);
+
+	InputSystem inputSystem(msgBus);
 	Time& timeInstance = Time::sGetInstance();
-
 	timeInstance.setPreviousTime();
 	std::cout << "Previous Time: " << timeInstance.getPreviousTime() << std::endl;
-	while (true) {
+
+	while (isRunning) {
 		double dt = timeInstance.calculateDeltaTime();
 		std::cout << "dt: " << dt << std::endl;
+
+		inputSystem.update();
+		if (msgBus->hasMessage()) {
+			Message* msg = msgBus->getMessage();
+			InputData* inputData = msg->getInputData();
+			if (inputData != nullptr) {
+				/* std::cout << "keycode: " << inputData->getKeyCode() << " timestamp: " << inputData->getTimeStamp() << std::endl; */
+				if (inputData->getKeyCode() == 0) {
+					/* std::cout << "set game is running to false" << std::endl; */
+					isRunning = false;
+				}
+			}
+			delete msg;
+			inputData = NULL;
+		}
 		SDL_Delay(16);
 	}
-}
-
-void testGameObject() {
-	std::cout << "Testing Game Object" << std::endl;
-	std::cout << "debug0" << std::endl;
-	GameObject player1("texture", "position", "movement", "score", "animation", nullptr);
-
-	player1.texturePositionComponent->setSrcRect(10, 11, 12, 13);
-	std::cout << "x: " << player1.texturePositionComponent->getSrcRect().x << std::endl;
-	std::cout << "y: " << player1.texturePositionComponent->getSrcRect().y << std::endl;
-	std::cout << "w: " << player1.texturePositionComponent->getSrcRect().w << std::endl;
-	std::cout << "h: " << player1.texturePositionComponent->getSrcRect().h << std::endl;
-
-	player1.positionComponent->setDestRect(14, 15, 16, 17);
-	std::cout << "x: " << player1.positionComponent->getDestRect().x << std::endl;
-	std::cout << "y: " << player1.positionComponent->getDestRect().y << std::endl;
-	std::cout << "w: " << player1.positionComponent->getDestRect().w << std::endl;
-	std::cout << "h: " << player1.positionComponent->getDestRect().h << std::endl;
-
-	player1.movementComponent->setVelocity(18, 19);
-	std::cout << "xVelocity: " << player1.movementComponent->getXVelocity() << std::endl;
-	std::cout << "yVelocity: " << player1.movementComponent->getYVelocity() << std::endl;
-
-	player1.scoreComponent->setScore(20);
-	std::cout << "score: " << player1.scoreComponent->getScore() << std::endl;
-
-	player1.animationComponent->setFirstTexturePosition(21, 22, 23, 24);
-	std::cout << "x: " << player1.animationComponent->getFirstTexturePosition().x << std::endl;
-	std::cout << "y: " << player1.animationComponent->getFirstTexturePosition().y << std::endl;
-	std::cout << "w: " << player1.animationComponent->getFirstTexturePosition().w << std::endl;
-	std::cout << "h: " << player1.animationComponent->getFirstTexturePosition().h << std::endl;
-
-	player1.animationComponent->setNoOfFramInAnimation(25);
-	std::cout << "noOfFrameInAnimation: " << player1.animationComponent->getNoOfFrameInAnimaiton() << std::endl;
-}	
-
-void testDrawFramework() {
-    Draw &singleton = Draw::getInstance();
-
-    singleton.InitializeSDL();
-
-    SDL_Rect srcRect;
-    SDL_Rect dstRect;
-    srcRect.w = 32;
-    srcRect.h = 32;
-    srcRect.x = 0;
-    srcRect.y = 0;
-    dstRect.w = 64;
-    dstRect.h = 64;
-    dstRect.x = 500;
-    dstRect.y = 500;
-
-    bool isRunning = singleton.CheckRunning();
-    singleton.LoadTexture("../res/images/arrow_left.png");
-    while (isRunning)
-    {
-        singleton.HandleEvents();
-        // singleton->sFullScreenDraw("../res/images/healthbar1.png", srcRect, dstRect);
-        
-        singleton.DrawTexture( srcRect, dstRect);
-        isRunning = singleton.CheckRunning();
-    }
-    singleton.DestroySDL();
-}
-
-void post()
-{
-	Message* msg = new Message("input");
-	InputData* in = new InputData(98, 123);
-	msg->setData(in);
-	msgBus->postMessage(msg);
-}
-
-void receive()
-{
-	if(msgBus->hasMessage())
-	{
-		//std::cout << msgBus->getMessageType() << std::endl;
-		Message* another = msgBus->getMessage();
-		InputData* in = another->getInputData();
-		std::cout << in->getKeyCode() << std::endl;
-		//std::cout << in->getTimeStamp() << std::endl;
-		delete another;
-	}
-}
-
-void testMessageBus() {
-	std::cout << "Testing Message Bus" << std::endl;
-
-	while(true)
-	{
-		post();
-		receive();
-	}
-	//std::cout << msgBus->getMessageType() << std::endl;
+	quitSDL();
 }
 
 int main(int argc, char* argv[]){
 	(void) argc;
 	(void) argv;
 
-	std::cout << "Hello from main" << std::endl;
-	testTimeFramework();
-	/* testGameObject(); */
-	/* testDrawFramework(); */
-	/* testMessageBus(); */
+	testInputSystem();
 
 	return 0;
 }
-
