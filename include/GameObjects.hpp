@@ -4,10 +4,10 @@
 
 // Similar to SDL_Rect
 struct PositionAndDimensionStruct {
-	int x;
-	int y;
-	int w;
-	int h;
+	float x;
+	float y;
+	float w;
+	float h;
 };
 
 // Provides the size and position of texture in the texture atlas
@@ -28,7 +28,7 @@ class PositionComponent {
 		PositionAndDimensionStruct destRect;
 
 	public:
-		void setDestRect(int destX, int destY, int destW, int destH);
+		void setDestRect(float destX, float destY, float destW, float destH);
 		PositionAndDimensionStruct& getDestRect();
 
 		std::string getComponentType() {return "position";};

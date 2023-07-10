@@ -99,8 +99,8 @@ int main(int argc, char* argv[]){
 	(void) argv;
 
 	/* testTimeFramework(); */
-	/* testGameObject(); */
-	testMessageBus();
+	testGameObject();
+	/* testMessageBus(); */
 
 	return 0;
 }
