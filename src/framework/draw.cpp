@@ -33,6 +33,7 @@ void Draw ::DrawTexture(SDL_Rect srcRect, SDL_Rect dstRect)
 
 void Draw::DestroySDL()
 {
+	IMG_Quit();
 	SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();

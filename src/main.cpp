@@ -20,12 +20,12 @@ void testVideoSystem() {
 	Time& timeInstance = Time::sGetInstance();
 
 	Message* msgLoadVideo = new Message("video");
-	VideoData* loadVideo= new VideoData("load", "../res/videos/chika-dance", 2835, 90);
+	VideoData* loadVideo= new VideoData("load", "../res/videos/chika-dance", 2835, 120, 845, 480);
 	msgLoadVideo->setData(loadVideo);
 	msgBus->postMessage(msgLoadVideo);
 
 	Message* msgPlayVideo = new Message("video");
-	VideoData* playVideo = new VideoData("play", "../res/videos/chika-dance", 2835, 30);
+	VideoData* playVideo = new VideoData("play");
 	msgPlayVideo->setData(playVideo);
 	msgBus->postMessage(msgPlayVideo);
 
@@ -42,6 +42,7 @@ void testVideoSystem() {
     
         videoSystem.update();
     }
+	delete msgBus;
 	drawInstance.DestroySDL();
 }
 int main(int argc, char* argv[]){
@@ -49,6 +50,7 @@ int main(int argc, char* argv[]){
 	(void) argv;
 
 	testVideoSystem();
+	SDL_Delay(2000); // Delay for 2 seconds
 
 	return 0;
 }
