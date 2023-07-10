@@ -75,7 +75,10 @@ int main(int argc, char* argv[]){
 	(void) argc;
 	(void) argv;
 
-	testInputSystem();
+	//testInputSystem();
+	/* testTimeFramework(); */
+	//testGameObject();
+	/* testMessageBus(); */
 
 	return 0;
 }
