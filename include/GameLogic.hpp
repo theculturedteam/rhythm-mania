@@ -3,7 +3,6 @@
 #include "MessageBus.hpp"
 #include "framework/time.hpp"
 #include "BeatMap.hpp"
-#include "time.h"
 
 class GameLogic
 {
@@ -11,7 +10,7 @@ class GameLogic
         GameLogic(MessageBus* msgBus, std::vector<GameObject*>* gameObjects);
         ~GameLogic();
 
-        void updateGameObjectsPosition();
+        void updateGObjectsPosition();
         void createArrowGObjects();
         void handleInputs();
         void update();
