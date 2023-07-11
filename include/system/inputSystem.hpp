@@ -1,6 +1,6 @@
 #pragma once
 #include "MessageBus.hpp"
-#include "System.hpp"
+#include "system/System.hpp"
 #include "framework/input.hpp"
 
 class InputSystem : public System {

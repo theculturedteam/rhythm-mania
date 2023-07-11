@@ -1,4 +1,4 @@
-#include "SoundSystem.hpp"
+#include "system/SoundSystem.hpp"
 
 void SoundSystem ::handleMessage()
 {

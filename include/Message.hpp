@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include "data/inputData.hpp"
-#include "data/soundData.hpp"
+#include "data/SoundData.hpp"
 
 class Message
 {

@@ -7,5 +7,5 @@ class Game
         Game();
         ~Game();
     private:
-        InputSystem inputSystem;
+        //InputSystem inputSystem;
 };
