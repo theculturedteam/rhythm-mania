@@ -15,7 +15,9 @@ class Draw{
     void operator=(Draw const&)  = delete;
     static Draw& getInstance();
     void InitializeSDL();
-    void DrawTexture(SDL_Rect srcRect, SDL_Rect dstRect);
+    void CopyTexture(SDL_Rect srcRect, SDL_Rect dstRect);
+    void PresentTexture();
+    void ClearTexture();
     void DestroySDL();
     void HandleEvents();
     void LoadTexture(std::string);
