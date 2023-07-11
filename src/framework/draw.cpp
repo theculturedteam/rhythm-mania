@@ -23,8 +23,7 @@ void Draw ::InitializeSDL()
 }
 //Copy a portion of the texture to the current rendering target.
 void Draw ::CopyTexture(SDL_Rect srcRect, SDL_Rect dstRect)
-{
-    SDL_RenderCopy(renderer, texture, &srcRect, &dstRect);
+{ SDL_RenderCopy(renderer, texture, &srcRect, &dstRect);
 }
 //Update the screen with any rendering performed since the previous call.
 void Draw::PresentTexture(){
