@@ -6,6 +6,8 @@ void SoundSystem ::handleMessage()
     {
         if (msgBus->getMessageType() == "sound")
         {
+            Message *message = msgBus->getMessage();
+            soundData = message->getSoundData();
             if (soundData->getcommand() == "play")
             {
                 object.LoadMusic(soundData->getpath().c_str());
