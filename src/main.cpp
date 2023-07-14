@@ -1,34 +1,32 @@
-#include <SDL2/SDL_timer.h>
-#include <cstdio>
 #include <iostream>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include "GameObjects.hpp"
 #include "framework/time.hpp"
 #include "Message.hpp"
 #include "MessageBus.hpp"
-#include "framework/inputData.hpp"
+#include "data/inputData.hpp"
 #include "framework/draw.hpp"
 #include "system/RenderSystem.hpp"
 using namespace std;
 
 MessageBus* msgBus = new MessageBus();
 
-void testTimeFramework() {
-	std::cout << "Testing Time Framework" << std::endl;
-	SDL_Init(SDL_INIT_TIMER);
+// void testTimeFramework() {
+// 	std::cout << "Testing Time Framework" << std::endl;
+// 	SDL_Init(SDL_INIT_TIMER);
 
-	Time& timeInstance = Time::sGetInstance();
+// 	Time& timeInstance = Time::sGetInstance();
 
-	timeInstance.setPreviousTime(timeInstance.getCurrentTime());
+// 	timeInstance.setPreviousTime(timeInstance.getCurrentTime());
 
-	std::cout << "Previous Time: " << timeInstance.getPreviousTime() << std::endl;
+// 	std::cout << "Previous Time: " << timeInstance.getPreviousTime() << std::endl;
 
-	while (true) {
-		double dt = timeInstance.calculateDeltaTime(timeInstance.getCurrentTime());
-		std::cout << "dt: " << dt << std::endl;
-		SDL_Delay(16);
-	}
-}
+// 	while (true) {
+// 		double dt = timeInstance.calculateDeltaTime(timeInstance.getCurrentTime());
+// 		std::cout << "dt: " << dt << std::endl;
+// 		SDL_Delay(16);
+// 	}
+// }
 
 void testGameObject() {
 	std::cout << "Testing Game Object" << std::endl;
@@ -64,34 +62,34 @@ void testGameObject() {
 	std::cout << "noOfFrameInAnimation: " << player1.animationComponent->getNoOfFrameInAnimaiton() << std::endl;
 }	
 
-void testDrawFramework() {
-    Draw &singleton = Draw::getInstance();
+// void testDrawFramework() {
+//     Draw &singleton = Draw::getInstance();
 
-    singleton.InitializeSDL();
+//     singleton.InitializeSDL();
 
-    SDL_Rect srcRect;
-    SDL_Rect dstRect;
-    srcRect.w = 32;
-    srcRect.h = 32;
-    srcRect.x = 0;
-    srcRect.y = 0;
-    dstRect.w = 64;
-    dstRect.h = 64;
-    dstRect.x = 500;
-    dstRect.y = 500;
+//     SDL_Rect srcRect;
+//     SDL_Rect dstRect;
+//     srcRect.w = 32;
+//     srcRect.h = 32;
+//     srcRect.x = 0;
+//     srcRect.y = 0;
+//     dstRect.w = 64;
+//     dstRect.h = 64;
+//     dstRect.x = 500;
+//     dstRect.y = 500;
 
-    bool isRunning = singleton.CheckRunning();
-    singleton.LoadTexture("../res/images/arrow_left.png");
-    while (isRunning)
-    {
-        singleton.HandleEvents();
-        // singleton->sFullScreenDraw("../res/images/healthbar1.png", srcRect, dstRect);
-        
-        singleton.DrawTexture( srcRect, dstRect);
-        isRunning = singleton.CheckRunning();
-    }
-    singleton.DestroySDL();
-}
+//     bool isRunning = singleton.CheckRunning();
+//     singleton.LoadTexture("../res/images/arrow_left.png");
+//     while (isRunning)
+//     {
+//         singleton.HandleEvents();
+//         // singleton->sFullScreenDraw("../res/images/healthbar1.png", srcRect, dstRect);
+
+//         singleton.DrawTexture( srcRect, dstRect);
+//         isRunning = singleton.CheckRunning();
+//     }
+//     singleton.DestroySDL();
+// }
 
 
 void testRenderSystem(){
@@ -100,10 +98,10 @@ void testRenderSystem(){
 	bool checkRunning = drawInstance.CheckRunning();
 	GameObject* player1 = new GameObject("position", "texture", nullptr);
 	GameObject* background = new GameObject("position", "texture", nullptr);
-	player1->texturePositionComponent->setSrcRect(0, 0 , 371, 403);
-	player1->positionComponent->setDestRect(100, 100, 50, 50);
-	background->texturePositionComponent->setSrcRect(0, 0, 371, 403);
-	background->positionComponent->setDestRect(0, 0, 50, 50);
+	player1->texturePositionComponent->setSrcRect(0, 0 , 128, 128);
+	player1->positionComponent->setDestRect(100, 100, 128*2, 128*2);
+	background->texturePositionComponent->setSrcRect(0, 0, 128, 128);
+	background->positionComponent->setDestRect(300, 400, 128 * 4, 128 * 4);
 	std::vector<GameObject*>* gameobjects = new std::vector<GameObject*>{player1, background};
 	Render renderSystem(msgBus,gameobjects);
 	while(checkRunning){
@@ -157,4 +155,3 @@ int main(int argc, char* argv[]){
 	testRenderSystem();
 	return 0;
 }
-

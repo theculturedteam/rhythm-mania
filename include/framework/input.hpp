@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
 #include <vector>
-#include <SDL2/SDL_events.h>
-#include "framework/inputData.hpp"
+#include <SDL_events.h>
+#include "data/inputData.hpp"
 
 class Input
 {
