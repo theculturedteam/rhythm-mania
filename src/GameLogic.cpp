@@ -31,7 +31,11 @@ void GameLogic :: updateGObjectsPosition()
 void GameLogic :: createArrowGObjects()
 {
     uint32_t currentTime = startTime - Time::sGetInstance().getCurrentTime();
-    (void) currentTime;
+    int baseDistance = 1080 - APOS;
+    double eta = baseDistance / velocity;
+    eta = eta + currentTime + 1000;
+    (void) eta;
+
 }
 
 void GameLogic :: handleInputs()

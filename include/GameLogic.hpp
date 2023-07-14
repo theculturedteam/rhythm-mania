@@ -4,6 +4,8 @@
 #include "framework/time.hpp"
 #include "BeatMap.hpp"
 
+#define APOS 80
+
 class GameLogic
 {
     public:
@@ -20,4 +22,6 @@ class GameLogic
         std::vector<GameObject*>* gameObjects;
         BeatMap beatMap;
         uint32_t startTime;
+        int indexBeatMap;
+        float velocity; // temporary, will be provided through constructor
 };
