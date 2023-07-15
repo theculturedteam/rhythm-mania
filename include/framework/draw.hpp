@@ -3,23 +3,34 @@
 #include <SDL2/SDL_image.h>
 #include <iostream>
 class Draw{
-    const char* path;
-    SDL_Texture * texture;
-    SDL_Window* window;
-    SDL_Renderer* renderer;
-    bool isRunning;
-    static Draw& instanceptr;
-    Draw(){};
+	private:
+		static Draw& instanceptr;
+		Draw(){};
+
+		SDL_Texture* texture;
+		SDL_Window* window;
+		SDL_Renderer* renderer;
+
+    	const char* path;
+
+		// Temp variable
+    	bool isRunning;
     public:
-    Draw(const Draw& obj) = delete;
-    void operator=(Draw const&)  = delete;
-    static Draw& getInstance();
-    void InitializeSDL();
-    void CopyTexture(SDL_Rect srcRect, SDL_Rect dstRect);
-    void PresentTexture();
-    void ClearTexture();
-    void DestroySDL();
-    void HandleEvents();
-    void LoadTexture(std::string);
-    bool CheckRunning();
+    	Draw(const Draw& obj) = delete;
+    	void operator=(Draw const&)  = delete;
+
+    	static Draw& getInstance();
+
+    	void InitializeSDL();
+
+		void LoadTexture(std::string);
+    	void CopyTexture(SDL_Rect srcRect, SDL_Rect dstRect);
+    	void PresentTexture();
+    	void ClearTexture();
+
+    	void DestroySDL();
+		
+		// Temp function
+    	void HandleEvents();
+    	bool CheckRunning();
 };
