@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <SDL_events.h>
-#include "framework/inputData.hpp"
+#include "data/inputData.hpp"
 
 class Input
 {
