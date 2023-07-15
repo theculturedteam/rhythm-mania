@@ -3,23 +3,34 @@
 #define SCREEN_HEIGHT 1080
 
 //initializes video,audio and image subsystems of SDL2
-void Draw ::InitializeSDL()
+bool Draw::InitializeSDL()
 {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
     {
         std::cout << "SDL INIT ERROR: " << SDL_GetError() << std::endl;
+		isRunning = false;
+		return false;
     }
 
-    if (!IMG_Init(IMG_INIT_PNG))
-    {
-        std::cout << "IMG INIT ERROR: " << SDL_GetError() << std::endl;
-    }
+	// load support for the JPG and PNG image formats
+	int flags = IMG_INIT_JPG | IMG_INIT_PNG;
+	int initted = IMG_Init(flags);
+	if((initted&flags) != flags) {
+	    printf("IMG_Init: Failed to init required jpg and png support!\n");
+	    printf("IMG_Init: %s\n", IMG_GetError());
+		isRunning = false;
+		return false;
+	}
+	
     isRunning = true;
+
     window = SDL_CreateWindow("GAME", 0, 40, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
     std::cout << "Game Started" << std::endl;
+
+	return true;
 }
 //Copy a portion of the texture to the current rendering target.
 void Draw ::CopyTexture(SDL_Rect srcRect, SDL_Rect dstRect)

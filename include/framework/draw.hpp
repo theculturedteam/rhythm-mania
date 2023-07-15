@@ -14,14 +14,14 @@ class Draw{
     	const char* path;
 
 		// Temp variable
-    	bool isRunning;
+    	bool isRunning = false;
     public:
     	Draw(const Draw& obj) = delete;
     	void operator=(Draw const&)  = delete;
 
     	static Draw& getInstance();
 
-    	void InitializeSDL();
+    	bool InitializeSDL();
 
 		void LoadTexture(std::string);
     	void CopyTexture(SDL_Rect srcRect, SDL_Rect dstRect);
