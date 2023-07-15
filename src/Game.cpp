@@ -1,8 +1,7 @@
 #include "Game.hpp"
-#include "system/inputSystem.hpp"
 
 Game :: Game()
-    :inputSystem(&msgBus)
+    :inputSystem(&msgBus), gameLogic(&msgBus, &gameObjects)
 {}
 
 
@@ -10,4 +9,5 @@ Game :: ~Game()
 {}
 
 void Game :: run()
-{}
+{
+}
