@@ -6,6 +6,6 @@ int main(int argc, char* argv[]){
 	(void) argv;
 
     Game gameInstance;
-
+    gameInstance.run();
 	return 0;
 }
