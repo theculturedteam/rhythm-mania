@@ -8,7 +8,7 @@
 #include "MessageBus.hpp"
 #include "data/inputData.hpp"
 #include "framework/draw.hpp"
-#include "system/inputSystem.hpp"
+#include "system/InputSystem.hpp"
 using namespace std;
 
 MessageBus* msgBus = new MessageBus();
