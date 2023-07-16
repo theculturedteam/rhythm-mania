@@ -16,7 +16,7 @@ void Time::setPreviousTime() {
 double Time::calculateDeltaTime() {
 	curretTime = getCurrentTime();
 	deltaTime = (curretTime - previousTime) / 1000.0;
-	previousTime = getCurrentTime();
+    previousTime = getCurrentTime();
 	return deltaTime;
 }
 

@@ -2,10 +2,12 @@
 
 Render:: Render(MessageBus* msgBus, std::vector<GameObject*>* gameobjects):System(msgBus), gameObjects(gameobjects){
     // this->gameObjects = gameObjects;
+    instance.InitializeSDL();
     instance.LoadTexture("../res/images/arrow_down.png"); //path of the texture(atlas)
 }
 
 void Render::update(){
+    instance.ClearTexture();
     for(GameObject* gameobj : *gameObjects){
         if(gameobj->animationComponent != nullptr){
             //animation part from atlas(will implement later..)
@@ -21,6 +23,7 @@ void Render::update(){
             return;
         }
     }
+    instance.PresentTexture();
 }
 
 

@@ -4,6 +4,7 @@
 #include "MessageBus.hpp"
 #include "system/inputSystem.hpp"
 #include "system/SoundSystem.hpp"
+#include "system/RenderSystem.hpp"
 
 class Game
 {
@@ -13,10 +14,11 @@ class Game
         void run();
     private:
         MessageBus msgBus;
+        std::vector<GameObject*> gameObjects;
+        Render renderSystem;
         InputSystem inputSystem;
         //SoundSystem soundSystem;
         GameLogic gameLogic;
-        std::vector<GameObject*> gameObjects;
         bool isRunning;
         int gameState;
 };
