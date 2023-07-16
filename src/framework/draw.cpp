@@ -1,6 +1,13 @@
 #include "framework/draw.hpp"
+
 #define SCREEN_WIDTH 1920
 #define SCREEN_HEIGHT 1080
+
+Draw& Draw::getInstance()
+{
+    static Draw instanceptr;
+    return instanceptr;
+}
 
 //initializes video,audio and image subsystems of SDL2
 bool Draw::InitializeSDL()
@@ -16,31 +23,54 @@ bool Draw::InitializeSDL()
 	int flags = IMG_INIT_JPG | IMG_INIT_PNG;
 	int initted = IMG_Init(flags);
 	if((initted&flags) != flags) {
-	    printf("IMG_Init: Failed to init required jpg and png support!\n");
-	    printf("IMG_Init: %s\n", IMG_GetError());
+		std::cout << "IMG_Init: Failed to init required jpg and png support!" << std::endl;
+		std::cout << "IMG_Init: " << IMG_GetError() << std::endl;
 		isRunning = false;
 		return false;
 	}
 	
     isRunning = true;
 
-    window = SDL_CreateWindow("GAME", 0, 40, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE);
+	// Setting window size to 1280 x 720 helps in debugging
+	// Removed SDL_WINDOW_RESIZABLE flag because the Window gets Squeezed in i3wm
+    window = SDL_CreateWindow("GAME", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, 0);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-    std::cout << "Game Started" << std::endl;
 
+    SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+	// Set background color to black
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+	// Clear the entire screen to our selected color.
+	// See SDL wiki
+    SDL_RenderClear(renderer);
+	SDL_RenderPresent(renderer);
+
+    std::cout << "Game Started" << std::endl;
 	return true;
 }
-//Copy a portion of the texture to the current rendering target.
-void Draw ::CopyTexture(SDL_Rect srcRect, SDL_Rect dstRect)
-{
-    SDL_RenderCopy(renderer, texture, &srcRect, &dstRect);
+
+//load an image to the gpu texture (SDL_Texture*) Always load texture before using CopyTexture() or PresentTexture() call
+int Draw::LoadTexture(const char* path){
+	SDL_Texture* texture = IMG_LoadTexture(renderer, path);
+	textureMap.insert({mapIndex, texture});
+	return mapIndex++;
 }
+
+//Copy a portion of the texture to the current rendering target.
+void Draw::CopyTexture(SDL_Rect srcRect, SDL_Rect dstRect, int key)
+{
+	if (textureMap.find(key) != textureMap.end()) {
+		SDL_RenderCopy(renderer, textureMap.at(key), &srcRect, &dstRect);
+	} else {
+		std::cout << "No value of key: " << key << " found" << std::endl;
+	}
+}
+
 //Update the screen with any rendering performed since the previous call.
 void Draw::PresentTexture(){
     SDL_RenderPresent(renderer);
 }
+
 //Clear the current rendering target with the drawing color.
 void Draw::ClearTexture(){
     SDL_RenderClear(renderer);
@@ -48,17 +78,36 @@ void Draw::ClearTexture(){
 
 void Draw::DestroySDL()
 {
+	IMG_Quit();
+
+	// loops through unordered_map and deletes texture as well a 
+	// map pair
+	while (mapIndex != -1) {
+		if (textureMap.find(mapIndex) != textureMap.end()) {
+			SDL_DestroyTexture(textureMap.at(mapIndex));
+			textureMap.erase(mapIndex);
+		}
+		mapIndex--;
+	}
+
+	textureMap.clear();
+
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
-    SDL_DestroyTexture(texture);
     SDL_Quit();
 }
 
-Draw &Draw::getInstance()
+void Draw::DestroyTexture(int key)
 {
-    static Draw instanceptr;
-    return instanceptr;
+	if (textureMap.find(key) != textureMap.end()) {
+		SDL_DestroyTexture(textureMap.at(mapIndex));
+		textureMap.erase(mapIndex);
+		mapIndex--;
+	} else {
+		std::cout << "No value of key: " << key << " found" << std::endl;
+	}
 }
+
 //temp function *DONT FORGET TO REMOVE*
 void Draw::HandleEvents()
 {
@@ -73,14 +122,9 @@ void Draw::HandleEvents()
         break;
     }
 }
+
 //return the running status of the game(temp function)
 bool Draw::CheckRunning()
 {
     return isRunning;
 }
-
-//load an image to the gpu texture (SDL_Texture*) Always load texture before using CopyTexture() or PresentTexture() call
-void Draw::LoadTexture(std::string path){
-    texture = IMG_LoadTexture(renderer, path.c_str()); // c_str to convert to char* from string
-}
-

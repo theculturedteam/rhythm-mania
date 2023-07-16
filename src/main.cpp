@@ -9,9 +9,7 @@ int main(int argc, char *argv[])
 
     std::cout << "Hello from main" << std::endl;
 
-    Time *time = new Time();
-
-    Draw &singleton = Draw::getInstance();
+    Draw& singleton = Draw::getInstance();
 
     singleton.InitializeSDL();
 
@@ -28,15 +26,17 @@ int main(int argc, char *argv[])
 
     bool isRunning = singleton.CheckRunning();
     singleton.ClearTexture();
-    singleton.LoadTexture("../res/images/arrow_left.png");
+    int key = singleton.LoadTexture("../res/images/arrow_left.png");
+	int key2 = singleton.LoadTexture("../res/images/arrow_down.png");
     while (isRunning)
     {
-        singleton.CopyTexture(srcRect, dstRect);
+        singleton.CopyTexture(srcRect, dstRect, key);
+        singleton.CopyTexture(srcRect, dstRect, key2);
         singleton.PresentTexture();
         singleton.HandleEvents();
         isRunning = singleton.CheckRunning();
     }
+
     singleton.DestroySDL();
-    time->hello();
     return 0;
 }
