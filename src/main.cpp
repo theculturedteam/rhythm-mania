@@ -97,7 +97,7 @@ void testRenderSystem(){
 	GameObject* player1 = new GameObject("position", "texture", nullptr);
 	GameObject* player2 = new GameObject("position", "texture", nullptr);
 	GameObject* background = new GameObject("position", "texture", nullptr);
-	player1->texturePositionComponent->setSrcRect(0, 128 , 128, 128);
+	player1->texturePositionComponent->setSrcRect(0, 641 , 128, 128);
 	player1->positionComponent->setDestRect(100, 100, 128*2, 128*2);
 	player2->texturePositionComponent->setSrcRect(128, 1026 , 128, 512);
 	player2->positionComponent->setDestRect(200, 300, 128, 256);
