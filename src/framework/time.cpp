@@ -1,4 +1,4 @@
-#include <SDL_timer.h>
+#include <SDL2/SDL_timer.h>
 #include <cstdint>
 #include <iostream>
 #include "framework/time.hpp"
@@ -16,6 +16,7 @@ void Time::setPreviousTime() {
 void Time::calculateDeltaTime() {
 	curretTime = getCurrentTime();
 	deltaTime = (curretTime - previousTime) / 1000.0;
+	previousTime = getCurrentTime();
 }
 
 uint32_t Time::getPreviousTime() {

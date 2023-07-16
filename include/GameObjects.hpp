@@ -1,38 +1,25 @@
 #pragma once
-#include <initializer_list>
-#include <string>
-
-// Similar to SDL_Rect
-struct PositionAndDimensionStruct {
-	int x;
-	int y;
-	int w;
-	int h;
-};
+#include <SDL_rect.h>
+#include <iostream>
 
 // Provides the size and position of texture in the texture atlas
 class TexturePositionComponent {
 	private:
-		PositionAndDimensionStruct srcRect;
+		SDL_Rect srcRect;
 
 	public:
 		void setSrcRect(int srcX, int srcY, int srcW, int srcH);
-		PositionAndDimensionStruct& getSrcRect();
-
-		std::string getComponentType() {return "texture";};
+		SDL_Rect& getSrcRect();
 };
 
 // Provides the position of game objects in window
 class PositionComponent {
 	private:
-		PositionAndDimensionStruct destRect;
+		SDL_Rect destRect;
 
 	public:
-		void setDestRect(int destX, int destY, int destW, int destH);
-		PositionAndDimensionStruct& getDestRect();
-
-		std::string getComponentType() {return "position";};
-
+		void setDestRect(float destX, float destY, float destW, float destH);
+		SDL_Rect& getDestRect();
 };
 
 // Provides movement parameters
@@ -45,8 +32,6 @@ class MovementComponent {
 
 		int& getXVelocity();
 		int& getYVelocity();
-
-		std::string getComponentType() {return "movement";};
 };
 
 // Provides score parameter
@@ -58,27 +43,21 @@ class ScoreComponent {
 		void setScore(int score);
 
 		int& getScore();
-
-		std::string getComponentType() {return "score";};
-
 };
 
 // Provides animation related parameters
 class AnimationComponent {
 	private:
 		// Position and size of the first texture for animation
-		PositionAndDimensionStruct firstTexturePosition;
+		SDL_Rect firstTexturePosition;
 		int noOfFrameInAnimation;
 
 	public:
 		void setFirstTexturePosition(int xOfFirstTex, int yOfFirstTex, int wOfFirstTex, int hOfFirstTex);
 		void setNoOfFramInAnimation(int noOfFrameInAnimation);
 
-		PositionAndDimensionStruct& getFirstTexturePosition();
+		SDL_Rect& getFirstTexturePosition();
 		int& getNoOfFrameInAnimaiton();
-
-		std::string getComponentType() {return "animation";};
-
 };
 
 // Actual class all the game objects are made up of

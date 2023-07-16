@@ -1,29 +1,42 @@
 #pragma once
-#include <SDL2/SDL_render.h>
 #include <SDL2/SDL_image.h>
 #include <iostream>
-class Draw{
+#include <unordered_map>
+#include <utility>
+
+class Draw {
 	private:
+		Draw(){};
+
+		SDL_Window* window;
+		SDL_Renderer* renderer;
+
     	const char* path;
-    	SDL_Texture * texture;
-    	SDL_Window* window;
-    	SDL_Renderer* renderer;
-    	bool isRunning;
-    	static Draw& instanceptr;
-    	Draw(){};
+
+		std::unordered_map<int, SDL_Texture*> textureMap;
+		int mapIndex = -1;
+
+		// Temp variable
+    	bool isRunning = false;
+
     public:
-    	Draw(const Draw& obj) = delete;
+    	Draw(Draw const&) = delete;
     	void operator=(Draw const&)  = delete;
+
     	static Draw& getInstance();
-    	void InitializeSDL();
-    	void DrawTexture(SDL_Rect srcRect, SDL_Rect dstRect);
+
+    	bool InitializeSDL();
+
+		int LoadTexture(const char* path);
+    	void CopyTexture(SDL_Rect srcRect, SDL_Rect dstRect, int key);
+    	void PresentTexture();
+    	void ClearTexture();
+
     	void DestroySDL();
+
+		void DestroyTexture(int key);
+		
+		// Temp function
     	void HandleEvents();
-    	void LoadTexture(std::string);
     	bool CheckRunning();
-
-		SDL_Texture* getTexture();
-		SDL_Renderer* getRenderer();
-
-		void setTexture(SDL_Texture* texture);
 };

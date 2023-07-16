@@ -22,6 +22,5 @@ class Time {
 
 		uint32_t getPreviousTime();
 		uint32_t getCurrentTime();
-
 		double getDeltaTime();
 };

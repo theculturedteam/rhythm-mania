@@ -1,7 +1,6 @@
-#include <SDL2/SDL_timer.h>
-#include <cstdio>
 #include <iostream>
 #include <SDL2/SDL.h>
+
 #include "GameObjects.hpp"
 #include "data/videoData.hpp"
 #include "framework/time.hpp"
@@ -9,9 +8,8 @@
 #include "MessageBus.hpp"
 #include "data/inputData.hpp"
 #include "framework/draw.hpp"
-#include "system/inputSystem.hpp"
+#include "system/InputSystem.hpp"
 #include "system/videoSystem.hpp"
-using namespace std;
 
 MessageBus* msgBus = new MessageBus();
 
@@ -36,7 +34,6 @@ void testVideoSystem() {
 	timeInstance.setPreviousTime();
     while (drawInstance.CheckRunning()) {
         timeInstance.calculateDeltaTime();
-        timeInstance.setPreviousTime();
 
         drawInstance.HandleEvents();
     
@@ -45,6 +42,7 @@ void testVideoSystem() {
 	delete msgBus;
 	drawInstance.DestroySDL();
 }
+
 int main(int argc, char* argv[]){
 	(void) argc;
 	(void) argv;
