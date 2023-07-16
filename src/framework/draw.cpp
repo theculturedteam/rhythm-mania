@@ -100,9 +100,8 @@ void Draw::DestroySDL()
 void Draw::DestroyTexture(int key)
 {
 	if (textureMap.find(key) != textureMap.end()) {
-		SDL_DestroyTexture(textureMap.at(mapIndex));
-		textureMap.erase(mapIndex);
-		mapIndex--;
+		SDL_DestroyTexture(textureMap.at(key));
+		textureMap.erase(key);
 	} else {
 		std::cout << "No value of key: " << key << " found" << std::endl;
 	}

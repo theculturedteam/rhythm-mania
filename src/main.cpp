@@ -28,14 +28,17 @@ int main(int argc, char *argv[])
     singleton.ClearTexture();
     int key = singleton.LoadTexture("../res/images/arrow_left.png");
 	int key2 = singleton.LoadTexture("../res/images/arrow_down.png");
+	int key3 = singleton.LoadTexture("../res/images/arrow_right.png");
     while (isRunning)
     {
         singleton.CopyTexture(srcRect, dstRect, key);
         singleton.CopyTexture(srcRect, dstRect, key2);
+        singleton.CopyTexture(srcRect, dstRect, key3);
         singleton.PresentTexture();
         singleton.HandleEvents();
         isRunning = singleton.CheckRunning();
     }
+	singleton.DestroyTexture(key2);
 
     singleton.DestroySDL();
     return 0;
