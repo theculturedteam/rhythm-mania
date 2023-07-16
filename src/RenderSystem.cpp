@@ -1,8 +1,8 @@
 #include "system/RenderSystem.hpp"
 
 Render:: Render(MessageBus* msgBus, std::vector<GameObject*>* gameobjects):System(msgBus), gameObjects(gameobjects){
-    // this->gameObjects = gameObjects;
-    instance.LoadTexture("../res/images/arrow_down.png"); //path of the texture(atlas)
+    instance.InitializeSDL(); 
+    instance.LoadTexture("../res/images/4kAtlas.png"); //path of the texture(atlas)
 }
 
 void Render::update(){

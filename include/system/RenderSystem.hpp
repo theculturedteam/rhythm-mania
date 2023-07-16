@@ -6,7 +6,6 @@
 
 
 class Render:public System{
-    int noOfFrames; //to count the number of frames in animation
     PositionAndDimensionStruct srcRect; //gameobjects's global data type struct
     PositionAndDimensionStruct dstRect;
     SDL_Rect src,dst;

@@ -93,17 +93,20 @@ void testGameObject() {
 
 
 void testRenderSystem(){
-	Draw& drawInstance = Draw::getInstance();
-	drawInstance.InitializeSDL();
-	bool checkRunning = drawInstance.CheckRunning();
+
 	GameObject* player1 = new GameObject("position", "texture", nullptr);
+	GameObject* player2 = new GameObject("position", "texture", nullptr);
 	GameObject* background = new GameObject("position", "texture", nullptr);
-	player1->texturePositionComponent->setSrcRect(0, 0 , 128, 128);
+	player1->texturePositionComponent->setSrcRect(0, 128 , 128, 128);
 	player1->positionComponent->setDestRect(100, 100, 128*2, 128*2);
+	player2->texturePositionComponent->setSrcRect(128, 1026 , 128, 512);
+	player2->positionComponent->setDestRect(200, 300, 128, 256);
 	background->texturePositionComponent->setSrcRect(0, 0, 128, 128);
 	background->positionComponent->setDestRect(300, 400, 128 * 4, 128 * 4);
-	std::vector<GameObject*>* gameobjects = new std::vector<GameObject*>{player1, background};
+	std::vector<GameObject*>* gameobjects = new std::vector<GameObject*>{player1, background, player2};
 	Render renderSystem(msgBus,gameobjects);
+	Draw& drawInstance = Draw::getInstance();
+	bool checkRunning = drawInstance.CheckRunning();
 	while(checkRunning){
 		drawInstance.HandleEvents();	
 		renderSystem.update();
