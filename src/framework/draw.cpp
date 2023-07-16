@@ -51,9 +51,10 @@ bool Draw::InitializeSDL()
 
 //load an image to the gpu texture (SDL_Texture*) Always load texture before using CopyTexture() or PresentTexture() call
 int Draw::LoadTexture(const char* path){
+	mapIndex++;
 	SDL_Texture* texture = IMG_LoadTexture(renderer, path);
 	textureMap.insert({mapIndex, texture});
-	return mapIndex++;
+	return mapIndex;
 }
 
 //Copy a portion of the texture to the current rendering target.
@@ -102,6 +103,10 @@ void Draw::DestroyTexture(int key)
 	if (textureMap.find(key) != textureMap.end()) {
 		SDL_DestroyTexture(textureMap.at(key));
 		textureMap.erase(key);
+
+		// Specific optimization for video subsystems
+		if (key == mapIndex)
+			mapIndex--;
 	} else {
 		std::cout << "No value of key: " << key << " found" << std::endl;
 	}

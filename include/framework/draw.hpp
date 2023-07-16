@@ -14,7 +14,7 @@ class Draw {
     	const char* path;
 
 		std::unordered_map<int, SDL_Texture*> textureMap;
-		int mapIndex = 0;
+		int mapIndex = -1;
 
 		// Temp variable
     	bool isRunning = false;
