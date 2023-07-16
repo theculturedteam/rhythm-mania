@@ -1,4 +1,4 @@
-#include "system/inputSystem.hpp"
+#include "system/InputSystem.hpp"
 #include "Message.hpp"
 #include "data/inputData.hpp"
 
