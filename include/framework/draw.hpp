@@ -3,7 +3,6 @@
 #include <iostream>
 #include <unordered_map>
 #include <utility>
-
 class Draw {
 	private:
 		Draw(){};

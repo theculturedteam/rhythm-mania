@@ -1,23 +1,24 @@
 #pragma once
 #include <iostream>
 #include <cstdint>
-#include <unordered_map>
+#include <vector>
 
 class BeatValue
 {
     public:
-        BeatValue(int keycode, uint32_t beatDuration);
+        BeatValue(uint32_t beatTime, int keycode, uint32_t beatDuration);
         ~BeatValue();
+        uint32_t beatTime;
         int keycode;
         uint32_t beatDuration;
 };
 
-class BeatMap
+class BeatVec
 {
     public:
-        BeatMap(std::string beatPath);
-        ~BeatMap();
-        std::unordered_map<uint32_t, BeatValue*> beat;
+        BeatVec(std::string beatPath);
+        ~BeatVec();
+        std::vector<BeatValue*> beat;
     private:
         void parse(std::string beatPath);
 };
