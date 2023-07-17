@@ -35,6 +35,8 @@ class Draw {
     	void DestroySDL();
 
 		void DestroyTexture(int key);
+
+		void DimBackground(uint8_t alpha);
 		
 		// Temp function
     	void HandleEvents();

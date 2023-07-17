@@ -112,6 +112,11 @@ void Draw::DestroyTexture(int key)
 	}
 }
 
+void Draw::DimBackground(uint8_t alpha) {
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, alpha);
+	SDL_RenderFillRect(renderer, NULL);
+}
+
 //temp function *DONT FORGET TO REMOVE*
 void Draw::HandleEvents()
 {
