@@ -1,5 +1,9 @@
 #include "SoundSystem.hpp"
 
+void SoundSystem :: update(){
+    SoundSystem :: handleMessage();
+}
+
 void SoundSystem ::handleMessage()
 {
     if (msgBus->hasMessage())
@@ -7,6 +11,8 @@ void SoundSystem ::handleMessage()
         if (msgBus->getMessageType() == "sound")
         {
             Message *message = msgBus->getMessage();
+            Sound &object = Sound ::get_object();
+            SoundData *soundData;
             soundData = message->getSoundData();
             if (soundData->getcommand() == "play")
             {
