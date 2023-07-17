@@ -2,7 +2,7 @@
 
 Render:: Render(MessageBus* msgBus, std::vector<GameObject*>* gameobjects):System(msgBus), gameObjects(gameobjects){
     instance.InitializeSDL(); 
-    instance.LoadTexture("../res/images/4kAtlas.png"); //path of the texture(atlas)
+    index = instance.LoadTexture("../res/images/4kAtlas.png"); //path of the texture(atlas)
 }
 
 void Render::update(){
@@ -12,10 +12,9 @@ void Render::update(){
             //animation part from atlas(will implement later..)
         }
         else if(gameobj->positionComponent != nullptr && gameobj->texturePositionComponent != nullptr){
-            srcRect = gameobj->texturePositionComponent->getSrcRect();
-            dstRect = gameobj->positionComponent->getDestRect();
-            convert(srcRect, dstRect);
-            instance.CopyTexture(src,dst);
+            src = gameobj->texturePositionComponent->getSrcRect();
+            dst = gameobj->positionComponent->getDestRect();
+            instance.CopyTexture(src,dst,index);
         }
         else{
             std::cout << "Game Object does not meet requirements to render on screen"<< std::endl;
@@ -26,17 +25,7 @@ void Render::update(){
 }
 
 
-void Render::convert(PositionAndDimensionStruct srcRect, PositionAndDimensionStruct dstRect){
-    src.x = srcRect.x;
-    src.y = srcRect.y;
-    src.w = srcRect.w;
-    src.h = srcRect.h;
-    dst.x = dstRect.x;
-    dst.y = dstRect.y;
-    dst.w = dstRect.w;
-    dst.h = dstRect.h;
-}
-
 Render::~Render(){
+    instance.DestroyTexture(index);
     instance.DestroySDL();
 }

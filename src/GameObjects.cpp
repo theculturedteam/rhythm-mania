@@ -1,7 +1,4 @@
 #include "GameObjects.hpp"
-#include <cstdarg>
-#include <cstring>
-#include <iostream>
 
 void TexturePositionComponent::setSrcRect(int srcX, int srcY, int srcW, int srcH) {
 	srcRect.x = srcX;
@@ -10,7 +7,7 @@ void TexturePositionComponent::setSrcRect(int srcX, int srcY, int srcW, int srcH
 	srcRect.h = srcH;
 }
 
-PositionAndDimensionStruct& TexturePositionComponent::getSrcRect() {
+SDL_Rect& TexturePositionComponent::getSrcRect() {
 	return srcRect;
 }
 
@@ -21,7 +18,7 @@ void PositionComponent::setDestRect(float destX, float destY, float destW, float
 	destRect.h = destH;
 }
 
-PositionAndDimensionStruct& PositionComponent::getDestRect() {
+SDL_Rect& PositionComponent::getDestRect() {
 	return destRect;
 }
 
@@ -57,7 +54,7 @@ void AnimationComponent::setNoOfFramInAnimation(int noOfFrameInAnimation) {
 	this->noOfFrameInAnimation = noOfFrameInAnimation;
 }
 
-PositionAndDimensionStruct& AnimationComponent::getFirstTexturePosition() {
+SDL_Rect& AnimationComponent::getFirstTexturePosition() {
 	return firstTexturePosition;
 }
 

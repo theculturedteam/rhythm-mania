@@ -18,11 +18,11 @@ void GameLogic :: updateGObjectsPosition()
     {
         if(gO->movementComponent != nullptr && gO->positionComponent != nullptr)
         {
-            double dt = Time::sGetInstance().calculateDeltaTime();
-            PositionAndDimensionStruct temp = gO->positionComponent->getDestRect();
-            temp.x += gO->movementComponent->getXVelocity() * dt;
-            temp.y += gO->movementComponent->getYVelocity() * dt;
-            gO->positionComponent->setDestRect(temp.x, temp.y, temp.w, temp.h);
+            // double dt = Time::sGetInstance().calculateDeltaTime();
+            // PositionAndDimensionStruct temp = gO->positionComponent->getDestRect();
+            // temp.x += gO->movementComponent->getXVelocity() * dt;
+            // temp.y += gO->movementComponent->getYVelocity() * dt;
+            // gO->positionComponent->setDestRect(temp.x, temp.y, temp.w, temp.h);
         }
     }
 }

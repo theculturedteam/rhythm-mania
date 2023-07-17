@@ -13,11 +13,10 @@ void Time::setPreviousTime() {
 	previousTime = getCurrentTime();
 }
 
-double Time::calculateDeltaTime() {
+void Time::calculateDeltaTime() {
 	curretTime = getCurrentTime();
 	deltaTime = (curretTime - previousTime) / 1000.0;
 	previousTime = getCurrentTime();
-	return deltaTime;
 }
 
 uint32_t Time::getPreviousTime() {

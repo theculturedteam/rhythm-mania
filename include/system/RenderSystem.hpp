@@ -6,12 +6,10 @@
 
 
 class Render:public System{
-    PositionAndDimensionStruct srcRect; //gameobjects's global data type struct
-    PositionAndDimensionStruct dstRect;
     SDL_Rect src,dst;
+    int index;
     std::vector<GameObject*>* gameObjects;  
     Draw& instance = Draw::getInstance(); 
-    void convert(PositionAndDimensionStruct srcRect, PositionAndDimensionStruct dstRect); // convert struct to SDL_rect type for draw framework
     public:
     Render(MessageBus* msgbus, std::vector<GameObject*>* gameobjects);
     void handleMessage(){};

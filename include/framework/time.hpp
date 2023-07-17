@@ -18,7 +18,7 @@ class Time {
 		static Time& sGetInstance();
 
 		void setPreviousTime();
-		double calculateDeltaTime();
+		void calculateDeltaTime();
 
 		uint32_t getPreviousTime();
 		uint32_t getCurrentTime();
