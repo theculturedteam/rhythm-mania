@@ -1,12 +1,14 @@
 #include "GameLogic.hpp"
-#include "GameObjects.hpp"
-
+#define PERFECT 20
+#define GOOD 50
+#define BAD 70
 
 GameLogic :: GameLogic(MessageBus* msgBus, std::vector<GameObject*>* gameObjects, bool* isRunning)
     :msgBus(msgBus), gameObjects(gameObjects), beatVec(""), isRunning(isRunning)
 {
     velocity = 0.25;
     indexBeatVec = 0;
+    inputIndexBVec = 0;
     startTime = Time::sGetInstance().getCurrentTime();
     GameObject* arrow = new GameObject("texture", "position", nullptr);
     arrow->texturePositionComponent->setSrcRect(0, 0, 403, 370);
@@ -35,6 +37,13 @@ void GameLogic :: updateGObjectsPosition()
             temp.x += gO->movementComponent->getXVelocity() * dt;
             temp.y += gO->movementComponent->getYVelocity() * dt;
             gO->positionComponent->setDestRect(temp.x, temp.y, temp.w, temp.h);
+
+            if(temp.y + temp.h < 0)
+            {
+                gameObjects->erase(std::remove(gameObjects->begin(), gameObjects->end(), gO), gameObjects->end());
+                //std::cout << "Removed" << std::endl;
+                delete gO;
+            }
         }
     }
 }
@@ -45,38 +54,67 @@ void GameLogic :: createArrowGObjects()
     uint32_t currentTime = Time::sGetInstance().getCurrentTime() - startTime;
     int baseDistance = 1070 - APOS;
     double eta = baseDistance / velocity;
-    if(indexBeatVec < beatVec.beat.size())
-    {
-        if(currentTime >= beatVec.beat[indexBeatVec]->beatTime - eta)
-        {
-            std::cout << "Current Time: " << currentTime << std::endl;
-            std::cout << "BeatVec time: " << beatVec.beat[indexBeatVec]->beatTime - eta << std::endl;
-            GameObject* gameArrow = new GameObject("texture", "position", "movement", nullptr);
-            gameArrow->texturePositionComponent->setSrcRect(0, 0, 403, 370);
-            gameArrow->positionComponent->setDestRect(10, 1070, 403 / 3, 370 / 3);
-            gameArrow->movementComponent->setVelocity(0, -velocity * 1000);
-            gameObjects->push_back(gameArrow);
-            indexBeatVec++;
-            //std::cout << "Generated at " << Time::sGetInstance().getCurrentTime() << std::endl;
-        }
-    }
 
+    for(int i = 0; i <= 3; i++)
+    {
+        if(indexBeatVec > beatVec.beat.size() - 1)
+            break;
+
+        if(currentTime < beatVec.beat[indexBeatVec]->beatTime - eta)
+            break;
+
+        //std::cout << "Current Time: " << currentTime << std::endl;
+        //std::cout << "BeatVec time: " << beatVec.beat[indexBeatVec]->beatTime - eta << std::endl;
+        GameObject* gameArrow = new GameObject("texture", "position", "movement", nullptr);
+        gameArrow->texturePositionComponent->setSrcRect(0, 0, 403, 370);
+        gameArrow->positionComponent->setDestRect(10, 1070, 403 / 3, 370 / 3);
+        gameArrow->movementComponent->setVelocity(0, -velocity * 1000);
+        gameObjects->push_back(gameArrow);
+        indexBeatVec++;
+        //std::cout << "Generated at " << Time::sGetInstance().getCurrentTime() << std::endl;
+
+    }
 }
 
 void GameLogic :: handleInputs()
 {
-    if(msgBus->hasMessage())
+    uint32_t currentTime = Time::sGetInstance().getCurrentTime() - startTime;
+    (void) currentTime;
+
+    while(msgBus->hasMessage() && msgBus->getMessageType() == "input")
     {
-        if(msgBus->getMessageType() == "input")
+        Message* msg = msgBus->getMessage();
+        InputData* in = msg->getInputData();
+
+        if(in->getKeyCode() == 0)
         {
-            Message* msg = msgBus->getMessage();
-            InputData* in = msg->getInputData();
-            if(in->getKeyCode() == 0)
-            {
-                *isRunning = false;
-            }
-            delete msg;
+            *isRunning = false;
         }
+
+        if(inputIndexBVec > beatVec.beat.size() - 1)
+        {
+            delete msg;
+            break;
+        }
+
+        //if(currentTime > beatVec.beat[inputIndexBVec]->beatTime + 100)
+        //{
+            //inputIndexBVec++;
+        //}
+
+
+        if(in->getKeyCode() == beatVec.beat[inputIndexBVec]->keycode)
+        {
+            if(in->getTimeStamp() - startTime - beatVec.beat[inputIndexBVec]->beatTime < 100)
+            {
+                std::cout << "Got it" << std::endl;
+                std:: cout << in->getTimeStamp() - startTime << std::endl;
+                std::cout << beatVec.beat[inputIndexBVec]->beatTime << std::endl;
+                inputIndexBVec++;
+            }
+        }
+
+        delete msg;
     }
 }
 

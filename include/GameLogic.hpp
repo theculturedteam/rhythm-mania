@@ -1,4 +1,5 @@
 #pragma once
+#include <algorithm>
 #include "GameObjects.hpp"
 #include "MessageBus.hpp"
 #include "framework/time.hpp"
@@ -23,6 +24,7 @@ class GameLogic
         BeatVec beatVec;
         uint32_t startTime;
         std::vector<BeatValue*>::size_type indexBeatVec;
+        std::vector<BeatValue*>::size_type inputIndexBVec;
         float velocity; // temporary, will be provided through constructor
         bool* isRunning;
 };
