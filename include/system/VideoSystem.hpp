@@ -18,9 +18,7 @@ class VideoSystem : public System {
 		int textureWidth = 0;
 		int textureHeight = 0;
 
-		float frame = 0;
-
-		std::vector<SDL_Texture*> textures;
+		float frame = 1;
 
 	public:
 		VideoSystem(MessageBus* msgBus);

@@ -1,9 +1,12 @@
 #include "data/videoData.hpp"
-#include "system/videoSystem.hpp"
+#include "system/VideoSystem.hpp"
 #include <iostream>
 
 VideoSystem::VideoSystem(MessageBus* msgBus) 
 	:System(msgBus)
+{}
+
+VideoSystem::~VideoSystem() 
 {}
 
 void VideoSystem::handleMessage() {
@@ -25,10 +28,10 @@ void VideoSystem::handleMessage() {
 				textureWidth = videoData->getTextureWidth();
 				textureHeight = videoData->getTextureHeight();
 
-				for (int i= 1; i<= noOfFrames; i++) {
-					SDL_Texture* texture = IMG_LoadTexture(drawInstance.getRenderer(), (videoDir + "/" + std::to_string(i) + ".jpeg").c_str());
-					textures.push_back(texture);
-				}
+				/* for (int i= 1; i<= noOfFrames; i++) { */
+				/* 	SDL_Texture* texture = IMG_LoadTexture(drawInstance.getRenderer(), (videoDir + "/" + std::to_string(i) + ".jpeg").c_str()); */
+				/* 	textures.push_back(texture); */
+				/* } */
 
 				/* SDL_QueryTexture(textures[0], NULL, NULL, &textureWidth, &textureHeight); */
 			} else {
@@ -57,25 +60,22 @@ void VideoSystem::update() {
 	handleMessage();
 
 	if (frame < noOfFrames && isPlaying) {
-		SDL_RenderClear(drawInstance.getRenderer());
+		drawInstance.ClearTexture();
 
-		drawInstance.setTexture(textures[frame]);
-
+		int key = drawInstance.LoadTexture((videoDir + "/" + std::to_string((int)frame) + ".jpeg").c_str());
 
 		SDL_Rect srcRect = {0, 0, textureWidth, textureHeight};
 		SDL_Rect destRect = {0, 0, 1920, 1080};
 
-		drawInstance.DrawTexture(srcRect, destRect);
+		drawInstance.CopyTexture(srcRect, destRect, key);
+
+		drawInstance.DimBackground(125);
+
+		drawInstance.PresentTexture();
+
+		drawInstance.DestroyTexture(key);
 
 		frame += videoSpeed * timeInstance.getDeltaTime();
-        SDL_RenderPresent(drawInstance.getRenderer());
 	}
 }
 
-VideoSystem::~VideoSystem() {
-	for (SDL_Texture* texture : textures) {
-		SDL_DestroyTexture(texture);
-	}
-    std::cout << "Texture deleted" << std::endl;
-	textures.clear();
-}

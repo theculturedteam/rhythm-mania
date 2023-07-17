@@ -9,7 +9,7 @@
 #include "data/inputData.hpp"
 #include "framework/draw.hpp"
 #include "system/InputSystem.hpp"
-#include "system/videoSystem.hpp"
+#include "system/VideoSystem.hpp"
 
 MessageBus* msgBus = new MessageBus();
 
@@ -18,7 +18,7 @@ void testVideoSystem() {
 	Time& timeInstance = Time::sGetInstance();
 
 	Message* msgLoadVideo = new Message("video");
-	VideoData* loadVideo= new VideoData("load", "../res/videos/chika-dance", 2835, 120, 845, 480);
+	VideoData* loadVideo= new VideoData("load", "../res/videos/chika-dance", 2835, 30, 845, 480);
 	msgLoadVideo->setData(loadVideo);
 	msgBus->postMessage(msgLoadVideo);
 
