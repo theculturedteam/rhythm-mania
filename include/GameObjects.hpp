@@ -1,7 +1,7 @@
 #pragma once
 #include <SDL_rect.h>
 #include <iostream>
-
+#include<string.h>
 // Provides the size and position of texture in the texture atlas
 class TexturePositionComponent {
 	private:
