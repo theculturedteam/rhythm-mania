@@ -1,4 +1,6 @@
 #include "Message.hpp"
+#include "data/videoData.hpp"
+#include <iostream>
 
 Message :: Message(std::string type)
 {
@@ -10,17 +12,20 @@ Message :: Message(std::string type)
     }
     pInputData = nullptr;
     pSoundData = nullptr;
+    pVideoData = nullptr;
 }
 
 Message :: ~Message()
 {
     delete pInputData;
     delete pSoundData;
+	delete pVideoData;
+	std::cout << "Message deleted" << std::endl;
 }
 
 bool Message :: validate_type(std::string type)
 {
-    std::string types[] = {"sound", "input"};
+    std::string types[] = {"sound", "input", "video"};
 
     for(std::string t : types)
     {
@@ -45,6 +50,11 @@ void Message :: setData(SoundData* pData)
     pSoundData = pData;
 }
 
+void Message :: setData(VideoData* pData)
+{
+    pVideoData = pData;
+}
+
 InputData* Message :: getInputData()
 {
     if(pInputData == nullptr)
@@ -61,4 +71,13 @@ SoundData* Message :: getSoundData()
         std::cout << "Error: Message::getSoundData asking for nonexistent data" << std::endl;
     }
     return pSoundData;
+}
+
+VideoData* Message :: getVideoData()
+{
+    if(pVideoData == nullptr)
+    {
+        std::cout << "Error: Message::getVideoData asking for nonexistent data" << std::endl;
+    }
+    return pVideoData;
 }
