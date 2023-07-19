@@ -17,7 +17,7 @@ void Render::update(){
             instance.CopyTexture(src,dst,index);
         }
         else{
-            std::cout << "Game Object does not meet requirements to render on screen"<< std::endl;
+            //std::cout << "Game Object does not meet requirements to render on screen"<< std::endl;
             return;
         }
     }

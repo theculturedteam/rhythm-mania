@@ -5,8 +5,8 @@ BeatVec :: BeatVec(std::string beatPath)
     //parse(beatPath);
     (void)beatPath;
     beat.push_back(new BeatValue(10000, 115, 0));
-    beat.push_back(new BeatValue(11000, 115, 0));
-    beat.push_back(new BeatValue(11500, 115, 0));
+    //beat.push_back(new BeatValue(11000, 115, 0));
+    //beat.push_back(new BeatValue(11500, 115, 0));
 }
 
 BeatVec :: ~BeatVec()

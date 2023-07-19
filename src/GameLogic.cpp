@@ -1,4 +1,5 @@
 #include "GameLogic.hpp"
+#include "framework/time.hpp"
 #define PERFECT 20
 #define GOOD 50
 #define BAD 70
@@ -9,10 +10,11 @@ GameLogic :: GameLogic(MessageBus* msgBus, std::vector<GameObject*>* gameObjects
     velocity = 0.25;
     indexBeatVec = 0;
     inputIndexBVec = 0;
-    startTime = Time::sGetInstance().getCurrentTime();
+    //startTime = Time::sGetInstance().getCurrentTime();
+    //std::cout << startTime << std::endl;
     GameObject* arrow = new GameObject("texture", "position", nullptr);
-    arrow->texturePositionComponent->setSrcRect(0, 0, 403, 370);
-    arrow->positionComponent->setDestRect(10, 80, 403 / 3, 370 / 3);
+    arrow->texturePositionComponent->setSrcRect(0, 0, 128, 128);
+    arrow->positionComponent->setDestRect(10, APOS, 128, 128);
     gameObjects->push_back(arrow);
 
     //GameObject* ar = new GameObject("texture", "position", "movement", nullptr);
@@ -33,10 +35,19 @@ void GameLogic :: updateGObjectsPosition()
         if(gO->movementComponent != nullptr && gO->positionComponent != nullptr)
         {
             double dt = Time::sGetInstance().getDeltaTime();
-            PositionAndDimensionStruct& temp = gO->positionComponent->getDestRect();
-            temp.x += gO->movementComponent->getXVelocity() * dt;
-            temp.y += gO->movementComponent->getYVelocity() * dt;
-            gO->positionComponent->setDestRect(temp.x, temp.y, temp.w, temp.h);
+            SDL_Rect& temp = gO->positionComponent->getDestRect();
+            //temp.x += gO->movementComponent->getXVelocity() * dt;
+            //temp.y += gO->movementComponent->getYVelocity() * dt;
+            tempX = temp.x + gO->movementComponent->getXVelocity() * dt;
+            tempY = temp.y + gO->movementComponent->getYVelocity() * dt;
+            //std::cout << dt << std::endl << tempX << std::endl << tempY << std::endl;
+            gO->positionComponent->setDestRect(tempX, tempY, temp.w, temp.h);
+
+            if(temp.y <= APOS)
+            {
+                std::cout << Time::sGetInstance().getCurrentTime() - startTime << std::endl;
+            }
+
 
             if(temp.y + temp.h < 0)
             {
@@ -55,25 +66,31 @@ void GameLogic :: createArrowGObjects()
     int baseDistance = 1070 - APOS;
     double eta = baseDistance / velocity;
 
-    for(int i = 0; i <= 3; i++)
-    {
+    //for(int i = 0; i <= 3; i++)
+    //{
+        //if(currentTime >= 10000)
+            //std::cout << "Its time" << std::endl;
+
         if(indexBeatVec > beatVec.beat.size() - 1)
-            break;
+            //break;
 
-        if(currentTime < beatVec.beat[indexBeatVec]->beatTime - eta)
-            break;
+        if(currentTime >= beatVec.beat[indexBeatVec]->beatTime - eta)
+            //break;
+        {
 
-        //std::cout << "Current Time: " << currentTime << std::endl;
-        //std::cout << "BeatVec time: " << beatVec.beat[indexBeatVec]->beatTime - eta << std::endl;
+        std::cout << "Current Time: " << currentTime << std::endl;
+        std::cout << "BeatVec time: " << beatVec.beat[indexBeatVec]->beatTime - eta << std::endl;
+        std::cout << "ETA: " << eta << std::endl;
         GameObject* gameArrow = new GameObject("texture", "position", "movement", nullptr);
-        gameArrow->texturePositionComponent->setSrcRect(0, 0, 403, 370);
-        gameArrow->positionComponent->setDestRect(10, 1070, 403 / 3, 370 / 3);
+        gameArrow->texturePositionComponent->setSrcRect(0, 0, 128, 128);
+        gameArrow->positionComponent->setDestRect(10, 1070 - 128, 128, 128);
         gameArrow->movementComponent->setVelocity(0, -velocity * 1000);
         gameObjects->push_back(gameArrow);
         indexBeatVec++;
         //std::cout << "Generated at " << Time::sGetInstance().getCurrentTime() << std::endl;
+        }
 
-    }
+    //}
 }
 
 void GameLogic :: handleInputs()
@@ -102,7 +119,9 @@ void GameLogic :: handleInputs()
             //inputIndexBVec++;
         //}
 
-
+        //std::cout << in->getTimeStamp() - startTime << std::endl;
+        //std::cout << currentTime << std::endl;
+        //std::cout << beatVec.beat[inputIndexBVec]->beatTime << std::endl;
         if(in->getKeyCode() == beatVec.beat[inputIndexBVec]->keycode)
         {
             if(in->getTimeStamp() - startTime - beatVec.beat[inputIndexBVec]->beatTime < 100)
@@ -123,4 +142,9 @@ void GameLogic :: update()
     createArrowGObjects();
     updateGObjectsPosition();
     handleInputs();
+}
+
+void GameLogic :: setTime()
+{
+    startTime = Time::sGetInstance().getCurrentTime();
 }

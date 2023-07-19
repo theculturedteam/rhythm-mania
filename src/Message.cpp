@@ -20,7 +20,6 @@ Message :: ~Message()
     delete pInputData;
     delete pSoundData;
 	delete pVideoData;
-	std::cout << "Message deleted" << std::endl;
 }
 
 bool Message :: validate_type(std::string type)

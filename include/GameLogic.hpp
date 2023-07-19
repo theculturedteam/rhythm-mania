@@ -5,7 +5,7 @@
 #include "framework/time.hpp"
 #include "BeatVec.hpp"
 
-#define APOS 80
+#define APOS 50
 
 class GameLogic
 {
@@ -17,6 +17,7 @@ class GameLogic
         void createArrowGObjects();
         void handleInputs();
         void update();
+        void setTime();
 
     private:
         MessageBus* msgBus;
@@ -27,4 +28,5 @@ class GameLogic
         std::vector<BeatValue*>::size_type inputIndexBVec;
         float velocity; // temporary, will be provided through constructor
         bool* isRunning;
+        float tempX, tempY;
 };

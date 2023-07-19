@@ -14,6 +14,7 @@ Game :: ~Game()
 void Game :: run()
 {
     Time::sGetInstance().setPreviousTime();
+    gameLogic.setTime();
     while(isRunning)
     {
         Time::sGetInstance().calculateDeltaTime();
