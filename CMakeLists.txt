@@ -41,16 +41,15 @@ ENDIF()
 find_package(SDL2_image REQUIRED)
 target_link_libraries(${PROJECT_NAME} SDL2::Image)
 
-# # Add SDL2_ttf library
-# # If windows use SDL libraries provided in .sdl2
-# IF (WIN32)
-# 	set(SDL2_TTF_PATH "${CMAKE_CURRENT_SOURCE_DIR}/.sdl2" CACHE BOOL "" FORCE)
-# 	set(SDL2_TTF_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/.sdl2/include" CACHE BOOL "" FORCE)
-# 	set(SDL2_TTF_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/.sdl2/include/SDL2" CACHE BOOL "" FORCE)
-# ENDIF()
-# # Else for anything else use system's SDL2
-# find_package(SDL2_ttf REQUIRED)
-# target_link_libraries(${PROJECT_NAME} SDL2::TTF)
+# Add SDL2_ttf library
+# If windows use SDL libraries provided in .sdl2
+IF (WIN32)
+	set(SDL2_TTF_PATH "${CMAKE_CURRENT_SOURCE_DIR}/.sdl2" CACHE BOOL "" FORCE)
+	set(SDL2_TTF_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/.sdl2/include" "${CMAKE_CURRENT_SOURCE_DIR}/.sdl2/include/SDL2" CACHE BOOL "" FORCE)
+ENDIF()
+# Else for anything else use system's SDL2
+find_package(SDL2_ttf REQUIRED)
+target_link_libraries(${PROJECT_NAME} SDL2::TTF)
 
 # Add SDL2_net library
 #find_package(SDL2_net REQUIRED)
