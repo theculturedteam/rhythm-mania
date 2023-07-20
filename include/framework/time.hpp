@@ -1,5 +1,5 @@
 #pragma once
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 class Time {
 	private:
@@ -18,7 +18,7 @@ class Time {
 		static Time& sGetInstance();
 
 		void setPreviousTime();
-		double calculateDeltaTime();
+		void calculateDeltaTime();
 
 		uint32_t getPreviousTime();
 		uint32_t getCurrentTime();

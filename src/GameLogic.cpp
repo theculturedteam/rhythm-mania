@@ -11,8 +11,8 @@ GameLogic :: GameLogic(MessageBus* msgBus, std::vector<GameObject*>* gameObjects
     inputIndexBVec = 0;
     startTime = Time::sGetInstance().getCurrentTime();
     GameObject* arrow = new GameObject("texture", "position", nullptr);
-    arrow->texturePositionComponent->setSrcRect(0, 0, 403, 370);
-    arrow->positionComponent->setDestRect(10, 80, 403 / 3, 370 / 3);
+    arrow->texturePositionComponent->setSrcRect(0, 0, 128, 128);
+    arrow->positionComponent->setDestRect(10, 80, 128, 128);
     gameObjects->push_back(arrow);
 
     //GameObject* ar = new GameObject("texture", "position", "movement", nullptr);
@@ -66,8 +66,8 @@ void GameLogic :: createArrowGObjects()
         //std::cout << "Current Time: " << currentTime << std::endl;
         //std::cout << "BeatVec time: " << beatVec.beat[indexBeatVec]->beatTime - eta << std::endl;
         GameObject* gameArrow = new GameObject("texture", "position", "movement", nullptr);
-        gameArrow->texturePositionComponent->setSrcRect(0, 0, 403, 370);
-        gameArrow->positionComponent->setDestRect(10, 1070, 403 / 3, 370 / 3);
+        gameArrow->texturePositionComponent->setSrcRect(0, 0, 128, 128);
+        gameArrow->positionComponent->setDestRect(10, 1070, 128, 128);
         gameArrow->movementComponent->setVelocity(0, -velocity * 1000);
         gameObjects->push_back(gameArrow);
         indexBeatVec++;

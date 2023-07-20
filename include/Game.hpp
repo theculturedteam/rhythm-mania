@@ -2,7 +2,7 @@
 #include "GameLogic.hpp"
 #include "GameObjects.hpp"
 #include "MessageBus.hpp"
-#include "system/inputSystem.hpp"
+#include "system/InputSystem.hpp"
 #include "system/SoundSystem.hpp"
 #include "system/RenderSystem.hpp"
 
