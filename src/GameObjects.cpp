@@ -114,3 +114,11 @@ GameObject::~GameObject() {
 	delete animationComponent;
 	animationComponent = NULL;
 }
+
+void GameObject::setObjectId(uint16_t objectId) {
+	this->objectId = objectId;
+}
+
+uint16_t GameObject::getObjectId() {
+	return objectId;
+}
