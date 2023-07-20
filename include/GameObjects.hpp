@@ -2,24 +2,32 @@
 #include <SDL_rect.h>
 #include <iostream>
 
+// Similar to PositionAndDimensionStruct
+struct PositionAndDimensionStruct {
+	float x;
+	float y;
+	float w;
+	float h;
+};
+
 // Provides the size and position of texture in the texture atlas
 class TexturePositionComponent {
 	private:
-		SDL_Rect srcRect;
+		PositionAndDimensionStruct srcRect;
 
 	public:
 		void setSrcRect(int srcX, int srcY, int srcW, int srcH);
-		SDL_Rect& getSrcRect();
+		PositionAndDimensionStruct& getSrcRect();
 };
 
 // Provides the position of game objects in window
 class PositionComponent {
 	private:
-		SDL_Rect destRect;
+		PositionAndDimensionStruct destRect;
 
 	public:
 		void setDestRect(float destX, float destY, float destW, float destH);
-		SDL_Rect& getDestRect();
+		PositionAndDimensionStruct& getDestRect();
 };
 
 // Provides movement parameters
@@ -49,14 +57,14 @@ class ScoreComponent {
 class AnimationComponent {
 	private:
 		// Position and size of the first texture for animation
-		SDL_Rect firstTexturePosition;
+		PositionAndDimensionStruct firstTexturePosition;
 		int noOfFrameInAnimation;
 
 	public:
 		void setFirstTexturePosition(int xOfFirstTex, int yOfFirstTex, int wOfFirstTex, int hOfFirstTex);
 		void setNoOfFramInAnimation(int noOfFrameInAnimation);
 
-		SDL_Rect& getFirstTexturePosition();
+		PositionAndDimensionStruct& getFirstTexturePosition();
 		int& getNoOfFrameInAnimaiton();
 };
 

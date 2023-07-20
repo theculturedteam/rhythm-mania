@@ -7,7 +7,7 @@ void TexturePositionComponent::setSrcRect(int srcX, int srcY, int srcW, int srcH
 	srcRect.h = srcH;
 }
 
-SDL_Rect& TexturePositionComponent::getSrcRect() {
+PositionAndDimensionStruct& TexturePositionComponent::getSrcRect() {
 	return srcRect;
 }
 
@@ -18,7 +18,7 @@ void PositionComponent::setDestRect(float destX, float destY, float destW, float
 	destRect.h = destH;
 }
 
-SDL_Rect& PositionComponent::getDestRect() {
+PositionAndDimensionStruct& PositionComponent::getDestRect() {
 	return destRect;
 }
 
@@ -54,7 +54,7 @@ void AnimationComponent::setNoOfFramInAnimation(int noOfFrameInAnimation) {
 	this->noOfFrameInAnimation = noOfFrameInAnimation;
 }
 
-SDL_Rect& AnimationComponent::getFirstTexturePosition() {
+PositionAndDimensionStruct& AnimationComponent::getFirstTexturePosition() {
 	return firstTexturePosition;
 }
 
