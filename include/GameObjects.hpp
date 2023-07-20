@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL_rect.h>
+#include <cmath>
 #include <iostream>
 
 // Similar to PositionAndDimensionStruct
@@ -8,6 +9,16 @@ struct PositionAndDimensionStruct {
 	float y;
 	float w;
 	float h;
+
+	//overloading operator overloading to automatically convert PositionAndDimensionStruct to SDL_Rect
+	operator SDL_Rect() const {
+		SDL_Rect rect;
+		rect.x = round(x);
+        rect.y = round(y);
+        rect.w = round(w);
+        rect.h = round(h);
+        return rect;
+	}
 };
 
 // Provides the size and position of texture in the texture atlas

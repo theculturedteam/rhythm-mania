@@ -39,11 +39,18 @@ void testGameObject() {
 	std::cout << "w: " << player1.texturePositionComponent->getSrcRect().w << std::endl;
 	std::cout << "h: " << player1.texturePositionComponent->getSrcRect().h << std::endl;
 
-	player1.positionComponent->setDestRect(14, 15, 16, 17);
+	player1.positionComponent->setDestRect(14.01, 15.51, 16.99, 17.04);
 	std::cout << "x: " << player1.positionComponent->getDestRect().x << std::endl;
 	std::cout << "y: " << player1.positionComponent->getDestRect().y << std::endl;
 	std::cout << "w: " << player1.positionComponent->getDestRect().w << std::endl;
 	std::cout << "h: " << player1.positionComponent->getDestRect().h << std::endl;
+
+	SDL_Rect rect = player1.positionComponent->getDestRect();
+
+	std::cout << "SDL_Rect.x: " << rect.x << std::endl;
+	std::cout << "SDL_Rect.y: " << rect.y << std::endl;
+	std::cout << "SDL_Rect.w: " << rect.w << std::endl;
+	std::cout << "SDL_Rect.h: " << rect.h << std::endl;
 
 	player1.movementComponent->setVelocity(18, 19);
 	std::cout << "xVelocity: " << player1.movementComponent->getXVelocity() << std::endl;
