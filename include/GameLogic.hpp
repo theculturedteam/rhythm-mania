@@ -24,6 +24,7 @@ class GameLogic
         BeatVec beatVec;
         uint32_t startTime;
         std::vector<BeatValue*>::size_type indexBeatVec;
+        std::vector<BeatValue*>::size_type indexBeatNo;
         std::vector<BeatValue*>::size_type inputIndexBVec;
         float velocity; // temporary, will be provided through constructor
         bool* isRunning;

@@ -8,6 +8,7 @@ GameLogic :: GameLogic(MessageBus* msgBus, std::vector<GameObject*>* gameObjects
 {
     velocity = 0.25;
     indexBeatVec = 0;
+    indexBeatNo = 0;
     inputIndexBVec = 0;
     startTime = Time::sGetInstance().getCurrentTime();
     GameObject* arrow = new GameObject("texture", "position", nullptr);
@@ -57,11 +58,29 @@ void GameLogic :: createArrowGObjects()
 
     for(int i = 0; i <= 3; i++)
     {
-        if(indexBeatVec > beatVec.beat.size() - 1)
+        if(indexBeatNo > beatVec.beats.size() - 1)
+        {
+            break;
+        }
+
+        if(beatVec.beats[indexBeatNo]->size() == 0)
+        {
+            //indexBeatNo++;
+            //indexBeatVec = 0;
+            break;
+        }
+
+        if(indexBeatVec > beatVec.beats[indexBeatNo]->size() - 1)
+        {
+            indexBeatNo++;
+            indexBeatVec = 0;
+            break;
+        }
+
+
+        if(currentTime < (*beatVec.beats[indexBeatNo])[indexBeatVec]->beatTime - eta)
             break;
 
-        if(currentTime < beatVec.beat[indexBeatVec]->beatTime - eta)
-            break;
 
         //std::cout << "Current Time: " << currentTime << std::endl;
         //std::cout << "BeatVec time: " << beatVec.beat[indexBeatVec]->beatTime - eta << std::endl;
@@ -78,11 +97,11 @@ void GameLogic :: createArrowGObjects()
 
 void GameLogic :: handleInputs()
 {
-    uint32_t currentTime = Time::sGetInstance().getCurrentTime() - startTime;
-    (void) currentTime;
-
     while(msgBus->hasMessage() && msgBus->getMessageType() == "input")
     {
+        uint32_t currentTime = Time::sGetInstance().getCurrentTime() - startTime;
+        (void) currentTime;
+
         Message* msg = msgBus->getMessage();
         InputData* in = msg->getInputData();
 
@@ -91,11 +110,11 @@ void GameLogic :: handleInputs()
             *isRunning = false;
         }
 
-        if(inputIndexBVec > beatVec.beat.size() - 1)
-        {
-            delete msg;
-            break;
-        }
+        //if(inputIndexBVec > beatVec.beat.size() - 1)
+        //{
+            //delete msg;
+            //break;
+        //}
 
         //if(currentTime > beatVec.beat[inputIndexBVec]->beatTime + 100)
         //{
@@ -103,16 +122,16 @@ void GameLogic :: handleInputs()
         //}
 
 
-        if(in->getKeyCode() == beatVec.beat[inputIndexBVec]->keycode)
-        {
-            if(in->getTimeStamp() - startTime - beatVec.beat[inputIndexBVec]->beatTime < 100)
-            {
-                std::cout << "Got it" << std::endl;
-                std:: cout << in->getTimeStamp() - startTime << std::endl;
-                std::cout << beatVec.beat[inputIndexBVec]->beatTime << std::endl;
-                inputIndexBVec++;
-            }
-        }
+        //if(in->getKeyCode() == beatVec.beat[inputIndexBVec]->keycode)
+        //{
+            //if(in->getTimeStamp() - startTime - beatVec.beat[inputIndexBVec]->beatTime < 100)
+            //{
+                //std::cout << "Got it" << std::endl;
+                //std:: cout << in->getTimeStamp() - startTime << std::endl;
+                //std::cout << beatVec.beat[inputIndexBVec]->beatTime << std::endl;
+                //inputIndexBVec++;
+            //}
+        //}
 
         delete msg;
     }
