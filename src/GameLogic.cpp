@@ -294,7 +294,6 @@ void GameLogic :: handleInputs()
 
             if(diff < 100)
             {
-                std::cout << "Got em" << std::endl;
 				switch (bv->keycode) {
 					case 97:
 						animate(1);
@@ -323,8 +322,8 @@ void GameLogic :: handleInputs()
 				}
 
                 auto id = createId(bv->beatTime, bv->keycode);
-                std::cout << id << std::endl;
-                std::cout << bv->beatTime << " " << bv->keycode << std::endl;
+                //std::cout << id << std::endl;
+                //std::cout << bv->beatTime << " " << bv->keycode << std::endl;
                 deleteGObject(id);
                 break;
             }
@@ -360,7 +359,6 @@ void GameLogic :: handleInputs()
                 //std::cout<< "diff: " << diff << std::endl;
                 if(diff < 100)
                 {
-                    std::cout << "Got em" << std::endl;
 					switch (bv->keycode) {
 						case 97:
 							animate(1);

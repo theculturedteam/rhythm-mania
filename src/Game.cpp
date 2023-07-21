@@ -2,6 +2,7 @@
 #include "GameLogic.hpp"
 #include "data/playData.hpp"
 #include "system/VideoSystem.hpp"
+#include "Gui.hpp"
 
 Game :: Game()
     :renderSystem(&msgBus, &gameObjects), inputSystem(&msgBus), gameLogic(&msgBus, &gameObjects, &isRunning), soundSystem(&msgBus), videoSystem(&msgBus)

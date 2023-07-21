@@ -28,6 +28,12 @@ bool Draw::InitializeSDL()
 		isRunning = false;
 		return false;
 	}
+
+	if (TTF_Init() == -1) {
+		std::cout << "TTF_Init: Failed to init TTF" << std::endl;
+		isRunning = false;
+		return false;
+	}
 	
     isRunning = true;
 
@@ -82,6 +88,7 @@ void Draw::ClearTexture(){
 
 void Draw::DestroySDL()
 {
+	TTF_Quit();
 	IMG_Quit();
 
 	// loops through unordered_map and deletes texture as well a 
@@ -118,6 +125,18 @@ void Draw::DestroyTexture(int key)
 void Draw::DimBackground(uint8_t alpha) {
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, alpha);
 	SDL_RenderFillRect(renderer, NULL);
+}
+
+SDL_Texture* Draw::ConvertTexture(SDL_Surface* surface){
+	SDL_Texture* texture =  SDL_CreateTextureFromSurface(renderer, surface);
+	SDL_FreeSurface(surface);
+	return texture;
+}
+
+uint16_t Draw::addTexture(SDL_Texture* texture) {
+	mapIndex++;
+	textureMap.insert({mapIndex, texture});
+	return mapIndex;
 }
 
 //temp function *DONT FORGET TO REMOVE*

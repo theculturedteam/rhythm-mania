@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <iostream>
 #include <unordered_map>
 #include <utility>
@@ -38,6 +39,10 @@ class Draw {
 
 		void DimBackground(uint8_t alpha);
 		
+		SDL_Texture* ConvertTexture(SDL_Surface* surface);
+
+		uint16_t addTexture(SDL_Texture* texture);
+
 		// Temp function
     	void HandleEvents();
     	bool CheckRunning();
