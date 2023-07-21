@@ -1,0 +1,20 @@
+this is where the textures are in the atlas. Put this value in the src SDL_Rect. This is the base size of the textures in the atlas. 
+
+
+arrow down = 0 , 0 , 128, 128
+arrow right = 0 , 133, 128, 128
+arrow  up = 0, 266, 128, 128
+arrow left = 0, 399, 128, 128
+arrow down glow = 133, 0, 128, 128
+arrow right glow = 133, 133, 128, 128
+arrow up glow = 133, 266, 128, 128
+arrow left glow = 133, 399, 128, 128
+arrow down blank = 0, 533 , 128, 128
+arrow right blank = 0, 666 , 128, 128
+arrow up blank = 0, 799, 128, 128
+arrow left blank = 0, 932, 128, 128
+arrow down long press = 0 , 1065, 128, 512
+arrow right long press = 128, 1065, 128, 512
+arrow up long press = 256, 1065, 128, 512 
+arrow left long press = 384, 1065, 128, 512
+gui button = 0, 1577, 512, 128

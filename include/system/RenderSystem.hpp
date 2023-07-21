@@ -7,7 +7,7 @@
 
 class Render:public System{
     SDL_Rect src,dst;
-    int index;
+    int index = 0;
     std::vector<GameObject*>* gameObjects;  
     Draw& instance = Draw::getInstance(); 
     public:

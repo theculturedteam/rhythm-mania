@@ -3,6 +3,7 @@
 #include <cmath>
 #include <cstdint>
 #include <iostream>
+#include <cstring>
 
 // Similar to PositionAndDimensionStruct
 struct PositionAndDimensionStruct {
