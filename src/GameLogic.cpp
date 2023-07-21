@@ -80,12 +80,12 @@ void GameLogic :: start()
     arrow->positionComponent->setDestRect(AR2XPOS, AYPOS, 128, 128);
     gameObjects->push_back(arrow);
 
-    beatVec = new BeatVec("../beatmap/beethoven.txt");
+    beatVec = new BeatVec("../beatmap/music1.txt");
 
     Message* msg;
     msg = new Message("sound");
     SoundData* sData = new SoundData();
-    sData->setdata("play", "../res/audio/beethoven.wav");
+    sData->setdata("play", "../res/audio/music1.wav");
     msg->setData(sData);
 
     startTime = Time::sGetInstance().getCurrentTime();
@@ -239,7 +239,7 @@ void GameLogic :: handleInputs()
             //std::cout << diff << std::endl;
 
 
-            if(diff < 200)
+            if(diff < 100)
             {
                 std::cout << "Got em" << std::endl;
                 auto id = createId(bv->beatTime, bv->keycode);
@@ -278,7 +278,7 @@ void GameLogic :: handleInputs()
 
                 //std::cout << "in: " << in->getTimeStamp() - currentTime << std::endl;
                 //std::cout<< "diff: " << diff << std::endl;
-                if(diff < 200)
+                if(diff < 100)
                 {
                     std::cout << "Got em" << std::endl;
                     deleteGObject(createId(bv->beatTime, bv->keycode));
