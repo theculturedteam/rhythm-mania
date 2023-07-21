@@ -2,9 +2,11 @@
 #include "GameLogic.hpp"
 #include "GameObjects.hpp"
 #include "MessageBus.hpp"
+#include "data/playData.hpp"
 #include "system/InputSystem.hpp"
 #include "system/SoundSystem.hpp"
 #include "system/RenderSystem.hpp"
+#include "system/VideoSystem.hpp"
 
 class Game
 {
@@ -12,14 +14,16 @@ class Game
         Game();
         ~Game();
         void run();
-        void testGui();
+
     private:
         MessageBus msgBus;
         std::vector<GameObject*> gameObjects;
+        std::vector<PlayData*> playDatas;
         Render renderSystem;
         InputSystem inputSystem;
-        //SoundSystem soundSystem;
         GameLogic gameLogic;
+        SoundSystem soundSystem;
+        VideoSystem videoSystem;
         bool isRunning;
         int gameState;
 };

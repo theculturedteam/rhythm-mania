@@ -1,4 +1,5 @@
 #include "GameObjects.hpp"
+#include <cstring>
 
 void TexturePositionComponent::setSrcRect(int srcX, int srcY, int srcW, int srcH) {
 	srcRect.x = srcX;
@@ -51,23 +52,47 @@ int& ScoreComponent::getScore() {
 	return score;
 }
 
-void AnimationComponent::setFirstTexturePosition(int xOfFirstTex, int yOfFirstTex, int wOfFirstTex, int hOfFirstTex) {
-	firstTexturePosition.x = xOfFirstTex;
-	firstTexturePosition.y = yOfFirstTex;
-	firstTexturePosition.w = wOfFirstTex;
-	firstTexturePosition.h = hOfFirstTex;
+void AnimationComponent::setTexturePosition(int xOfFirstTex, int yOfFirstTex, int wOfFirstTex, int hOfFirstTex) {
+	texturePosition.x = xOfFirstTex;
+	texturePosition.y = yOfFirstTex;
+	texturePosition.w = wOfFirstTex;
+	texturePosition.h = hOfFirstTex;
 }
 
 void AnimationComponent::setNoOfFramInAnimation(int noOfFrameInAnimation) {
 	this->noOfFrameInAnimation = noOfFrameInAnimation;
 }
 
-PositionAndDimensionStruct& AnimationComponent::getFirstTexturePosition() {
-	return firstTexturePosition;
+void AnimationComponent::setAnimationSpeed(uint8_t animationSpeed) {
+	this->animationSpeed = animationSpeed;
+}
+
+void AnimationComponent::setAnimate(bool animate) {
+	this->animate = animate;
+}
+
+void AnimationComponent::setCurrentFrame(float currentFrame) {
+	this->currentFrame = currentFrame;
+}
+
+PositionAndDimensionStruct& AnimationComponent::getTexturePosition() {
+	return texturePosition;
 }
 
 int& AnimationComponent::getNoOfFrameInAnimaiton() {
 	return noOfFrameInAnimation;
+}
+
+uint8_t& AnimationComponent::getAnimationSpeed() {
+	return animationSpeed;
+}
+
+bool& AnimationComponent::getAnimate() {
+	return animate;
+}
+
+float& AnimationComponent::getCurrentFrame() {
+	return currentFrame;
 }
 
 GameObject::GameObject(const char* format...) {
@@ -123,10 +148,10 @@ GameObject::~GameObject() {
 	animationComponent = NULL;
 }
 
-void GameObject::setObjectId(uint16_t objectId) {
+void GameObject::setObjectId(uint32_t objectId) {
 	this->objectId = objectId;
 }
 
-uint16_t GameObject::getObjectId() {
+uint32_t GameObject::getObjectId() {
 	return objectId;
 }

@@ -1,11 +1,25 @@
 #include "system/SoundSystem.hpp"
 
+SoundSystem::SoundSystem(MessageBus *msgBus)
+    : System(msgBus)
+{
+}
+
+void SoundSystem ::update()
+{
+    handleMessage();
+}
+
 void SoundSystem ::handleMessage()
 {
     if (msgBus->hasMessage())
     {
         if (msgBus->getMessageType() == "sound")
         {
+            Message *message = msgBus->getMessage();
+            Sound &object = Sound ::get_object();
+            SoundData *soundData;
+            soundData = message->getSoundData();
             if (soundData->getcommand() == "play")
             {
                 object.LoadMusic(soundData->getpath().c_str());
@@ -27,6 +41,7 @@ void SoundSystem ::handleMessage()
             {
                 printf("The command is invalid");
             }
+            delete message;
         }
     }
 }

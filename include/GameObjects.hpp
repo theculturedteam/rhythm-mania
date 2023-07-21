@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL_rect.h>
 #include <cmath>
+#include <cstdint>
 #include <iostream>
 #include <cstring>
 
@@ -73,15 +74,24 @@ class ScoreComponent {
 class AnimationComponent {
 	private:
 		// Position and size of the first texture for animation
-		PositionAndDimensionStruct firstTexturePosition;
+		PositionAndDimensionStruct texturePosition;
 		int noOfFrameInAnimation;
+		uint8_t animationSpeed;
+		bool animate = false;
+		float currentFrame = 0;
 
 	public:
-		void setFirstTexturePosition(int xOfFirstTex, int yOfFirstTex, int wOfFirstTex, int hOfFirstTex);
+		void setTexturePosition(int xOfFirstTex, int yOfFirstTex, int wOfFirstTex, int hOfFirstTex);
 		void setNoOfFramInAnimation(int noOfFrameInAnimation);
+		void setAnimationSpeed(uint8_t animationSpeed);
+		void setAnimate(bool animate);
+		void setCurrentFrame(float currentFrame);
 
-		PositionAndDimensionStruct& getFirstTexturePosition();
+		PositionAndDimensionStruct& getTexturePosition();
 		int& getNoOfFrameInAnimaiton();
+		uint8_t& getAnimationSpeed();
+		bool& getAnimate();
+		float& getCurrentFrame();
 };
 
 // Actual class all the game objects are made up of
@@ -94,7 +104,7 @@ class GameObject {
 		ScoreComponent* scoreComponent = nullptr;
 		AnimationComponent* animationComponent = nullptr;
 
-		uint16_t objectId = 0;
+		uint32_t objectId = 0;
 
 	public:
 		// take dynamic no of const char* arguments
@@ -103,7 +113,7 @@ class GameObject {
 		GameObject(const char* format...);
 		~GameObject();
 
-		void setObjectId(uint16_t objectId);
-		uint16_t getObjectId();
+		void setObjectId(uint32_t objectId);
+		uint32_t getObjectId();
 };
 

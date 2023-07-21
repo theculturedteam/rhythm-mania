@@ -59,7 +59,11 @@ void VideoSystem::handleMessage() {
 void VideoSystem::update() {
 	handleMessage();
 
-	if (frame < noOfFrames && isPlaying) {
+	if (frame > noOfFrames) {
+		frame = 1;
+	}
+
+	if (isPlaying) {
 		drawInstance.ClearTexture();
 
 		int key = drawInstance.LoadTexture((videoDir + "/" + std::to_string((int)frame) + ".jpeg").c_str());
@@ -69,9 +73,9 @@ void VideoSystem::update() {
 
 		drawInstance.CopyTexture(srcRect, destRect, key);
 
-		drawInstance.DimBackground(125);
+		drawInstance.DimBackground(100);
 
-		drawInstance.PresentTexture();
+		//drawInstance.PresentTexture();
 
 		drawInstance.DestroyTexture(key);
 

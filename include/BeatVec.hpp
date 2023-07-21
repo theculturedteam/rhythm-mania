@@ -1,21 +1,23 @@
 #pragma once
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <cstdint>
 #include <vector>
 
 class BeatValue
 {
     public:
-        BeatValue(uint32_t beatTime, int keycode, uint32_t beatDuration);
+        BeatValue(uint32_t beatTime, int keycode);
         ~BeatValue();
         uint32_t beatTime;
         int keycode;
-        uint32_t beatDuration;
 };
 
 class BeatVec
 {
     public:
+
         BeatVec(std::string beatPath);
         ~BeatVec();
         std::vector<BeatValue*> beat1;
@@ -32,5 +34,7 @@ class BeatVec
         std::vector<BeatValue*> beat12;
         std::vector<std::vector<BeatValue*>*> beats;
     private:
+        uint32_t beatTime;
+        int keycode;
         void parse(std::string beatPath);
 };
