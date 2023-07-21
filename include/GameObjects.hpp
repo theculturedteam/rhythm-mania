@@ -78,7 +78,7 @@ class AnimationComponent {
 		int noOfFrameInAnimation;
 		uint8_t animationSpeed;
 		bool animate = false;
-		float currentFrame = 0;
+		float currentFrame = 1;
 
 	public:
 		void setTexturePosition(int xOfFirstTex, int yOfFirstTex, int wOfFirstTex, int hOfFirstTex);
