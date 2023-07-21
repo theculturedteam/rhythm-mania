@@ -21,5 +21,5 @@ class Gui{
     Gui();
     GameObject* drawText(int xint, int yint, const char* text);
     GameObject* drawButton(int xint, int yint,const char* text);
-
+    void freeTexture(int index);
 };

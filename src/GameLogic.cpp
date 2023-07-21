@@ -1,9 +1,12 @@
 #include "GameLogic.hpp"
+#include "Message.hpp"
 #include "data/SoundData.hpp"
 #include "data/videoData.hpp"
-#define PERFECT 20
-#define GOOD 50
-#define BAD 70
+#include <cstring>
+#include <string>
+#define PERFECT 50 //300 score
+#define GOOD 100 //100
+#define BAD 250 //50
 
 class Coordinate
 {
@@ -30,6 +33,8 @@ std::map<int,Coordinate*> coordinates =
 GameLogic :: GameLogic(MessageBus* msgBus, std::vector<GameObject*>* gameObjects, bool* isRunning)
     :msgBus(msgBus), gameObjects(gameObjects), beatVec(nullptr), isRunning(isRunning)
 {
+    p1Score = 0;
+    p2Score = 0;
 }
 
 void GameLogic :: start()
@@ -113,6 +118,16 @@ void GameLogic :: start()
 	arrow->animationComponent->setAnimationSpeed(10);
 	arrow->animationComponent->setNoOfFramInAnimation(2);
     gameObjects->push_back(arrow);
+
+    std::string txt;
+    txt = "Score    " + std::to_string(p1Score);
+    //txt = "Score: 0";
+    score1 = gui.drawText(AL1XPOS, AYPOS - 70, txt.c_str());
+    gameObjects->push_back(score1);
+
+    txt = "Score    " + std::to_string(p2Score);
+    score2 = gui.drawText(AL2XPOS, AYPOS - 70, txt.c_str());
+    gameObjects->push_back(score2);
 
     beatVec = new BeatVec("../beatmap/beethoven.txt");
 
@@ -269,12 +284,16 @@ void GameLogic :: handleInputs()
 
         //std::cout << "in: " << in->getTimeStamp() - startTime << std::endl;
 
+        bool wrong_press = false;
         for(auto bv : *beatVec->beats[inputIndexBVec])
         {
             uint32_t diff = 1000;
 
             if(keycode != bv->keycode)
+            {
+                wrong_press = true;
                 continue;
+            }
 
             if(bv->beatTime > in->getTimeStamp() - startTime)
             {
@@ -292,7 +311,7 @@ void GameLogic :: handleInputs()
             //std::cout << diff << std::endl;
 
 
-            if(diff < 100)
+            if(diff < BAD)
             {
 				switch (bv->keycode) {
 					case 97:
@@ -321,17 +340,74 @@ void GameLogic :: handleInputs()
 						break;
 				}
 
+                for(auto keyc : {119, 97, 115, 100})
+                {
+                    if(keycode != keyc)
+                    {
+                        //std::cout << "In" << std::endl;
+                        continue;
+                    }
+
+                    if(diff <= PERFECT)
+                    {
+                        p1Score += 300;
+                    }
+                    else if(diff <= GOOD)
+                    {
+                        p1Score += 100;
+                    }
+                    else if(diff <= BAD)
+                    {
+                        p1Score += 50;
+                    }
+                    //std::cout << p1Score << std::endl;
+                    std::string txt = "Score    " + std::to_string(p1Score);
+                    gui.freeTexture(score1->texturePositionComponent->getIndex());
+                    gameObjects->erase(std::remove(gameObjects->begin(), gameObjects->end(), score1), gameObjects->end());
+                    delete score1;
+                    score1 = gui.drawText(AL1XPOS, AYPOS - 70, txt.c_str());
+                    gameObjects->push_back(score1);
+                    break;
+                }
+
+                for(auto keyc : {3, 4, 5, 6})
+                {
+                    if(keycode != keyc)
+                    {
+                        continue;
+                    }
+
+                    if(diff <= PERFECT)
+                    {
+                        p2Score += 300;
+                    }
+                    else if(diff <= GOOD)
+                    {
+                        p2Score += 100;
+                    }
+                    else if(diff <= BAD)
+                    {
+                        p2Score += 50;
+                    }
+                    std::string txt = "Score    " + std::to_string(p2Score);
+                    gui.freeTexture(score2->texturePositionComponent->getIndex());
+                    gameObjects->erase(std::remove(gameObjects->begin(), gameObjects->end(), score2), gameObjects->end());
+                    delete score2;
+                    score2 = gui.drawText(AL2XPOS, AYPOS - 70, txt.c_str());
+                    gameObjects->push_back(score2);
+                    break;
+                }
+
                 auto id = createId(bv->beatTime, bv->keycode);
-                //std::cout << id << std::endl;
-                //std::cout << bv->beatTime << " " << bv->keycode << std::endl;
                 deleteGObject(id);
                 break;
+            } else {
+                wrong_press = true;
             }
         }
 
         if(double_check)
         {
-
             if(inputIndexBVec + check_direction > beatVec->beats.size() - 1)
             {
                 delete msg;
@@ -340,58 +416,170 @@ void GameLogic :: handleInputs()
 
             for(auto bv : *beatVec->beats[inputIndexBVec + check_direction])
             {
-                uint32_t diff = 0;
+                uint32_t diff = 1000;
 
                 if(keycode != bv->keycode)
+                {
+                    wrong_press = true;
                     continue;
+                }
 
                 if(bv->beatTime > in->getTimeStamp() - startTime)
                 {
                     diff = bv->beatTime - in->getTimeStamp() + startTime;
                 }
+                //else if (in->getTimeStamp() - startTime > bv->beatTime)
+                //{
+                    //diff = in->getTimeStamp() - startTime - bv->beatTime;
+                //}
                 else
                 {
-                    diff = in->getTimeStamp() - bv->beatTime;
+                    diff = in->getTimeStamp() - startTime - bv->beatTime;
                 }
+                //std::cout << in->getKeyCode() << std::endl;
+                //std::cout << diff << std::endl;
 
 
-                //std::cout << "in: " << in->getTimeStamp() - currentTime << std::endl;
-                //std::cout<< "diff: " << diff << std::endl;
-                if(diff < 100)
+                if(diff < BAD)
                 {
-					switch (bv->keycode) {
-						case 97:
-							animate(1);
-							break;
-						case 115:
-							animate(2);
-							break;
-						case 119:
-							animate(3);
-							break;
-						case 100:
-							animate(4);
-							break;
-						case 4:
-							animate(5);
-							break;
-						case 5:
-							animate(6);
-							break;
-						case 6:
-							animate(7);
-							break;
-						case 3:
-							animate(8);
-							break;
-					}
-                    deleteGObject(createId(bv->beatTime, bv->keycode));
+                    switch (bv->keycode) {
+                        case 97:
+                            animate(1);
+                            break;
+                        case 115:
+                            animate(2);
+                            break;
+                        case 119:
+                            animate(3);
+                            break;
+                        case 100:
+                            animate(4);
+                            break;
+                        case 4:
+                            animate(5);
+                            break;
+                        case 5:
+                            animate(6);
+                            break;
+                        case 6:
+                            animate(7);
+                            break;
+                        case 3:
+                            animate(8);
+                            break;
+                    }
+
+                    for(auto keyc : {119, 97, 115, 100})
+                    {
+                        if(keycode != keyc)
+                        {
+                            //std::cout << "In" << std::endl;
+                            continue;
+                        }
+
+                        if(diff <= PERFECT)
+                        {
+                            p1Score += 300;
+                        }
+                        else if(diff <= GOOD)
+                        {
+                            p1Score += 100;
+                        }
+                        else if(diff <= BAD)
+                        {
+                            p1Score += 50;
+                        }
+                        //std::cout << p1Score << std::endl;
+                        std::string txt = "Score    " + std::to_string(p1Score);
+                        gui.freeTexture(score1->texturePositionComponent->getIndex());
+                        gameObjects->erase(std::remove(gameObjects->begin(), gameObjects->end(), score1), gameObjects->end());
+                        delete score1;
+                        score1 = gui.drawText(AL1XPOS, AYPOS - 70, txt.c_str());
+                        gameObjects->push_back(score1);
+                        break;
+                    }
+
+                    for(auto keyc : {3, 4, 5, 6})
+                    {
+                        if(keycode != keyc)
+                        {
+                            continue;
+                        }
+
+                        if(diff <= PERFECT)
+                        {
+                            p2Score += 300;
+                        }
+                        else if(diff <= GOOD)
+                        {
+                            p2Score += 100;
+                        }
+                        else if(diff <= BAD)
+                        {
+                            p2Score += 50;
+                        }
+                        std::string txt = "Score    " + std::to_string(p2Score);
+                        gui.freeTexture(score2->texturePositionComponent->getIndex());
+                        gameObjects->erase(std::remove(gameObjects->begin(), gameObjects->end(), score2), gameObjects->end());
+                        delete score2;
+                        score2 = gui.drawText(AL2XPOS, AYPOS - 70, txt.c_str());
+                        gameObjects->push_back(score2);
+                        break;
+                    }
+
+                    auto id = createId(bv->beatTime, bv->keycode);
+                    deleteGObject(id);
                     break;
+                } else {
+                    wrong_press = true;
                 }
             }
-            //std::cout << "Finished checking" << std::endl;
         }
-        
+
+        if(wrong_press)
+        {
+            for(auto keyc : {119, 97, 115, 100})
+            {
+                if(keycode != keyc)
+                {
+                    //std::cout << "In" << std::endl;
+                    continue;
+                }
+
+                if(p1Score != 0)
+                {
+                    p1Score -= 50;
+                }
+                std::string txt = "Score    " + std::to_string(p1Score);
+                gui.freeTexture(score1->texturePositionComponent->getIndex());
+                gameObjects->erase(std::remove(gameObjects->begin(), gameObjects->end(), score1), gameObjects->end());
+                delete score1;
+                score1 = gui.drawText(AL1XPOS, AYPOS - 70, txt.c_str());
+                gameObjects->push_back(score1);
+                break;
+            }
+
+            for(auto keyc : {3, 4, 5, 6})
+            {
+                if(keycode != keyc)
+                {
+                    continue;
+                }
+
+                if(p2Score != 0)
+                {
+                    p2Score -= 50;
+                }
+                std::string txt = "Score    " + std::to_string(p2Score);
+                gui.freeTexture(score2->texturePositionComponent->getIndex());
+                gameObjects->erase(std::remove(gameObjects->begin(), gameObjects->end(), score2), gameObjects->end());
+                delete score2;
+                score2 = gui.drawText(AL2XPOS, AYPOS - 70, txt.c_str());
+                gameObjects->push_back(score2);
+                break;
+            }
+        }
+
         delete msg;
     }
 }
@@ -416,6 +604,12 @@ void GameLogic :: deleteGObject(uint32_t id)
 
 void GameLogic :: update()
 {
+    //if(endScreen)
+    //{
+        //displayEndScreen();
+        //handleEndInputs();
+        //return;
+    //}
     createArrowGObjects();
     updateGObjectsPosition();
     handleInputs();
@@ -428,5 +622,38 @@ void GameLogic::animate(uint32_t id) {
         {
 			gO->animationComponent->setAnimate(true);
         }
+    }
+}
+
+void GameLogic :: displayEndScreen()
+{
+    Message* msg = new Message("video");
+    VideoData* vData = new VideoData("pause");
+    msg->setData(vData);
+    msgBus->postMessage(msg);
+
+    GameObject* endBanner;
+    std::string txt;
+    if(p1Score > p2Score)
+    {
+        txt = "Player 1 Won";
+    } else if (p1Score < p2Score)
+    {
+        txt = "Player 2 Won";
+    }
+    else {
+    txt = "Draw";
+    }
+    endBanner = gui.drawText(1920 - 100, 1080 -100, txt.c_str());
+    gameObjects->push_back(endBanner);
+}
+
+void GameLogic :: handleEndInputs()
+{
+    while(msgBus->hasMessage() && msgBus->getMessageType() == "input")
+    {
+        delete msgBus->getMessage();
+        gameObjects->clear();
+        *isRunning = false;
     }
 }

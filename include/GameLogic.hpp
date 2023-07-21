@@ -8,6 +8,7 @@
 #include "framework/time.hpp"
 #include "data/SoundData.hpp"
 #include "BeatVec.hpp"
+#include "Gui.hpp"
 
 #define AYPOS 100
 #define ACYPOS 1070
@@ -48,5 +49,12 @@ class GameLogic
         uint32_t createId(uint32_t timestamp, int keycode);
         void deleteGObject(uint32_t id);
 
+        Gui gui;
         int p1Score, p2Score;
+        GameObject* score1;
+        GameObject* score2;
+
+        bool endScreen;
+        void displayEndScreen();
+        void handleEndInputs();
 };

@@ -56,10 +56,7 @@ GameObject* Gui::drawButton(int xint, int yint, const char* text) {
     return textButton;
 }
 
-
-
-
-
-
-
-
+void Gui :: freeTexture(int index)
+{
+    instance.DestroyTexture(index);
+}
