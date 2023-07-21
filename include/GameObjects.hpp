@@ -74,18 +74,18 @@ class ScoreComponent {
 class AnimationComponent {
 	private:
 		// Position and size of the first texture for animation
-		PositionAndDimensionStruct firstTexturePosition;
+		PositionAndDimensionStruct texturePosition;
 		int noOfFrameInAnimation;
 		uint8_t animationSpeed;
 		bool animate = false;
 
 	public:
-		void setFirstTexturePosition(int xOfFirstTex, int yOfFirstTex, int wOfFirstTex, int hOfFirstTex);
+		void setTexturePosition(int xOfFirstTex, int yOfFirstTex, int wOfFirstTex, int hOfFirstTex);
 		void setNoOfFramInAnimation(int noOfFrameInAnimation);
 		void setAnimationSpeed(uint8_t animationSpeed);
 		void setAnimate(bool animate);
 
-		PositionAndDimensionStruct& getFirstTexturePosition();
+		PositionAndDimensionStruct& getTexturePosition();
 		int& getNoOfFrameInAnimaiton();
 		uint8_t& getAnimationSpeed();
 		bool& getAnimate();
