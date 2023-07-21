@@ -28,6 +28,12 @@ bool Draw::InitializeSDL()
 		isRunning = false;
 		return false;
 	}
+
+	if (TTF_Init() == -1) {
+		std::cout << "TTF_Init: Failed to init TTF" << std::endl;
+		isRunning = false;
+		return false;
+	}
 	
     isRunning = true;
 
@@ -81,6 +87,7 @@ void Draw::ClearTexture(){
 
 void Draw::DestroySDL()
 {
+	TTF_Quit();
 	IMG_Quit();
 
 	// loops through unordered_map and deletes texture as well a 
