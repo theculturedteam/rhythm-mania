@@ -38,6 +38,8 @@ class Draw {
 
 		void DimBackground(uint8_t alpha);
 		
+		SDL_Texture* ConvertTexture(SDL_Surface* surface);
+
 		// Temp function
     	void HandleEvents();
     	bool CheckRunning();

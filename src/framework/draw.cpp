@@ -119,6 +119,9 @@ void Draw::DimBackground(uint8_t alpha) {
 	SDL_RenderFillRect(renderer, NULL);
 }
 
+SDL_Texture* Draw::ConvertTexture(SDL_Surface* surface){
+	return  SDL_CreateTextureFromSurface(renderer, surface);
+}
 //temp function *DONT FORGET TO REMOVE*
 void Draw::HandleEvents()
 {
