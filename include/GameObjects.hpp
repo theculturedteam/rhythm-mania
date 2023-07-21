@@ -25,10 +25,14 @@ struct PositionAndDimensionStruct {
 class TexturePositionComponent {
 	private:
 		PositionAndDimensionStruct srcRect;
+		uint16_t index = 0;
 
 	public:
 		void setSrcRect(int srcX, int srcY, int srcW, int srcH);
+		void setIndex(uint16_t index);
+
 		PositionAndDimensionStruct& getSrcRect();
+		uint16_t getIndex();
 };
 
 // Provides the position of game objects in window
@@ -89,11 +93,16 @@ class GameObject {
 		ScoreComponent* scoreComponent = nullptr;
 		AnimationComponent* animationComponent = nullptr;
 
+		uint16_t objectId = 0;
+
 	public:
 		// take dynamic no of const char* arguments
 		// needs to be ended with a nullptr
 		// Eg, GameObject background("texture", "position", nullptr)
 		GameObject(const char* format...);
 		~GameObject();
+
+		void setObjectId(uint16_t objectId);
+		uint16_t getObjectId();
 };
 
