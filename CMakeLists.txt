@@ -16,7 +16,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE include)
 
 # Add compiler errors/warnings flags
 target_compile_options(${PROJECT_NAME} PRIVATE $<$<C_COMPILER_ID:MSVC>:/W4 /WX>)
-target_compile_options(${PROJECT_NAME} PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -Werror>)
+target_compile_options(${PROJECT_NAME} PRIVATE $<$<NOT:$<C_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -Werror -g>)
 
 # Setting to automatically generate compile_commands required by linters
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -25,7 +25,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # If windows use SDL libraries provided in .sdl2
 IF (WIN32)
 	set(SDL2_PATH "${CMAKE_CURRENT_SOURCE_DIR}/.sdl2" CACHE BOOL "" FORCE)
-	set(SDL2_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/.sdl2/include" CACHE BOOL "" FORCE)
+	set(SDL2_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/.sdl2/include" "${CMAKE_CURRENT_SOURCE_DIR}/.sdl2/include/SDL2" CACHE BOOL "" FORCE)
 ENDIF()
 # Else for anything else use system's SDL2
 find_package(SDL2 REQUIRED)
@@ -35,15 +35,21 @@ target_link_libraries(${PROJECT_NAME} SDL2::Main)
 # If windows use SDL libraries provided in .sdl2
 IF (WIN32)
 	set(SDL2_IMAGE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/.sdl2" CACHE BOOL "" FORCE)
-	set(SDL2_IMAGE_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/.sdl2/include" CACHE BOOL "" FORCE)
+	set(SDL2_IMAGE_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/.sdl2/include" "${CMAKE_CURRENT_SOURCE_DIR}/.sdl2/include/SDL2" CACHE BOOL "" FORCE)
 ENDIF()
 # Else for anything else use system's SDL2
 find_package(SDL2_image REQUIRED)
 target_link_libraries(${PROJECT_NAME} SDL2::Image)
 
 # Add SDL2_ttf library
-#find_package(SDL2_ttf REQUIRED)
-#target_link_libraries(${PROJECT_NAME} SDL2::TTF)
+# If windows use SDL libraries provided in .sdl2
+IF (WIN32)
+	set(SDL2_TTF_PATH "${CMAKE_CURRENT_SOURCE_DIR}/.sdl2" CACHE BOOL "" FORCE)
+	set(SDL2_TTF_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/.sdl2/include" "${CMAKE_CURRENT_SOURCE_DIR}/.sdl2/include/SDL2" CACHE BOOL "" FORCE)
+ENDIF()
+# Else for anything else use system's SDL2
+find_package(SDL2_ttf REQUIRED)
+target_link_libraries(${PROJECT_NAME} SDL2::TTF)
 
 # Add SDL2_net library
 #find_package(SDL2_net REQUIRED)
@@ -53,7 +59,7 @@ target_link_libraries(${PROJECT_NAME} SDL2::Image)
 # If windows use SDL libraries provided in .sdl2
 IF (WIN32)
 	set(SDL2_MIXER_PATH "${CMAKE_CURRENT_SOURCE_DIR}/.sdl2" CACHE BOOL "" FORCE)
-	set(SDL2_MIXER_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/.sdl2/include" CACHE BOOL "" FORCE)
+	set(SDL2_MIXER_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/.sdl2/include" "${CMAKE_CURRENT_SOURCE_DIR}/.sdl2/include/SDL2" CACHE BOOL "" FORCE)
 ENDIF()
 # Else for anything else use system's SDL2
 find_package(SDL2_mixer REQUIRED)

@@ -1,13 +1,24 @@
 #pragma once
-#include <initializer_list>
-#include <string>
+#include <SDL_rect.h>
+#include <cmath>
+#include <iostream>
 
-// Similar to SDL_Rect
+// Similar to PositionAndDimensionStruct
 struct PositionAndDimensionStruct {
-	int x;
-	int y;
-	int w;
-	int h;
+	float x;
+	float y;
+	float w;
+	float h;
+
+	//overloading operator overloading to automatically convert PositionAndDimensionStruct to SDL_Rect
+	operator SDL_Rect() const {
+		SDL_Rect rect;
+		rect.x = round(x);
+        rect.y = round(y);
+        rect.w = round(w);
+        rect.h = round(h);
+        return rect;
+	}
 };
 
 // Provides the size and position of texture in the texture atlas
@@ -18,8 +29,6 @@ class TexturePositionComponent {
 	public:
 		void setSrcRect(int srcX, int srcY, int srcW, int srcH);
 		PositionAndDimensionStruct& getSrcRect();
-
-		std::string getComponentType() {return "texture";};
 };
 
 // Provides the position of game objects in window
@@ -28,11 +37,8 @@ class PositionComponent {
 		PositionAndDimensionStruct destRect;
 
 	public:
-		void setDestRect(int destX, int destY, int destW, int destH);
+		void setDestRect(float destX, float destY, float destW, float destH);
 		PositionAndDimensionStruct& getDestRect();
-
-		std::string getComponentType() {return "position";};
-
 };
 
 // Provides movement parameters
@@ -45,8 +51,6 @@ class MovementComponent {
 
 		int& getXVelocity();
 		int& getYVelocity();
-
-		std::string getComponentType() {return "movement";};
 };
 
 // Provides score parameter
@@ -58,9 +62,6 @@ class ScoreComponent {
 		void setScore(int score);
 
 		int& getScore();
-
-		std::string getComponentType() {return "score";};
-
 };
 
 // Provides animation related parameters
@@ -76,9 +77,6 @@ class AnimationComponent {
 
 		PositionAndDimensionStruct& getFirstTexturePosition();
 		int& getNoOfFrameInAnimaiton();
-
-		std::string getComponentType() {return "animation";};
-
 };
 
 // Actual class all the game objects are made up of

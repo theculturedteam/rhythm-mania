@@ -3,8 +3,8 @@
 void Bitmap :: bitmap()
 {
     std :: ifstream mapfile("../bitmap/bitmap1.txt");
-    int time, duration;
-    std::string keycode;
+    // int time, duration;
+    // std::string keycode;
     while(mapfile >> time >> keycode >> duration)
     {
         KeyCodeInfo info;
