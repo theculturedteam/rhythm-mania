@@ -1,6 +1,6 @@
 #include "system/SoundSystem.hpp"
 
-SoundSystem::SoundSystem(MessageBus *msgbus)
+SoundSystem::SoundSystem(MessageBus *msgBus)
     : System(msgBus)
 {
 }
