@@ -2,7 +2,7 @@
 #include "GameLogic.hpp"
 
 Game :: Game()
-    :renderSystem(&msgBus, &gameObjects), inputSystem(&msgBus), gameLogic(&msgBus, &gameObjects, &isRunning)
+    :renderSystem(&msgBus, &gameObjects), inputSystem(&msgBus), gameLogic(&msgBus, &gameObjects, &isRunning), soundSystem(&msgBus)
 {
     isRunning = true;
 }
@@ -20,6 +20,7 @@ void Game :: run()
         Time::sGetInstance().calculateDeltaTime();
         inputSystem.update();
         renderSystem.update();
+        soundSystem.update();
         gameLogic.update();
     }
 }
