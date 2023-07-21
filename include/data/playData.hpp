@@ -1,14 +1,19 @@
 #pragma once
-#include <data/SoundData.hpp>
-#include <data/videoData.hpp>
+#include <iostream>
+#include <cstdint>
 
 class PlayData
 {
     public:
-        PlayData();
+        PlayData(float velocity, std::string title, std::string soundPath, std::string videoDir, uint16_t noOfFrames, int videoSpeed, int textureWidth, int textureHeight);
         ~PlayData();
 
-        int velocity;
-        SoundData* sData;
-        VideoData* vData;
+        float velocity;
+        std::string title;
+        std::string soundPath;
+        std::string videoDir;
+        uint16_t noOfFrames;
+        int videoSpeed;
+        int textureWidth;
+        int textureHeight;
 };

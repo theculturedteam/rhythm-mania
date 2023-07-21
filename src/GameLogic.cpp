@@ -1,4 +1,6 @@
 #include "GameLogic.hpp"
+#include "data/SoundData.hpp"
+#include "data/videoData.hpp"
 #define PERFECT 20
 #define GOOD 50
 #define BAD 70
@@ -80,14 +82,26 @@ void GameLogic :: start()
     arrow->positionComponent->setDestRect(AR2XPOS, AYPOS, 128, 128);
     gameObjects->push_back(arrow);
 
-    beatVec = new BeatVec("../beatmap/music1.txt");
+    beatVec = new BeatVec("../beatmap/beethoven.txt");
 
     Message* msg;
-    msg = new Message("sound");
-    SoundData* sData = new SoundData();
-    sData->setdata("play", "../res/audio/music1.wav");
-    msg->setData(sData);
+    VideoData* vData;
+    SoundData* sData;
 
+    msg = new Message("video");
+    vData = new VideoData("load", "../res/videos/beethoven-virus", 1409, 30, 854, 480);
+    msg->setData(vData);
+    msgBus->postMessage(msg);
+
+    msg = new Message("video");
+    vData = new VideoData("play");
+    msg->setData(vData);
+    msgBus->postMessage(msg);
+
+    msg = new Message("sound");
+    sData = new SoundData();
+    sData->setdata("play", "../res/audio/beethoven.wav");
+    msg->setData(sData);
     startTime = Time::sGetInstance().getCurrentTime();
     msgBus->postMessage(msg);
 
@@ -202,9 +216,9 @@ void GameLogic :: handleInputs()
             *isRunning = false;
         }
 
-        if(keycode < 7)
+        if(keycode > 1073741900  && keycode < 1073741907)
         {
-            keycode = 1073741900 + keycode;
+            keycode = keycode - 1073741900;
         }
 
 

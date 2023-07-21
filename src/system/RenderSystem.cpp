@@ -6,7 +6,7 @@ Render:: Render(MessageBus* msgBus, std::vector<GameObject*>* gameobjects):Syste
 }
 
 void Render::update(){
-    instance.ClearTexture();
+    //instance.ClearTexture();
     for(GameObject* gameobj : *gameObjects){
         if(gameobj->animationComponent != nullptr){
             //animation part from atlas(will implement later..)
