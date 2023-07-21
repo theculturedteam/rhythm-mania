@@ -1,9 +1,10 @@
 #include "Game.hpp"
 #include "GameLogic.hpp"
 #include "data/playData.hpp"
+#include "system/VideoSystem.hpp"
 
 Game :: Game()
-    :renderSystem(&msgBus, &gameObjects), inputSystem(&msgBus), gameLogic(&msgBus, &gameObjects, &isRunning), soundSystem(&msgBus)
+    :renderSystem(&msgBus, &gameObjects), inputSystem(&msgBus), gameLogic(&msgBus, &gameObjects, &isRunning), soundSystem(&msgBus), videoSystem(&msgBus)
 {
     isRunning = true;
 
@@ -36,6 +37,7 @@ void Game :: run()
     {
         Time::sGetInstance().calculateDeltaTime();
         inputSystem.update();
+        videoSystem.update();
         renderSystem.update();
         soundSystem.update();
         gameLogic.update();

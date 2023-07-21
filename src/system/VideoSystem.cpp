@@ -75,7 +75,7 @@ void VideoSystem::update() {
 
 		drawInstance.DimBackground(100);
 
-		drawInstance.PresentTexture();
+		//drawInstance.PresentTexture();
 
 		drawInstance.DestroyTexture(key);
 

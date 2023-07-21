@@ -6,6 +6,7 @@
 #include "system/InputSystem.hpp"
 #include "system/SoundSystem.hpp"
 #include "system/RenderSystem.hpp"
+#include "system/VideoSystem.hpp"
 
 class Game
 {
@@ -22,6 +23,7 @@ class Game
         InputSystem inputSystem;
         GameLogic gameLogic;
         SoundSystem soundSystem;
+        VideoSystem videoSystem;
         bool isRunning;
         int gameState;
 };
