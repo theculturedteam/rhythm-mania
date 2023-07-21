@@ -148,9 +148,11 @@ void GameLogic :: createArrowGObjects()
         //std::cout << "BeatVec time: " << beatVec.beat[indexBeatVec]->beatTime - eta << std::endl;
         GameObject* gameArrow = new GameObject("texture", "position", "movement", nullptr);
         //gameArrow->texturePositionComponent->setSrcRect(0, 0, 128, 128);
-        auto beat = (*beatVec.beats[indexBeatNo])[indexBeatVec]->keycode;
-        gameArrow->texturePositionComponent->setSrcRect(coordinates[beat]->src_x, coordinates[beat]->src_y, 128, 128);
-        gameArrow->positionComponent->setDestRect(coordinates[beat]->dest_x, ACYPOS, 128, 128);
+        auto key = (*beatVec.beats[indexBeatNo])[indexBeatVec]->keycode;
+        auto time = (*beatVec.beats[indexBeatNo])[indexBeatVec]->beatTime;
+        gameArrow->setObjectId(createId(time, key));
+        gameArrow->texturePositionComponent->setSrcRect(coordinates[key]->src_x, coordinates[key]->src_y, 128, 128);
+        gameArrow->positionComponent->setDestRect(coordinates[key]->dest_x, ACYPOS, 128, 128);
         gameArrow->movementComponent->setVelocity(0, -velocity * 1000);
         gameObjects->push_back(gameArrow);
         indexBeatVec++;
@@ -220,6 +222,7 @@ void GameLogic :: handleInputs()
             if(diff < 100)
             {
                 std::cout << "Got em" << std::endl;
+                deleteGObject(createId(bv->beatTime, bv->keycode));
                 break;
             }
         }
@@ -255,6 +258,7 @@ void GameLogic :: handleInputs()
                 if(diff < 100)
                 {
                     std::cout << "Got em" << std::endl;
+                    deleteGObject(createId(bv->beatTime, bv->keycode));
                     break;
                 }
             }
@@ -263,6 +267,23 @@ void GameLogic :: handleInputs()
         
         delete msg;
     }
+}
+
+uint16_t GameLogic :: createId(uint32_t timestamp, int keycode)
+{
+    return 0.5 * (timestamp + keycode - 2) * (timestamp + keycode - 1) + timestamp;
+}
+
+void GameLogic :: deleteGObject(uint16_t id)
+{
+    for(auto gO : *gameObjects)
+    {
+        if(gO->getObjectId() == id)
+        {
+            gameObjects->erase(std::remove(gameObjects->begin(), gameObjects->end(), gO), gameObjects->end());
+        }
+    }
+
 }
 
 void GameLogic :: update()

@@ -6,7 +6,7 @@
 #include "framework/time.hpp"
 #include "BeatVec.hpp"
 
-#define AYPOS 50
+#define AYPOS 100
 #define ACYPOS 1070
 
 #define AL1XPOS 40
@@ -41,4 +41,8 @@ class GameLogic
         std::vector<BeatValue*>::size_type inputIndexBVec;
         float velocity; // temporary, will be provided through constructor
         bool* isRunning;
+        uint16_t createId(uint32_t timestamp, int keycode);
+        void deleteGObject(uint16_t id);
+
+        int p1Score, p2Score;
 };
