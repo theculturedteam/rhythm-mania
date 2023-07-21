@@ -7,6 +7,7 @@
 #include "BeatVec.hpp"
 
 #define AYPOS 50
+#define ACYPOS 1070
 
 #define AL1XPOS 40
 #define AD1XPOS 178

@@ -1,8 +1,31 @@
 #include "GameLogic.hpp"
 #include <cstdint>
+#include <map>
 #define PERFECT 20
 #define GOOD 50
 #define BAD 70
+
+class Coordinate
+{
+    public:
+        int src_x, src_y, dest_x;
+        Coordinate(int x, int y, int x1)
+            :src_x(x), src_y(y), dest_x(x1)
+        {}
+};
+
+std::map<int,Coordinate*> coordinates = 
+{
+    {119, new Coordinate(0, 266, AU1XPOS)},
+    {6, new Coordinate(0, 266, AU2XPOS)},
+    {97, new Coordinate(0, 399, AL1XPOS)},
+    {4, new Coordinate(0, 399, AL2XPOS)},
+    {115, new Coordinate(0, 0, AD1XPOS)},
+    {5, new Coordinate(0, 0, AD2XPOS)},
+    {100, new Coordinate(0, 133, AR1XPOS)},
+    {3, new Coordinate(0, 133, AR2XPOS)}
+
+};
 
 GameLogic :: GameLogic(MessageBus* msgBus, std::vector<GameObject*>* gameObjects, bool* isRunning)
     :msgBus(msgBus), gameObjects(gameObjects), beatVec(""), isRunning(isRunning)
@@ -20,43 +43,43 @@ void GameLogic :: start()
     GameObject* arrow;
 
     arrow = new GameObject("texture", "position", nullptr);
-    arrow->texturePositionComponent->setSrcRect(0, 0, 128, 128);
+    arrow->texturePositionComponent->setSrcRect(0, 932, 128, 128);
     arrow->positionComponent->setDestRect(AL1XPOS, AYPOS, 128, 128);
     gameObjects->push_back(arrow);
 
     arrow = new GameObject("texture", "position", nullptr);
-    arrow->texturePositionComponent->setSrcRect(0, 0, 128, 128);
+    arrow->texturePositionComponent->setSrcRect(0, 533, 128, 128);
     arrow->positionComponent->setDestRect(AD1XPOS, AYPOS, 128, 128);
     gameObjects->push_back(arrow);
 
     arrow = new GameObject("texture", "position", nullptr);
-    arrow->texturePositionComponent->setSrcRect(0, 0, 128, 128);
+    arrow->texturePositionComponent->setSrcRect(0, 799, 128, 128);
     arrow->positionComponent->setDestRect(AU1XPOS, AYPOS, 128, 128);
     gameObjects->push_back(arrow);
 
     arrow = new GameObject("texture", "position", nullptr);
-    arrow->texturePositionComponent->setSrcRect(0, 0, 128, 128);
+    arrow->texturePositionComponent->setSrcRect(0, 666, 128, 128);
     arrow->positionComponent->setDestRect(AR1XPOS, AYPOS, 128, 128);
     gameObjects->push_back(arrow);
 
     //Another player
     arrow = new GameObject("texture", "position", nullptr);
-    arrow->texturePositionComponent->setSrcRect(0, 0, 128, 128);
+    arrow->texturePositionComponent->setSrcRect(0, 932, 128, 128);
     arrow->positionComponent->setDestRect(AL2XPOS, AYPOS, 128, 128);
     gameObjects->push_back(arrow);
 
     arrow = new GameObject("texture", "position", nullptr);
-    arrow->texturePositionComponent->setSrcRect(0, 0, 128, 128);
+    arrow->texturePositionComponent->setSrcRect(0, 533, 128, 128);
     arrow->positionComponent->setDestRect(AD2XPOS, AYPOS, 128, 128);
     gameObjects->push_back(arrow);
 
     arrow = new GameObject("texture", "position", nullptr);
-    arrow->texturePositionComponent->setSrcRect(0, 0, 128, 128);
+    arrow->texturePositionComponent->setSrcRect(0, 799, 128, 128);
     arrow->positionComponent->setDestRect(AU2XPOS, AYPOS, 128, 128);
     gameObjects->push_back(arrow);
 
     arrow = new GameObject("texture", "position", nullptr);
-    arrow->texturePositionComponent->setSrcRect(0, 0, 128, 128);
+    arrow->texturePositionComponent->setSrcRect(0, 666, 128, 128);
     arrow->positionComponent->setDestRect(AR2XPOS, AYPOS, 128, 128);
     gameObjects->push_back(arrow);
 
@@ -92,7 +115,7 @@ void GameLogic :: updateGObjectsPosition()
 void GameLogic :: createArrowGObjects()
 {
     uint32_t currentTime = Time::sGetInstance().getCurrentTime() - startTime;
-    int baseDistance = 1070 - AYPOS;
+    int baseDistance = ACYPOS - AYPOS;
     double eta = baseDistance / velocity;
 
     for(int i = 0; i <= 3; i++)
@@ -124,8 +147,10 @@ void GameLogic :: createArrowGObjects()
         //std::cout << "Current Time: " << currentTime << std::endl;
         //std::cout << "BeatVec time: " << beatVec.beat[indexBeatVec]->beatTime - eta << std::endl;
         GameObject* gameArrow = new GameObject("texture", "position", "movement", nullptr);
-        gameArrow->texturePositionComponent->setSrcRect(0, 0, 128, 128);
-        gameArrow->positionComponent->setDestRect(10, 1070, 128, 128);
+        //gameArrow->texturePositionComponent->setSrcRect(0, 0, 128, 128);
+        auto beat = (*beatVec.beats[indexBeatNo])[indexBeatVec]->keycode;
+        gameArrow->texturePositionComponent->setSrcRect(coordinates[beat]->src_x, coordinates[beat]->src_y, 128, 128);
+        gameArrow->positionComponent->setDestRect(coordinates[beat]->dest_x, ACYPOS, 128, 128);
         gameArrow->movementComponent->setVelocity(0, -velocity * 1000);
         gameObjects->push_back(gameArrow);
         indexBeatVec++;
