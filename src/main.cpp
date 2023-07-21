@@ -104,13 +104,13 @@ void testRenderSystem(){
 	GameObject* arrow4glow = new GameObject("position","texture",nullptr);
 	GameObject* gui = new GameObject("position","texture",nullptr);
 
-	arrow1->texturePositionComponent->setSrcRect(0, 0 , 128, 128);
+	arrow1->texturePositionComponent->setSrcRect(0, 533 , 128, 128);
 	arrow1->positionComponent->setDestRect(100, 100, 128, 128);
-	arrow2->texturePositionComponent->setSrcRect(0, 128+5 , 128, 128);
+	arrow2->texturePositionComponent->setSrcRect(0, 666 , 128, 128);
 	arrow2->positionComponent->setDestRect(300, 100, 128, 128);
-	arrow3->texturePositionComponent->setSrcRect(0, 133*2, 128, 128);
+	arrow3->texturePositionComponent->setSrcRect(0, 799, 128, 128);
 	arrow3->positionComponent->setDestRect(500, 100, 128, 128);
-	arrow4->texturePositionComponent->setSrcRect(0, 133*3, 128, 128);
+	arrow4->texturePositionComponent->setSrcRect(0, 932, 128, 128);
 	arrow4->positionComponent->setDestRect(700, 100, 128, 128);
 	arrow1glow->texturePositionComponent->setSrcRect(133, 0, 128, 128);
 	arrow1glow->positionComponent->setDestRect(100, 300, 128, 128);
