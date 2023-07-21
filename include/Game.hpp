@@ -12,6 +12,7 @@ class Game
         Game();
         ~Game();
         void run();
+        void testGui();
     private:
         MessageBus msgBus;
         std::vector<GameObject*> gameObjects;
