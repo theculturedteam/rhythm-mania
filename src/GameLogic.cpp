@@ -80,12 +80,12 @@ void GameLogic :: start()
     arrow->positionComponent->setDestRect(AR2XPOS, AYPOS, 128, 128);
     gameObjects->push_back(arrow);
 
-    beatVec = new BeatVec("../beatmap/music1.txt");
+    beatVec = new BeatVec("../beatmap/beethoven.txt");
 
     Message* msg;
     msg = new Message("sound");
     SoundData* sData = new SoundData();
-    sData->setdata("play", "../res/audio/music1.wav");
+    sData->setdata("play", "../res/audio/beethoven.wav");
     msg->setData(sData);
 
     startTime = Time::sGetInstance().getCurrentTime();
