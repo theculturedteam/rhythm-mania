@@ -194,12 +194,19 @@ void GameLogic :: handleInputs()
 
         Message* msg = msgBus->getMessage();
         InputData* in = msg->getInputData();
+        auto keycode = in->getKeyCode();
         //std::cout << in->getKeyCode() << " " << in->getTimeStamp() - startTime << std::endl;
 
-        if(in->getKeyCode() == 0)
+        if(keycode == 0)
         {
             *isRunning = false;
         }
+
+        if(keycode < 7)
+        {
+            keycode = 1073741900 + keycode;
+        }
+
 
         //if(inputIndexBVec > beatVec->beats.size() - 1)
         //{
@@ -220,7 +227,7 @@ void GameLogic :: handleInputs()
         {
             uint32_t diff = 1000;
 
-            if(in->getKeyCode() != bv->keycode)
+            if(keycode != bv->keycode)
                 continue;
 
             if(bv->beatTime > in->getTimeStamp() - startTime)
@@ -263,7 +270,7 @@ void GameLogic :: handleInputs()
             {
                 uint32_t diff = 0;
 
-                if(in->getKeyCode() != bv->keycode)
+                if(keycode != bv->keycode)
                     continue;
 
                 if(bv->beatTime > in->getTimeStamp() - startTime)
