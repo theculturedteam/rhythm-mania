@@ -7,8 +7,16 @@ void TexturePositionComponent::setSrcRect(int srcX, int srcY, int srcW, int srcH
 	srcRect.h = srcH;
 }
 
+void TexturePositionComponent::setIndex(uint16_t index) {
+	this->index = index;
+}
+
 PositionAndDimensionStruct& TexturePositionComponent::getSrcRect() {
 	return srcRect;
+}
+
+uint16_t TexturePositionComponent::getIndex() {
+	return index;
 }
 
 void PositionComponent::setDestRect(float destX, float destY, float destW, float destH) {
@@ -54,12 +62,28 @@ void AnimationComponent::setNoOfFramInAnimation(int noOfFrameInAnimation) {
 	this->noOfFrameInAnimation = noOfFrameInAnimation;
 }
 
+void AnimationComponent::setAnimationSpeed(uint8_t animationSpeed) {
+	this->animationSpeed = animationSpeed;
+}
+
+void AnimationComponent::setAnimate(bool animate) {
+	this->animate = animate;
+}
+
 PositionAndDimensionStruct& AnimationComponent::getFirstTexturePosition() {
 	return firstTexturePosition;
 }
 
 int& AnimationComponent::getNoOfFrameInAnimaiton() {
 	return noOfFrameInAnimation;
+}
+
+uint8_t& AnimationComponent::getAnimationSpeed() {
+	return animationSpeed;
+}
+
+bool& AnimationComponent::getAnimate() {
+	return animate;
 }
 
 GameObject::GameObject(const char* format...) {
@@ -113,4 +137,12 @@ GameObject::~GameObject() {
 	scoreComponent = NULL;
 	delete animationComponent;
 	animationComponent = NULL;
+}
+
+void GameObject::setObjectId(uint16_t objectId) {
+	this->objectId = objectId;
+}
+
+uint16_t GameObject::getObjectId() {
+	return objectId;
 }
