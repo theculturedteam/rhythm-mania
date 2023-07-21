@@ -51,11 +51,11 @@ int& ScoreComponent::getScore() {
 	return score;
 }
 
-void AnimationComponent::setFirstTexturePosition(int xOfFirstTex, int yOfFirstTex, int wOfFirstTex, int hOfFirstTex) {
-	firstTexturePosition.x = xOfFirstTex;
-	firstTexturePosition.y = yOfFirstTex;
-	firstTexturePosition.w = wOfFirstTex;
-	firstTexturePosition.h = hOfFirstTex;
+void AnimationComponent::setTexturePosition(int xOfFirstTex, int yOfFirstTex, int wOfFirstTex, int hOfFirstTex) {
+	texturePosition.x = xOfFirstTex;
+	texturePosition.y = yOfFirstTex;
+	texturePosition.w = wOfFirstTex;
+	texturePosition.h = hOfFirstTex;
 }
 
 void AnimationComponent::setNoOfFramInAnimation(int noOfFrameInAnimation) {
@@ -70,8 +70,8 @@ void AnimationComponent::setAnimate(bool animate) {
 	this->animate = animate;
 }
 
-PositionAndDimensionStruct& AnimationComponent::getFirstTexturePosition() {
-	return firstTexturePosition;
+PositionAndDimensionStruct& AnimationComponent::getTexturePosition() {
+	return texturePosition;
 }
 
 int& AnimationComponent::getNoOfFrameInAnimaiton() {
