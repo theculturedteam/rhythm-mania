@@ -74,13 +74,19 @@ class AnimationComponent {
 		// Position and size of the first texture for animation
 		PositionAndDimensionStruct firstTexturePosition;
 		int noOfFrameInAnimation;
+		uint8_t animationSpeed;
+		bool animate = false;
 
 	public:
 		void setFirstTexturePosition(int xOfFirstTex, int yOfFirstTex, int wOfFirstTex, int hOfFirstTex);
 		void setNoOfFramInAnimation(int noOfFrameInAnimation);
+		void setAnimationSpeed(uint8_t animationSpeed);
+		void setAnimate(bool animate);
 
 		PositionAndDimensionStruct& getFirstTexturePosition();
 		int& getNoOfFrameInAnimaiton();
+		uint8_t& getAnimationSpeed();
+		bool& getAnimate();
 };
 
 // Actual class all the game objects are made up of

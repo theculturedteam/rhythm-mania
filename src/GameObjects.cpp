@@ -62,12 +62,28 @@ void AnimationComponent::setNoOfFramInAnimation(int noOfFrameInAnimation) {
 	this->noOfFrameInAnimation = noOfFrameInAnimation;
 }
 
+void AnimationComponent::setAnimationSpeed(uint8_t animationSpeed) {
+	this->animationSpeed = animationSpeed;
+}
+
+void AnimationComponent::setAnimate(bool animate) {
+	this->animate = animate;
+}
+
 PositionAndDimensionStruct& AnimationComponent::getFirstTexturePosition() {
 	return firstTexturePosition;
 }
 
 int& AnimationComponent::getNoOfFrameInAnimaiton() {
 	return noOfFrameInAnimation;
+}
+
+uint8_t& AnimationComponent::getAnimationSpeed() {
+	return animationSpeed;
+}
+
+bool& AnimationComponent::getAnimate() {
+	return animate;
 }
 
 GameObject::GameObject(const char* format...) {
