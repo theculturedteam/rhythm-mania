@@ -1,7 +1,13 @@
 #include "system/SoundSystem.hpp"
 
-void SoundSystem :: update(){
-    SoundSystem :: handleMessage();
+SoundSystem::SoundSystem(MessageBus *msgbus)
+    : System(msgBus)
+{
+}
+
+void SoundSystem ::update()
+{
+    handleMessage();
 }
 
 void SoundSystem ::handleMessage()
@@ -35,6 +41,7 @@ void SoundSystem ::handleMessage()
             {
                 printf("The command is invalid");
             }
+            delete message;
         }
     }
 }

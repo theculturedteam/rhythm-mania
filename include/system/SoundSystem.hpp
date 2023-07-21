@@ -7,10 +7,12 @@
 class SoundSystem : public System
 {
 private:
-
+    
 public:
     void update();
     void handleMessage();
+    SoundSystem(MessageBus *msgbus);
+
 };
 
 
