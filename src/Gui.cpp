@@ -22,7 +22,7 @@ GameObject* Gui::drawText(int xint, int yint, const char* text){
 //     SDL_Surface* button = IMG_Load("../res.images/4kAtlas.png");
 //     SDL_Surface* combined = SDL_CreateRGBSurface(0, 512, 128, 32, 0, 0, 0, 0);
 //     SDL_Rect dstRect = {0, 0, 512, 128};
-//     SDL_Rect srcRectButton = {0, 1577, 512, 128};    
+//     SDL_Rect srcRectButton ={0, 1577, 512, 128};    
 //     SDL_BlitSurface(button, &srcRectButton, combined, &dstRect);
 //     SDL_BlitSurface(sText, NULL, combined, &dstRect);
 //     textButton->texturePositionComponent->setSrcRect(0, 0, combined->w, combined->h);
@@ -44,7 +44,8 @@ GameObject* Gui::drawButton(int xint, int yint, const char* text) {
     if(button == NULL){
         std::cout << "You are fucked" << std::endl;
     }
-    SDL_BlitSurface(sText, NULL, button, NULL);
+    SDL_Rect dstRect = {button->w / 2 - sText->w/2, button->h/2 - sText->h/2, sText->w, sText->h};
+    SDL_BlitSurface(sText, NULL, button, &dstRect);
     auto texture = instance.ConvertTexture(button);
     auto index = instance.addTexture(texture);
 
