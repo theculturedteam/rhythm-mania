@@ -28,7 +28,11 @@ void Game :: run()
 void Game::testGui(){
 	Gui gui;
 	GameObject* text;
-	text = gui.drawText(100, 100,"hello");
+    GameObject* button;
+	text = gui.drawText(100, 100, "hello");
+    button = gui.drawButton(500, 500, "ANSHU IS GEH");
     // text->positionComponent->setDestRect(200, 200, 100, 100);
+
+    gameObjects.push_back(button);
 	gameObjects.push_back(text);
 }
