@@ -30,7 +30,7 @@ void Game::testGui(){
 	GameObject* text;
     GameObject* button;
 	text = gui.drawText(100, 100, "hello");
-    button = gui.drawButton(500, 500, "ANSHU IS GEH");
+    button = gui.drawButton(500, 500, "START GAME");
     // text->positionComponent->setDestRect(200, 200, 100, 100);
 
     gameObjects.push_back(button);

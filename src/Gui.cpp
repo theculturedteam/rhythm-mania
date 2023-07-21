@@ -1,7 +1,7 @@
-#include "Gui.hpp"
+ #include "Gui.hpp"
 
 Gui::Gui(){
-    textFont = TTF_OpenFont("../res/fonts/Hooverville-ymK3.ttf", 36);
+    textFont = TTF_OpenFont("../res/fonts/Hooverville-ymK3.ttf", 65);
     color = { 0xFF, 0xFF, 0xFF, 0xFF};
 }
 
@@ -39,35 +39,19 @@ GameObject* Gui::drawButton(int xint, int yint, const char* text) {
     textButton = new GameObject("texture", "position", nullptr);
     sText = TTF_RenderText_Solid(textFont, text, color);
 
-    SDL_Surface* button = IMG_Load("../res/images/4kAtlas.png");
+    SDL_Surface* button = IMG_Load("../res/images/button.png");
 
     if(button == NULL){
         std::cout << "You are fucked" << std::endl;
     }
-    SDL_Surface* combined = SDL_CreateRGBSurface(0, 512, 128, 32, 255, 255, 255, 255);
-
-    SDL_Rect srcRectButton = { 0, 1577, 512, 128 };
-    SDL_Rect dstRectButton = { 0, 0, 512, 128 };
-    SDL_BlitSurface(button, &srcRectButton, combined, &dstRectButton);
-
-    // int textX = (512 - sText->w) / 2; // Center horizontally
-    // int textY = (128 - sText->h) / 2; // Center vertically
-
-    SDL_Rect buttonDstRectText = { 0, 0, sText->w, sText->h };
-    SDL_BlitSurface(sText, &buttonDstRectText, combined, &dstRectButton);
+    SDL_BlitSurface(sText, NULL, button, NULL);
+    auto texture = instance.ConvertTexture(button);
+    auto index = instance.addTexture(texture);
 
     textButton->texturePositionComponent->setSrcRect(0, 0, 512, 128);
-    std::cout << "Here" << std::endl;
-    textButton->positionComponent->setDestRect(xint, yint, 512, 128);
-
-
-    font1.texture = instance.ConvertTexture(combined);
-    index = instance.addTexture(font1.texture);
     textButton->texturePositionComponent->setIndex(index);
-
-    SDL_FreeSurface(button);
+    textButton->positionComponent->setDestRect(xint, yint, 512, 128);
     SDL_FreeSurface(sText);
-
     return textButton;
 }
 
