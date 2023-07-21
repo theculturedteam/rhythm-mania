@@ -127,8 +127,17 @@ void Draw::DimBackground(uint8_t alpha) {
 }
 
 SDL_Texture* Draw::ConvertTexture(SDL_Surface* surface){
-	return  SDL_CreateTextureFromSurface(renderer, surface);
+	SDL_Texture* texture =  SDL_CreateTextureFromSurface(renderer, surface);
+	SDL_FreeSurface(surface);
+	return texture;
 }
+
+uint16_t Draw::addTexture(SDL_Texture* texture) {
+	mapIndex++;
+	textureMap.insert({mapIndex, texture});
+	return mapIndex;
+}
+
 //temp function *DONT FORGET TO REMOVE*
 void Draw::HandleEvents()
 {

@@ -41,6 +41,8 @@ class Draw {
 		
 		SDL_Texture* ConvertTexture(SDL_Surface* surface);
 
+		uint16_t addTexture(SDL_Texture* texture);
+
 		// Temp function
     	void HandleEvents();
     	bool CheckRunning();
