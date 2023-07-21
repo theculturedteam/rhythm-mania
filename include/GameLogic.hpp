@@ -33,6 +33,7 @@ class GameLogic
         void handleInputs();
         void update();
         void start();
+		void animate(uint32_t id);
 
     private:
         MessageBus* msgBus;

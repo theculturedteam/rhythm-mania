@@ -41,45 +41,77 @@ void GameLogic :: start()
 
     GameObject* arrow;
 
-    arrow = new GameObject("texture", "position", nullptr);
+    arrow = new GameObject("texture", "position", "animation", nullptr);
+	arrow->setObjectId(1);
     arrow->texturePositionComponent->setSrcRect(0, 932, 128, 128);
     arrow->positionComponent->setDestRect(AL1XPOS, AYPOS, 128, 128);
+	arrow->animationComponent->setTexturePosition(0, 932, 128, 128);
+	arrow->animationComponent->setAnimationSpeed(10);
+	arrow->animationComponent->setNoOfFramInAnimation(2);
     gameObjects->push_back(arrow);
 
-    arrow = new GameObject("texture", "position", nullptr);
+    arrow = new GameObject("texture", "position", "animation", nullptr);
+	arrow->setObjectId(2);
     arrow->texturePositionComponent->setSrcRect(0, 533, 128, 128);
     arrow->positionComponent->setDestRect(AD1XPOS, AYPOS, 128, 128);
+	arrow->animationComponent->setTexturePosition(0, 533, 128, 128);
+	arrow->animationComponent->setAnimationSpeed(10);
+	arrow->animationComponent->setNoOfFramInAnimation(2);
     gameObjects->push_back(arrow);
 
-    arrow = new GameObject("texture", "position", nullptr);
+    arrow = new GameObject("texture", "position", "animation", nullptr);
+	arrow->setObjectId(3);
     arrow->texturePositionComponent->setSrcRect(0, 799, 128, 128);
     arrow->positionComponent->setDestRect(AU1XPOS, AYPOS, 128, 128);
+	arrow->animationComponent->setTexturePosition(0, 799, 128, 128);
+	arrow->animationComponent->setAnimationSpeed(10);
+	arrow->animationComponent->setNoOfFramInAnimation(2);
     gameObjects->push_back(arrow);
 
-    arrow = new GameObject("texture", "position", nullptr);
+    arrow = new GameObject("texture", "position", "animation", nullptr);
+	arrow->setObjectId(4);
     arrow->texturePositionComponent->setSrcRect(0, 666, 128, 128);
     arrow->positionComponent->setDestRect(AR1XPOS, AYPOS, 128, 128);
+	arrow->animationComponent->setTexturePosition(0, 666, 128, 128);
+	arrow->animationComponent->setAnimationSpeed(10);
+	arrow->animationComponent->setNoOfFramInAnimation(2);
     gameObjects->push_back(arrow);
 
     //Another player
-    arrow = new GameObject("texture", "position", nullptr);
+    arrow = new GameObject("texture", "position", "animation", nullptr);
+	arrow->setObjectId(5);
     arrow->texturePositionComponent->setSrcRect(0, 932, 128, 128);
     arrow->positionComponent->setDestRect(AL2XPOS, AYPOS, 128, 128);
+	arrow->animationComponent->setTexturePosition(0, 932, 128, 128);
+	arrow->animationComponent->setAnimationSpeed(10);
+	arrow->animationComponent->setNoOfFramInAnimation(2);
     gameObjects->push_back(arrow);
 
-    arrow = new GameObject("texture", "position", nullptr);
+    arrow = new GameObject("texture", "position", "animation", nullptr);
+	arrow->setObjectId(6);
     arrow->texturePositionComponent->setSrcRect(0, 533, 128, 128);
     arrow->positionComponent->setDestRect(AD2XPOS, AYPOS, 128, 128);
+	arrow->animationComponent->setTexturePosition(0, 533, 128, 128);
+	arrow->animationComponent->setAnimationSpeed(10);
+	arrow->animationComponent->setNoOfFramInAnimation(2);
     gameObjects->push_back(arrow);
 
-    arrow = new GameObject("texture", "position", nullptr);
+    arrow = new GameObject("texture", "position", "animation", nullptr);
+	arrow->setObjectId(7);
     arrow->texturePositionComponent->setSrcRect(0, 799, 128, 128);
     arrow->positionComponent->setDestRect(AU2XPOS, AYPOS, 128, 128);
+	arrow->animationComponent->setTexturePosition(0, 799, 128, 128);
+	arrow->animationComponent->setAnimationSpeed(10);
+	arrow->animationComponent->setNoOfFramInAnimation(2);
     gameObjects->push_back(arrow);
 
-    arrow = new GameObject("texture", "position", nullptr);
+    arrow = new GameObject("texture", "position", "animation", nullptr);
+	arrow->setObjectId(8);
     arrow->texturePositionComponent->setSrcRect(0, 666, 128, 128);
     arrow->positionComponent->setDestRect(AR2XPOS, AYPOS, 128, 128);
+	arrow->animationComponent->setTexturePosition(0, 666, 128, 128);
+	arrow->animationComponent->setAnimationSpeed(10);
+	arrow->animationComponent->setNoOfFramInAnimation(2);
     gameObjects->push_back(arrow);
 
     beatVec = new BeatVec("../beatmap/beethoven.txt");
@@ -263,6 +295,33 @@ void GameLogic :: handleInputs()
             if(diff < 100)
             {
                 std::cout << "Got em" << std::endl;
+				switch (bv->keycode) {
+					case 97:
+						animate(1);
+						break;
+					case 115:
+						animate(2);
+						break;
+					case 119:
+						animate(3);
+						break;
+					case 100:
+						animate(4);
+						break;
+					case 4:
+						animate(5);
+						break;
+					case 5:
+						animate(6);
+						break;
+					case 6:
+						animate(7);
+						break;
+					case 3:
+						animate(8);
+						break;
+				}
+
                 auto id = createId(bv->beatTime, bv->keycode);
                 std::cout << id << std::endl;
                 std::cout << bv->beatTime << " " << bv->keycode << std::endl;
@@ -302,6 +361,32 @@ void GameLogic :: handleInputs()
                 if(diff < 100)
                 {
                     std::cout << "Got em" << std::endl;
+					switch (bv->keycode) {
+						case 97:
+							animate(1);
+							break;
+						case 115:
+							animate(2);
+							break;
+						case 119:
+							animate(3);
+							break;
+						case 100:
+							animate(4);
+							break;
+						case 4:
+							animate(5);
+							break;
+						case 5:
+							animate(6);
+							break;
+						case 6:
+							animate(7);
+							break;
+						case 3:
+							animate(8);
+							break;
+					}
                     deleteGObject(createId(bv->beatTime, bv->keycode));
                     break;
                 }
@@ -336,4 +421,14 @@ void GameLogic :: update()
     createArrowGObjects();
     updateGObjectsPosition();
     handleInputs();
+}
+
+void GameLogic::animate(uint32_t id) {
+    for(auto gO : *gameObjects)
+    {
+        if(gO->getObjectId() == id)
+        {
+			gO->animationComponent->setAnimate(true);
+        }
+    }
 }
