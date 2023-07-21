@@ -21,7 +21,7 @@ std::vector<InputData*>* Input :: getInputs()
             std::cout << "Quit Event: SDL asks to quit" << std::endl;
             InputData* in = new InputData(0, 0);
             inputsVec.push_back(in);
-        } else if(!event.key.repeat && (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP))
+        } else if(!event.key.repeat && (event.type == SDL_KEYDOWN))
         {
             InputData* in = new InputData(event.key.keysym.sym, event.key.timestamp);
             inputsVec.push_back(in);

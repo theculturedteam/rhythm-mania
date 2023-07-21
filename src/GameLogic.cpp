@@ -1,4 +1,5 @@
 #include "GameLogic.hpp"
+#include <cstdint>
 #define PERFECT 20
 #define GOOD 50
 #define BAD 70
@@ -6,21 +7,59 @@
 GameLogic :: GameLogic(MessageBus* msgBus, std::vector<GameObject*>* gameObjects, bool* isRunning)
     :msgBus(msgBus), gameObjects(gameObjects), beatVec(""), isRunning(isRunning)
 {
+}
+
+void GameLogic :: start()
+{
     velocity = 0.25;
     indexBeatVec = 0;
     indexBeatNo = 0;
     inputIndexBVec = 0;
     startTime = Time::sGetInstance().getCurrentTime();
-    GameObject* arrow = new GameObject("texture", "position", nullptr);
+
+    GameObject* arrow;
+
+    arrow = new GameObject("texture", "position", nullptr);
     arrow->texturePositionComponent->setSrcRect(0, 0, 128, 128);
-    arrow->positionComponent->setDestRect(10, 80, 128, 128);
+    arrow->positionComponent->setDestRect(AL1XPOS, AYPOS, 128, 128);
     gameObjects->push_back(arrow);
 
-    //GameObject* ar = new GameObject("texture", "position", "movement", nullptr);
-    //ar->texturePositionComponent->setSrcRect(0, 0, 403, 370);
-    //ar->positionComponent->setDestRect(40, 80, 403 / 3, 370 / 3);
-    //ar->movementComponent->setVelocity(0, -10);
-    //gameObjects->push_back(ar);
+    arrow = new GameObject("texture", "position", nullptr);
+    arrow->texturePositionComponent->setSrcRect(0, 0, 128, 128);
+    arrow->positionComponent->setDestRect(AD1XPOS, AYPOS, 128, 128);
+    gameObjects->push_back(arrow);
+
+    arrow = new GameObject("texture", "position", nullptr);
+    arrow->texturePositionComponent->setSrcRect(0, 0, 128, 128);
+    arrow->positionComponent->setDestRect(AU1XPOS, AYPOS, 128, 128);
+    gameObjects->push_back(arrow);
+
+    arrow = new GameObject("texture", "position", nullptr);
+    arrow->texturePositionComponent->setSrcRect(0, 0, 128, 128);
+    arrow->positionComponent->setDestRect(AR1XPOS, AYPOS, 128, 128);
+    gameObjects->push_back(arrow);
+
+    //Another player
+    arrow = new GameObject("texture", "position", nullptr);
+    arrow->texturePositionComponent->setSrcRect(0, 0, 128, 128);
+    arrow->positionComponent->setDestRect(AL2XPOS, AYPOS, 128, 128);
+    gameObjects->push_back(arrow);
+
+    arrow = new GameObject("texture", "position", nullptr);
+    arrow->texturePositionComponent->setSrcRect(0, 0, 128, 128);
+    arrow->positionComponent->setDestRect(AD2XPOS, AYPOS, 128, 128);
+    gameObjects->push_back(arrow);
+
+    arrow = new GameObject("texture", "position", nullptr);
+    arrow->texturePositionComponent->setSrcRect(0, 0, 128, 128);
+    arrow->positionComponent->setDestRect(AU2XPOS, AYPOS, 128, 128);
+    gameObjects->push_back(arrow);
+
+    arrow = new GameObject("texture", "position", nullptr);
+    arrow->texturePositionComponent->setSrcRect(0, 0, 128, 128);
+    arrow->positionComponent->setDestRect(AR2XPOS, AYPOS, 128, 128);
+    gameObjects->push_back(arrow);
+
 }
 
 GameLogic :: ~GameLogic()
@@ -53,7 +92,7 @@ void GameLogic :: updateGObjectsPosition()
 void GameLogic :: createArrowGObjects()
 {
     uint32_t currentTime = Time::sGetInstance().getCurrentTime() - startTime;
-    int baseDistance = 1070 - APOS;
+    int baseDistance = 1070 - AYPOS;
     double eta = baseDistance / velocity;
 
     for(int i = 0; i <= 3; i++)
@@ -100,7 +139,23 @@ void GameLogic :: handleInputs()
     while(msgBus->hasMessage() && msgBus->getMessageType() == "input")
     {
         uint32_t currentTime = Time::sGetInstance().getCurrentTime() - startTime;
-        (void) currentTime;
+        bool double_check = false;
+
+        int check_direction = 0;
+        auto rem = currentTime % 10000;
+        if((rem >= 9880 || rem <= 120) && currentTime > 120)
+        {
+            double_check = true;
+            if(rem >= 9880)
+                check_direction = 1;
+            else if (rem <= 120)
+                check_direction = -1;
+
+            //std::cout << currentTime << std::endl;
+            //std::cout << "True" << std::endl;
+        }
+
+        inputIndexBVec = std::ceil(currentTime / 10000);
 
         Message* msg = msgBus->getMessage();
         InputData* in = msg->getInputData();
@@ -110,29 +165,77 @@ void GameLogic :: handleInputs()
             *isRunning = false;
         }
 
-        //if(inputIndexBVec > beatVec.beat.size() - 1)
-        //{
-            //delete msg;
-            //break;
-        //}
+        if(inputIndexBVec > beatVec.beats.size() - 1)
+        {
+            delete msg;
+            return;
+        }
 
-        //if(currentTime > beatVec.beat[inputIndexBVec]->beatTime + 100)
-        //{
-            //inputIndexBVec++;
-        //}
+        //std::cout << "in: " << in->getTimeStamp() - startTime << std::endl;
+
+        for(auto bv : *beatVec.beats[inputIndexBVec])
+        {
+            uint32_t diff = 0;
+
+            if(in->getKeyCode() != bv->keycode)
+                break;
+
+            if(bv->beatTime > in->getTimeStamp() - startTime)
+            {
+                diff = bv->beatTime - in->getTimeStamp() + startTime;
+            }
+            else if (in->getTimeStamp() - startTime > bv->beatTime)
+            {
+                diff = in->getTimeStamp() - startTime - bv->beatTime;
+            }
+            //std::cout << in->getKeyCode() << std::endl;
+            //std::cout << diff << std::endl;
 
 
-        //if(in->getKeyCode() == beatVec.beat[inputIndexBVec]->keycode)
-        //{
-            //if(in->getTimeStamp() - startTime - beatVec.beat[inputIndexBVec]->beatTime < 100)
-            //{
-                //std::cout << "Got it" << std::endl;
-                //std:: cout << in->getTimeStamp() - startTime << std::endl;
-                //std::cout << beatVec.beat[inputIndexBVec]->beatTime << std::endl;
-                //inputIndexBVec++;
-            //}
-        //}
+            if(diff < 100)
+            {
+                std::cout << "Got em" << std::endl;
+                break;
+            }
+        }
 
+        if(double_check)
+        {
+
+            if(inputIndexBVec + check_direction > beatVec.beats.size() - 1)
+            {
+                delete msg;
+                return;
+            }
+
+            for(auto bv : *beatVec.beats[inputIndexBVec + check_direction])
+            {
+                uint32_t diff = 0;
+
+                if(in->getKeyCode() != bv->keycode)
+                    break;
+
+                if(bv->beatTime > in->getTimeStamp() - startTime)
+                {
+                    diff = bv->beatTime - in->getTimeStamp() + startTime;
+                }
+                else
+                {
+                    diff = in->getTimeStamp() - bv->beatTime;
+                }
+
+
+                //std::cout << "in: " << in->getTimeStamp() - currentTime << std::endl;
+                //std::cout<< "diff: " << diff << std::endl;
+                if(diff < 100)
+                {
+                    std::cout << "Got em" << std::endl;
+                    break;
+                }
+            }
+            //std::cout << "Finished checking" << std::endl;
+        }
+        
         delete msg;
     }
 }

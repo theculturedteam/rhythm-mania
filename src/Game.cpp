@@ -13,6 +13,7 @@ Game :: ~Game()
 
 void Game :: run()
 {
+    gameLogic.start();
     Time::sGetInstance().setPreviousTime();
     while(isRunning)
     {
