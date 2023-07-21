@@ -7,8 +7,16 @@ void TexturePositionComponent::setSrcRect(int srcX, int srcY, int srcW, int srcH
 	srcRect.h = srcH;
 }
 
+void TexturePositionComponent::setIndex(uint16_t index) {
+	this->index = index;
+}
+
 PositionAndDimensionStruct& TexturePositionComponent::getSrcRect() {
 	return srcRect;
+}
+
+uint16_t TexturePositionComponent::getIndex() {
+	return index;
 }
 
 void PositionComponent::setDestRect(float destX, float destY, float destW, float destH) {

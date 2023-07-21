@@ -25,10 +25,14 @@ struct PositionAndDimensionStruct {
 class TexturePositionComponent {
 	private:
 		PositionAndDimensionStruct srcRect;
+		uint16_t index = 0;
 
 	public:
 		void setSrcRect(int srcX, int srcY, int srcW, int srcH);
+		void setIndex(uint16_t index);
+
 		PositionAndDimensionStruct& getSrcRect();
+		uint16_t getIndex();
 };
 
 // Provides the position of game objects in window
