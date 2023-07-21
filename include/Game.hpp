@@ -17,8 +17,8 @@ class Game
         std::vector<GameObject*> gameObjects;
         Render renderSystem;
         InputSystem inputSystem;
-        //SoundSystem soundSystem;
         GameLogic gameLogic;
+        SoundSystem soundSystem;
         bool isRunning;
         int gameState;
 };

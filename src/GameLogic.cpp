@@ -1,6 +1,4 @@
 #include "GameLogic.hpp"
-#include <cstdint>
-#include <map>
 #define PERFECT 20
 #define GOOD 50
 #define BAD 70
@@ -28,7 +26,7 @@ std::map<int,Coordinate*> coordinates =
 };
 
 GameLogic :: GameLogic(MessageBus* msgBus, std::vector<GameObject*>* gameObjects, bool* isRunning)
-    :msgBus(msgBus), gameObjects(gameObjects), beatVec(""), isRunning(isRunning)
+    :msgBus(msgBus), gameObjects(gameObjects), beatVec(nullptr), isRunning(isRunning)
 {
 }
 
@@ -38,7 +36,6 @@ void GameLogic :: start()
     indexBeatVec = 0;
     indexBeatNo = 0;
     inputIndexBVec = 0;
-    startTime = Time::sGetInstance().getCurrentTime();
 
     GameObject* arrow;
 
@@ -83,6 +80,17 @@ void GameLogic :: start()
     arrow->positionComponent->setDestRect(AR2XPOS, AYPOS, 128, 128);
     gameObjects->push_back(arrow);
 
+    beatVec = new BeatVec("../beatmap/beethoven.txt");
+
+    Message* msg;
+    msg = new Message("sound");
+    SoundData* sData = new SoundData();
+    sData->setdata("play", "../res/audio/beethoven.wav");
+    msg->setData(sData);
+
+    startTime = Time::sGetInstance().getCurrentTime();
+    msgBus->postMessage(msg);
+
 }
 
 GameLogic :: ~GameLogic()
@@ -120,19 +128,19 @@ void GameLogic :: createArrowGObjects()
 
     for(int i = 0; i <= 3; i++)
     {
-        if(indexBeatNo > beatVec.beats.size() - 1)
+        if(indexBeatNo > beatVec->beats.size() - 1)
         {
             break;
         }
 
-        if(beatVec.beats[indexBeatNo]->size() == 0)
+        if(beatVec->beats[indexBeatNo]->size() == 0)
         {
-            //indexBeatNo++;
+            indexBeatNo++;
             //indexBeatVec = 0;
             break;
         }
 
-        if(indexBeatVec > beatVec.beats[indexBeatNo]->size() - 1)
+        if(indexBeatVec > beatVec->beats[indexBeatNo]->size() - 1)
         {
             indexBeatNo++;
             indexBeatVec = 0;
@@ -140,7 +148,7 @@ void GameLogic :: createArrowGObjects()
         }
 
 
-        if(currentTime < (*beatVec.beats[indexBeatNo])[indexBeatVec]->beatTime - eta)
+        if(currentTime < (*beatVec->beats[indexBeatNo])[indexBeatVec]->beatTime - eta)
             break;
 
 
@@ -148,8 +156,8 @@ void GameLogic :: createArrowGObjects()
         //std::cout << "BeatVec time: " << beatVec.beat[indexBeatVec]->beatTime - eta << std::endl;
         GameObject* gameArrow = new GameObject("texture", "position", "movement", nullptr);
         //gameArrow->texturePositionComponent->setSrcRect(0, 0, 128, 128);
-        auto key = (*beatVec.beats[indexBeatNo])[indexBeatVec]->keycode;
-        auto time = (*beatVec.beats[indexBeatNo])[indexBeatVec]->beatTime;
+        auto key = (*beatVec->beats[indexBeatNo])[indexBeatVec]->keycode;
+        auto time = (*beatVec->beats[indexBeatNo])[indexBeatVec]->beatTime;
         gameArrow->setObjectId(createId(time, key));
         gameArrow->texturePositionComponent->setSrcRect(coordinates[key]->src_x, coordinates[key]->src_y, 128, 128);
         gameArrow->positionComponent->setDestRect(coordinates[key]->dest_x, ACYPOS, 128, 128);
@@ -186,32 +194,44 @@ void GameLogic :: handleInputs()
 
         Message* msg = msgBus->getMessage();
         InputData* in = msg->getInputData();
+        //std::cout << in->getKeyCode() << " " << in->getTimeStamp() - startTime << std::endl;
 
         if(in->getKeyCode() == 0)
         {
             *isRunning = false;
         }
 
-        if(inputIndexBVec > beatVec.beats.size() - 1)
+        //if(inputIndexBVec > beatVec->beats.size() - 1)
+        //{
+            //delete msg;
+            //return;
+        //}
+
+        if(inputIndexBVec > 12)
         {
             delete msg;
             return;
         }
+        //std::cout << "Reached there" << std::endl;
 
         //std::cout << "in: " << in->getTimeStamp() - startTime << std::endl;
 
-        for(auto bv : *beatVec.beats[inputIndexBVec])
+        for(auto bv : *beatVec->beats[inputIndexBVec])
         {
-            uint32_t diff = 0;
+            uint32_t diff = 1000;
 
             if(in->getKeyCode() != bv->keycode)
-                break;
+                continue;
 
             if(bv->beatTime > in->getTimeStamp() - startTime)
             {
                 diff = bv->beatTime - in->getTimeStamp() + startTime;
             }
-            else if (in->getTimeStamp() - startTime > bv->beatTime)
+            //else if (in->getTimeStamp() - startTime > bv->beatTime)
+            //{
+                //diff = in->getTimeStamp() - startTime - bv->beatTime;
+            //}
+            else
             {
                 diff = in->getTimeStamp() - startTime - bv->beatTime;
             }
@@ -219,10 +239,13 @@ void GameLogic :: handleInputs()
             //std::cout << diff << std::endl;
 
 
-            if(diff < 100)
+            if(diff < 200)
             {
                 std::cout << "Got em" << std::endl;
-                deleteGObject(createId(bv->beatTime, bv->keycode));
+                auto id = createId(bv->beatTime, bv->keycode);
+                std::cout << id << std::endl;
+                std::cout << bv->beatTime << " " << bv->keycode << std::endl;
+                deleteGObject(id);
                 break;
             }
         }
@@ -230,18 +253,18 @@ void GameLogic :: handleInputs()
         if(double_check)
         {
 
-            if(inputIndexBVec + check_direction > beatVec.beats.size() - 1)
+            if(inputIndexBVec + check_direction > beatVec->beats.size() - 1)
             {
                 delete msg;
                 return;
             }
 
-            for(auto bv : *beatVec.beats[inputIndexBVec + check_direction])
+            for(auto bv : *beatVec->beats[inputIndexBVec + check_direction])
             {
                 uint32_t diff = 0;
 
                 if(in->getKeyCode() != bv->keycode)
-                    break;
+                    continue;
 
                 if(bv->beatTime > in->getTimeStamp() - startTime)
                 {
@@ -255,7 +278,7 @@ void GameLogic :: handleInputs()
 
                 //std::cout << "in: " << in->getTimeStamp() - currentTime << std::endl;
                 //std::cout<< "diff: " << diff << std::endl;
-                if(diff < 100)
+                if(diff < 200)
                 {
                     std::cout << "Got em" << std::endl;
                     deleteGObject(createId(bv->beatTime, bv->keycode));
@@ -269,12 +292,13 @@ void GameLogic :: handleInputs()
     }
 }
 
-uint16_t GameLogic :: createId(uint32_t timestamp, int keycode)
+uint32_t GameLogic :: createId(uint32_t x, int y1)
 {
-    return 0.5 * (timestamp + keycode - 2) * (timestamp + keycode - 1) + timestamp;
+    uint32_t y = y1;
+    return x >= y ? x * x + x + y: y * y + x;
 }
 
-void GameLogic :: deleteGObject(uint16_t id)
+void GameLogic :: deleteGObject(uint32_t id)
 {
     for(auto gO : *gameObjects)
     {

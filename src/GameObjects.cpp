@@ -140,10 +140,10 @@ GameObject::~GameObject() {
 	animationComponent = NULL;
 }
 
-void GameObject::setObjectId(uint16_t objectId) {
+void GameObject::setObjectId(uint32_t objectId) {
 	this->objectId = objectId;
 }
 
-uint16_t GameObject::getObjectId() {
+uint32_t GameObject::getObjectId() {
 	return objectId;
 }

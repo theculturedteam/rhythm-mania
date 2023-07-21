@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL_rect.h>
 #include <cmath>
+#include <cstdint>
 #include <iostream>
 
 // Similar to PositionAndDimensionStruct
@@ -99,7 +100,7 @@ class GameObject {
 		ScoreComponent* scoreComponent = nullptr;
 		AnimationComponent* animationComponent = nullptr;
 
-		uint16_t objectId = 0;
+		uint32_t objectId = 0;
 
 	public:
 		// take dynamic no of const char* arguments
@@ -108,7 +109,7 @@ class GameObject {
 		GameObject(const char* format...);
 		~GameObject();
 
-		void setObjectId(uint16_t objectId);
-		uint16_t getObjectId();
+		void setObjectId(uint32_t objectId);
+		uint32_t getObjectId();
 };
 
