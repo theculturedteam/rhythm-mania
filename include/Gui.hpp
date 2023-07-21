@@ -19,8 +19,7 @@ class Gui{
     Draw& instance = Draw::getInstance();
     public:
     Gui();
-    void setPosition(int x, int y, int w, int h);
-    GameObject* drawText(int xint, int yint, int wint, int hint, const char* text);
+    GameObject* drawText(int wint, int hint, const char* text);
     GameObject* drawButton();
 
 };
