@@ -70,6 +70,10 @@ void AnimationComponent::setAnimate(bool animate) {
 	this->animate = animate;
 }
 
+void AnimationComponent::setCurrentFrame(float currentFrame) {
+	this->currentFrame = currentFrame;
+}
+
 PositionAndDimensionStruct& AnimationComponent::getTexturePosition() {
 	return texturePosition;
 }
@@ -84,6 +88,10 @@ uint8_t& AnimationComponent::getAnimationSpeed() {
 
 bool& AnimationComponent::getAnimate() {
 	return animate;
+}
+
+float& AnimationComponent::getCurrentFrame() {
+	return currentFrame;
 }
 
 GameObject::GameObject(const char* format...) {

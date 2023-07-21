@@ -76,17 +76,20 @@ class AnimationComponent {
 		int noOfFrameInAnimation;
 		uint8_t animationSpeed;
 		bool animate = false;
+		float currentFrame = 0;
 
 	public:
 		void setTexturePosition(int xOfFirstTex, int yOfFirstTex, int wOfFirstTex, int hOfFirstTex);
 		void setNoOfFramInAnimation(int noOfFrameInAnimation);
 		void setAnimationSpeed(uint8_t animationSpeed);
 		void setAnimate(bool animate);
+		void setCurrentFrame(float currentFrame);
 
 		PositionAndDimensionStruct& getTexturePosition();
 		int& getNoOfFrameInAnimaiton();
 		uint8_t& getAnimationSpeed();
 		bool& getAnimate();
+		float& getCurrentFrame();
 };
 
 // Actual class all the game objects are made up of
