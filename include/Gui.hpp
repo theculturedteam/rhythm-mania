@@ -11,5 +11,6 @@ class Gui{
     SDL_Surface* text;
     public:
     void setPosition(int x, int y, int w, int h);
+    void drawText();
     
 };
