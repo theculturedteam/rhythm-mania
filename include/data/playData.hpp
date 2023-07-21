@@ -5,7 +5,7 @@
 class PlayData
 {
     public:
-        PlayData();
+        PlayData(int velocity, SoundData* sData, VideoData* vData);
         ~PlayData();
 
         int velocity;

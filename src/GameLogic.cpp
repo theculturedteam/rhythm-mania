@@ -202,9 +202,9 @@ void GameLogic :: handleInputs()
             *isRunning = false;
         }
 
-        if(keycode < 7)
+        if(keycode > 1073741900  && keycode < 1073741907)
         {
-            keycode = 1073741900 + keycode;
+            keycode = keycode - 1073741900;
         }
 
 
