@@ -2,6 +2,7 @@
 #include <SDL_rect.h>
 #include <cmath>
 #include <iostream>
+#include <cstring>
 
 // Similar to PositionAndDimensionStruct
 struct PositionAndDimensionStruct {
