@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObjects.hpp"
 #include "framework/draw.hpp"
-#include "system.hpp"
+#include "system/System.hpp"
 #include "MessageBus.hpp"
 
 

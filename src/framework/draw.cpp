@@ -36,6 +36,8 @@ bool Draw::InitializeSDL()
     window = SDL_CreateWindow("GAME", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, 0);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND); // Enable alpha blending required by DimBackground
+
     SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	// Set background color to black
@@ -110,6 +112,11 @@ void Draw::DestroyTexture(int key)
 	} else {
 		std::cout << "No value of key: " << key << " found" << std::endl;
 	}
+}
+
+void Draw::DimBackground(uint8_t alpha) {
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, alpha);
+	SDL_RenderFillRect(renderer, NULL);
 }
 
 //temp function *DONT FORGET TO REMOVE*

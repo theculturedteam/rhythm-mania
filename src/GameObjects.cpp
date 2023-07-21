@@ -7,8 +7,16 @@ void TexturePositionComponent::setSrcRect(int srcX, int srcY, int srcW, int srcH
 	srcRect.h = srcH;
 }
 
-SDL_Rect& TexturePositionComponent::getSrcRect() {
+void TexturePositionComponent::setIndex(uint16_t index) {
+	this->index = index;
+}
+
+PositionAndDimensionStruct& TexturePositionComponent::getSrcRect() {
 	return srcRect;
+}
+
+uint16_t TexturePositionComponent::getIndex() {
+	return index;
 }
 
 void PositionComponent::setDestRect(float destX, float destY, float destW, float destH) {
@@ -18,7 +26,7 @@ void PositionComponent::setDestRect(float destX, float destY, float destW, float
 	destRect.h = destH;
 }
 
-SDL_Rect& PositionComponent::getDestRect() {
+PositionAndDimensionStruct& PositionComponent::getDestRect() {
 	return destRect;
 }
 
@@ -54,7 +62,7 @@ void AnimationComponent::setNoOfFramInAnimation(int noOfFrameInAnimation) {
 	this->noOfFrameInAnimation = noOfFrameInAnimation;
 }
 
-SDL_Rect& AnimationComponent::getFirstTexturePosition() {
+PositionAndDimensionStruct& AnimationComponent::getFirstTexturePosition() {
 	return firstTexturePosition;
 }
 
@@ -113,4 +121,12 @@ GameObject::~GameObject() {
 	scoreComponent = NULL;
 	delete animationComponent;
 	animationComponent = NULL;
+}
+
+void GameObject::setObjectId(uint16_t objectId) {
+	this->objectId = objectId;
+}
+
+uint16_t GameObject::getObjectId() {
+	return objectId;
 }

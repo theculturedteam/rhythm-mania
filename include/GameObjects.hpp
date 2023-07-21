@@ -1,25 +1,48 @@
 #pragma once
 #include <SDL_rect.h>
+#include <cmath>
 #include <iostream>
-#include<string.h>
+
+// Similar to PositionAndDimensionStruct
+struct PositionAndDimensionStruct {
+	float x;
+	float y;
+	float w;
+	float h;
+
+	//overloading operator overloading to automatically convert PositionAndDimensionStruct to SDL_Rect
+	operator SDL_Rect() const {
+		SDL_Rect rect;
+		rect.x = round(x);
+        rect.y = round(y);
+        rect.w = round(w);
+        rect.h = round(h);
+        return rect;
+	}
+};
+
 // Provides the size and position of texture in the texture atlas
 class TexturePositionComponent {
 	private:
-		SDL_Rect srcRect;
+		PositionAndDimensionStruct srcRect;
+		uint16_t index = 0;
 
 	public:
 		void setSrcRect(int srcX, int srcY, int srcW, int srcH);
-		SDL_Rect& getSrcRect();
+		void setIndex(uint16_t index);
+
+		PositionAndDimensionStruct& getSrcRect();
+		uint16_t getIndex();
 };
 
 // Provides the position of game objects in window
 class PositionComponent {
 	private:
-		SDL_Rect destRect;
+		PositionAndDimensionStruct destRect;
 
 	public:
 		void setDestRect(float destX, float destY, float destW, float destH);
-		SDL_Rect& getDestRect();
+		PositionAndDimensionStruct& getDestRect();
 };
 
 // Provides movement parameters
@@ -49,14 +72,14 @@ class ScoreComponent {
 class AnimationComponent {
 	private:
 		// Position and size of the first texture for animation
-		SDL_Rect firstTexturePosition;
+		PositionAndDimensionStruct firstTexturePosition;
 		int noOfFrameInAnimation;
 
 	public:
 		void setFirstTexturePosition(int xOfFirstTex, int yOfFirstTex, int wOfFirstTex, int hOfFirstTex);
 		void setNoOfFramInAnimation(int noOfFrameInAnimation);
 
-		SDL_Rect& getFirstTexturePosition();
+		PositionAndDimensionStruct& getFirstTexturePosition();
 		int& getNoOfFrameInAnimaiton();
 };
 
@@ -70,11 +93,16 @@ class GameObject {
 		ScoreComponent* scoreComponent = nullptr;
 		AnimationComponent* animationComponent = nullptr;
 
+		uint16_t objectId = 0;
+
 	public:
 		// take dynamic no of const char* arguments
 		// needs to be ended with a nullptr
 		// Eg, GameObject background("texture", "position", nullptr)
 		GameObject(const char* format...);
 		~GameObject();
+
+		void setObjectId(uint16_t objectId);
+		uint16_t getObjectId();
 };
 
