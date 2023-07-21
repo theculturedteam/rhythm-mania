@@ -3,13 +3,13 @@
 #include "data/SoundData.hpp"
 #include "framework/sound.hpp"
 
+
 class SoundSystem : public System
 {
 private:
-    SoundData *soundData;
-    Sound &object = Sound ::get_object();
 
 public:
+    void update();
     void handleMessage();
 };
 

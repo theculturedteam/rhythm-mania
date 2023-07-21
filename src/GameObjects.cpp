@@ -1,4 +1,5 @@
 #include "GameObjects.hpp"
+#include <cstring>
 
 void TexturePositionComponent::setSrcRect(int srcX, int srcY, int srcW, int srcH) {
 	srcRect.x = srcX;

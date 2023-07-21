@@ -1,11 +1,19 @@
 #include "system/SoundSystem.hpp"
 
+void SoundSystem :: update(){
+    SoundSystem :: handleMessage();
+}
+
 void SoundSystem ::handleMessage()
 {
     if (msgBus->hasMessage())
     {
         if (msgBus->getMessageType() == "sound")
         {
+            Message *message = msgBus->getMessage();
+            Sound &object = Sound ::get_object();
+            SoundData *soundData;
+            soundData = message->getSoundData();
             if (soundData->getcommand() == "play")
             {
                 object.LoadMusic(soundData->getpath().c_str());
