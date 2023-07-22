@@ -43,4 +43,13 @@ void Game :: run()
         soundSystem.update();
         gameLogic.update();
     }
+
+    //while(true)
+    //{
+        //gameLogic.displayEndScreen();
+        //inputSystem.update();
+        //videoSystem.update();
+        //renderSystem.update();
+        //soundSystem.update();
+    //}
 }

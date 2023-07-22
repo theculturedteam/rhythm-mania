@@ -151,7 +151,8 @@ void GameLogic :: start()
     msg->setData(sData);
     startTime = Time::sGetInstance().getCurrentTime();
     msgBus->postMessage(msg);
-
+    checkLastBeatTime();
+    std::cout << lastTime << std::endl;
 }
 
 GameLogic :: ~GameLogic()
@@ -604,12 +605,14 @@ void GameLogic :: deleteGObject(uint32_t id)
 
 void GameLogic :: update()
 {
-    //if(endScreen)
+    //if(Time::sGetInstance().getCurrentTime() - startTime > lastTime + 7000)
     //{
-        //displayEndScreen();
-        //handleEndInputs();
+        ////displayEndScreen();
+        ////handleEndInputs();
+        //*isRunning = false;
         //return;
     //}
+    
     createArrowGObjects();
     updateGObjectsPosition();
     handleInputs();
@@ -655,5 +658,17 @@ void GameLogic :: handleEndInputs()
         delete msgBus->getMessage();
         gameObjects->clear();
         *isRunning = false;
+    }
+}
+
+void GameLogic :: checkLastBeatTime()
+{
+    //int last = 12;
+    for(int i = 11; i>=0; i--)
+    {
+        if(beatVec->beats[i]->size() != 0){
+            lastTime = beatVec->beats[i]->back()->beatTime;
+            break;
+        }
     }
 }

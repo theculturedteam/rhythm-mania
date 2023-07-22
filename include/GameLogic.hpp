@@ -35,6 +35,7 @@ class GameLogic
         void update();
         void start();
 		void animate(uint32_t id);
+        void displayEndScreen();
 
     private:
         MessageBus* msgBus;
@@ -54,7 +55,7 @@ class GameLogic
         GameObject* score1;
         GameObject* score2;
 
-        bool endScreen;
-        void displayEndScreen();
+        uint32_t lastTime;
         void handleEndInputs();
+        void checkLastBeatTime();
 };
