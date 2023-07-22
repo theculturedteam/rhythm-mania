@@ -43,10 +43,6 @@ Game ::~Game()
 {
 }
 
-Game ::~Game()
-{
-}
-
 void Game ::run()
 {
     gameLogic.start(plData);
@@ -54,7 +50,7 @@ void Game ::run()
     while (isRunning)
     {
         Time::sGetInstance().calculateDeltaTime();
-        std::cout << "dt: " << Time::sGetInstance().getDeltaTime() << std::endl;
+        // std::cout << "dt: " << Time::sGetInstance().getDeltaTime() << std::endl;
         inputSystem.update();
         videoSystem.update();
         renderSystem.update();
