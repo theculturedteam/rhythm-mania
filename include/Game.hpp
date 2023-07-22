@@ -1,6 +1,7 @@
 #pragma once
 #include "GameLogic.hpp"
 #include "GameObjects.hpp"
+#include "MainMenu.hpp"
 #include "MessageBus.hpp"
 #include "data/playData.hpp"
 #include "system/InputSystem.hpp"
@@ -24,6 +25,7 @@ class Game
         GameLogic gameLogic;
         SoundSystem soundSystem;
         VideoSystem videoSystem;
+		MainMenu mainMenu;
         bool isRunning;
         int gameState;
 };
