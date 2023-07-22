@@ -37,7 +37,7 @@ GameLogic :: GameLogic(MessageBus* msgBus, std::vector<GameObject*>* gameObjects
     p2Score = 0;
 }
 
-void GameLogic :: start()
+void GameLogic :: start(PlayData* plData)
 {
     velocity = 0.25;
     indexBeatVec = 0;
@@ -129,14 +129,15 @@ void GameLogic :: start()
     score2 = gui.drawText(AL2XPOS, AYPOS - 70, txt.c_str());
     gameObjects->push_back(score2);
 
-    beatVec = new BeatVec("../beatmap/beethoven.txt");
+    /* beatVec = new BeatVec("../beatmap/beethoven.txt"); */
+    beatVec = new BeatVec(plData->beatMapDir);
 
     Message* msg;
     VideoData* vData;
     SoundData* sData;
 
     msg = new Message("video");
-    vData = new VideoData("load", "../res/videos/beethoven-virus", 1409, 30, 854, 480);
+    vData = new VideoData("load", plData->videoDir, plData->noOfFrames, plData->videoSpeed, plData->textureWidth, plData->textureHeight);
     msg->setData(vData);
     msgBus->postMessage(msg);
 
@@ -147,7 +148,8 @@ void GameLogic :: start()
 
     msg = new Message("sound");
     sData = new SoundData();
-    sData->setdata("play", "../res/audio/beethoven.wav");
+    /* sData->setdata("play", "../res/audio/beethoven.wav"); */
+    sData->setdata("play", plData->soundPath);
     msg->setData(sData);
     startTime = Time::sGetInstance().getCurrentTime();
     msgBus->postMessage(msg);

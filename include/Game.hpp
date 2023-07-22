@@ -26,4 +26,6 @@ class Game
         VideoSystem videoSystem;
         bool isRunning;
         int gameState;
+
+    	PlayData* plData;
 };

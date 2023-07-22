@@ -5,6 +5,7 @@
 #include <cstdint>
 #include "GameObjects.hpp"
 #include "MessageBus.hpp"
+#include "data/playData.hpp"
 #include "framework/time.hpp"
 #include "data/SoundData.hpp"
 #include "BeatVec.hpp"
@@ -33,7 +34,7 @@ class GameLogic
         void createArrowGObjects();
         void handleInputs();
         void update();
-        void start();
+        void start(PlayData* plData);
 		void animate(uint32_t id);
         void displayEndScreen();
 
