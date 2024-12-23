@@ -3,6 +3,10 @@
 ## Gameplay
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/CJ3TqEYT9DE/0.jpg)](https://www.youtube.com/watch?v=CJ3TqEYT9DE)
 
+## Project Showcase at Himalaya Exhibition (HEX 2023)
+https://github.com/user-attachments/assets/fd12227a-8639-4fc6-91fd-ab6e7d3c7999
+
+
 ## Build Dependencies
 * [Git](https://git-scm.com/)
 * [CMake](https://cmake.org/)
