@@ -1,7 +1,7 @@
 # rhythm-mania
 
 ## Gameplay
-[![Watch the gameplay](assets/rhythm_mania_gameplay.mp4)]
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/CJ3TqEYT9DE/0.jpg)](https://www.youtube.com/watch?v=CJ3TqEYT9DE)
 
 ## Build Dependencies
 * [Git](https://git-scm.com/)
