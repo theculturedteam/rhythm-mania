@@ -1,5 +1,8 @@
 # rhythm-mania
 
+## Gameplay
+[![Watch the gameplay](assets/rhythm_mania_gameplay.mp4)]
+
 ## Build Dependencies
 * [Git](https://git-scm.com/)
 * [CMake](https://cmake.org/)
